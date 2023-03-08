@@ -7,7 +7,7 @@ data:
     # neo4j
     gdbuser: neo4j
     gdbpass: s3cr3ts3cr3t
-    gdbaddr: neo4j://neo4j.{{ .Release.Namespace }}.svc.cluster.local:7687
+    gdbaddr: neo4j://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:7687
     realm: neo4j
 
     # nats
