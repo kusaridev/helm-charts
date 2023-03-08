@@ -1,0 +1,63 @@
+{{- if .Values.guac.ingestSampleData }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ingest-sample-data
+  labels:
+    app: ingest-sample-data
+spec:
+  backoffLimit: 5
+  template:
+    spec:
+      containers:
+      - name: ingest-sample-data
+        # Use same image as oci-collector for now
+        {{- if .Values.guac.oci_collector.image.digest }}
+        image: "{{ .Values.guac.oci_collector.image.repository }}@{{ .Values.guac.oci_collector.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.oci_collector.image.repository }}:{{ .Values.guac.oci_collector.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.oci_collector.image.pullPolicy }}"
+        command: ['sh', '-c', '/tmp/guac/ingest-sample-data.sh']
+        workingDir: {{ .Values.guac.workingDir }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+          - name: ingest-sample-data
+            mountPath: /tmp/guac
+      restartPolicy: OnFailure
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
+        - name: ingest-sample-data
+          configMap:
+            name: ingest-sample-data
+            defaultMode: 0755
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingest-sample-data
+data:
+  ingest-sample-data.sh: |
+    #!/usr/bin/env bash
+    set -e
+    
+    apt-get update && apt-get install -y git
+
+    export GUACSEC_HOME="/guac"
+    cd ${GUACSEC_HOME}
+    git clone https://github.com/guacsec/guac-data.git /tmp/guac-data
+    /opt/guac/guacone files /tmp/guac-data/docs
+    /opt/guac/guacone files /tmp/guac-data/top-dh-sboms
+    /opt/guac/guacone files /tmp/guac-data/some-sboms
+
+{{- end }}
