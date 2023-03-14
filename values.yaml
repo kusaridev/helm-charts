@@ -1,0 +1,120 @@
+# Default values for guac.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+# imagePullSecrets must be created independent of the chart and ahead of deployment
+imagePullSecrets:
+  - name: imagepullsecret
+
+guac:
+  workingDir: /guac
+
+  oci_collector:
+    name: oci-collector 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac 
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/collector image --use-csub']
+
+  ingestor:
+    name: ingestor 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac 
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/ingest ingest']
+
+  collectsub:
+    name: collectsub 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac 
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/guacone csub-server']
+      ports:
+        - containerPort: 2782
+
+  graphql_server:
+    name: graphql-server 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac 
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/guacone gql-server']
+      ports:
+        - containerPort: 8080
+
+  ingestSampleData: true
+
+neo4j:
+  neo4j:
+    name: guac-neo4j
+    # The chart will generate a secret if password is not specified
+    password: "s3cr3ts3cr3t"
+    resources:
+      cpu: "1"
+      memory: "4Gi"
+  config:
+    server.directories.plugins: "/var/lib/neo4j/labs"
+    dbms.security.procedures.unrestricted: "apoc.*"
+    server.config.strict_validation.enabled: "false"
+    dbms.security.procedures.allowlist: "gds.*,apoc.*"
+
+    server.metrics.enabled: "true"
+    server.metrics.csv.interval: "10s"
+    server.metrics.csv.rotation.keep_number: "2"
+    server.metrics.csv.rotation.compression: "NONE"
+
+  # Jvm configuration for Neo4j
+  jvm:
+    additionalJvmArguments:
+    - "-XX:+HeapDumpOnOutOfMemoryError"
+    - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+
+  # apoc_config:
+  #   apoc.trigger.enabled: "true"
+  #   apoc.jdbc.neo4j.url: "jdbc:foo:bar"
+  #   apoc.import.file.enabled: "true"
+  
+  volumes:
+    data:
+      mode: "dynamic"
+      dynamic:
+       # gp2 is a general-purpose SSD volume
+       storageClassName: gp2
+
+# https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
+nats:
+  nats:
+    jetstream:
+      enabled: true
+    limits:
+      # change max payload from default 1MB to 64MB
+      maxPayload: 64MB
+

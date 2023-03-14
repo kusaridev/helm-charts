@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.collectsub.name }}
+{{- if .Values.guac.collectsub.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.collectsub.annotations | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ .Values.guac.collectsub.name }}
+spec:
+  replicas:  {{ .Values.guac.collectsub.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.guac.collectsub.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.guac.collectsub.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.collectsub.name }}
+        {{- if .Values.guac.collectsub.image.digest }}
+        image: "{{ .Values.guac.collectsub.image.repository }}@{{ .Values.guac.collectsub.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.collectsub.image.repository }}:{{ .Values.guac.collectsub.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.collectsub.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.collectsub.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.collectsub.image.ports }}
+        ports:
+{{ toYaml .Values.guac.collectsub.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
+
+
+# TO-DO: generate service based on values.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.guac.collectsub.name }}
+  labels:
+    app: {{ .Values.guac.collectsub.name }}
+spec:
+  selector:
+    app: {{ .Values.guac.collectsub.name }}
+  ports:
+    # TO-DO: generate this from the list of ports
+    - protocol: TCP
+      port: 2782
+      targetPort: 2782

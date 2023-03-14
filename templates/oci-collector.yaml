@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.oci_collector.name }}
+{{- if .Values.guac.oci_collector.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.oci_collector.annotations | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ .Values.guac.oci_collector.name }}
+spec:
+  replicas:  {{ .Values.guac.oci_collector.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.guac.oci_collector.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.guac.oci_collector.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.oci_collector.name }}
+        {{- if .Values.guac.oci_collector.image.digest }}
+        image: "{{ .Values.guac.oci_collector.image.repository }}@{{ .Values.guac.oci_collector.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.oci_collector.image.repository }}:{{ .Values.guac.oci_collector.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.oci_collector.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.oci_collector.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.oci_collector.image.ports }}
+        ports:
+{{ toYaml .Values.guac.oci_collector.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
