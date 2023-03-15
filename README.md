@@ -33,6 +33,14 @@ The following are parameters that can be configured, as well as their default va
 | Collectsub | `guac.collectsub.image.tag` | Image tag, used if no digest is present | none |
 | Collectsub | `guac.collectsub.image.command` | Command for collectsub | `sh -c /opt/guac/guacone csub-server` |
 | Collectsub | `guac.collectsub.image.ports` | Port collectsub listens on | `2782` |
+| GraphQL Server | `guac.graphql_server.name` | Name of the GraphQL component | `graphql-server` |
+| GraphQL Server | `guac.graphql_server.annotations` | Annotations for deployment | `reloader.stakater.com/auto: "true"` |
+| GraphQL Server | `guac.graphql_server.replicas` | Replica count for deployment | `1` |
+| GraphQL Server | `guac.graphql_server.image.repository` | Path to GraphQL image | `ghcr.io/kusaridev/local-organic-guac` |
+| GraphQL Server | `guac.graphql_server.image.digest` | Image Digest for GraphQL| `sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646` |
+| GraphQL Server | `guac.graphql_server.image.tag` | Image tag, used if no digest is present | none |
+| GraphQL Server | `guac.graphql_server.image.command` | Command for GraphQL | `sh -c /opt/guac/guacone gql-server` |
+| GraphQL Server | `guac.graphql_server.image.ports` | Port GraphQL listens on | `8080` |
 
 # Developing
 

@@ -1,0 +1,25 @@
+suite: GraphQL Service tests
+templates:
+  - graphql-service.yaml
+
+tests:
+  - it: service should render
+    asserts:
+      - isKind:
+          of: Service
+      - hasDocuments:
+          count: 1
+  
+  - it: should respect spec level parameters
+    values:
+      - ./graphql_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path:  metadata.name
+          value:  graphql-server
+      - equal:
+          path:  metadata.labels.app
+          value:  graphql-server
+      - equal:
+          path:  spec.selector.app
+          value:  graphql-server

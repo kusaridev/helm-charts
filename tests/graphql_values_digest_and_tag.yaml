@@ -1,0 +1,19 @@
+imagePullSecrets:
+  - name: imagepullsecret
+
+guac:
+  workingDir: /guac
+
+  graphql_server:
+    name: graphql-server 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac 
+      tag: ""      
+      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/guacone gql-server']
+      ports:
+        - containerPort: 8080
