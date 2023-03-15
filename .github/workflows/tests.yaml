@@ -13,4 +13,4 @@ jobs:
       - name: Run helm unittest
         run: |
           helm plugin install https://github.com/quintush/helm-unittest
-          helm unittest charts/node-red -3
+          helm unittest . -3
