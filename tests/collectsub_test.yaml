@@ -1,0 +1,11 @@
+suite: Collector deployment tests
+templates:
+  - collectsub-deployment.yaml
+
+tests:
+  - it: deployment should render
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
