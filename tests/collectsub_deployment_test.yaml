@@ -43,10 +43,10 @@ tests:
           path:  spec.replicas
           value:  1
       - equal:
-          path:  spec.selector.matchLabels.app
+          path:  spec.selector.matchLabels.app.kubernetes.io/name
           value:  collectsub
       - equal:
-          path:  spec.template.metadata.labels.app
+          path:  spec.template.metadata.labels.app.kubernetes.io/name
           value:  collectsub
 
   - it: should use tag if only tag is specified
