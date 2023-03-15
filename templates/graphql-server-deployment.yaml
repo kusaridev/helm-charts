@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.graphqlServer.name }}
+{{- if .Values.guac.graphqlServer.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.graphqlServer.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+spec:
+  replicas:  {{ .Values.guac.graphqlServer.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+      app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+        app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.graphqlServer.name }}
+        {{- if .Values.guac.graphqlServer.image.digest }}
+        image: "{{ .Values.guac.graphqlServer.image.repository }}@{{ .Values.guac.graphqlServer.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.graphqlServer.image.repository }}:{{ .Values.guac.graphqlServer.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.graphqlServer.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.graphqlServer.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.graphqlServer.image.ports }}
+        ports:
+{{ toYaml .Values.guac.graphqlServer.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm

@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.ociCollector.name }}
+{{- if .Values.guac.ociCollector.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.ociCollector.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
+    app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+spec:
+  replicas:  {{ .Values.guac.ociCollector.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
+      app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
+        app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.ociCollector.name }}
+        {{- if .Values.guac.ociCollector.image.digest }}
+        image: "{{ .Values.guac.ociCollector.image.repository }}@{{ .Values.guac.ociCollector.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.ociCollector.image.repository }}:{{ .Values.guac.ociCollector.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.ociCollector.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.ociCollector.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.ociCollector.image.ports }}
+        ports:
+{{ toYaml .Values.guac.ociCollector.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm

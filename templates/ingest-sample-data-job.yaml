@@ -1,24 +1,32 @@
-{{- if .Values.guac.ingestSampleData }}
+{{- if .Values.guac.sampleData.ingest }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: ingest-sample-data
   labels:
-    app: ingest-sample-data
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
 spec:
   backoffLimit: 5
   template:
+    metadata:
+      labels:
+        {{- include "guac.labels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
     spec:
       containers:
       - name: ingest-sample-data
         # Use same image as oci-collector for now
-        {{- if .Values.guac.oci_collector.image.digest }}
-        image: "{{ .Values.guac.oci_collector.image.repository }}@{{ .Values.guac.oci_collector.image.digest }}"
+        {{- if .Values.guac.ociCollector.image.digest }}
+        image: "{{ .Values.guac.ociCollector.image.repository }}@{{ .Values.guac.ociCollector.image.digest }}"
         {{- else }}
-        image: "{{ .Values.guac.oci_collector.image.repository }}:{{ .Values.guac.oci_collector.image.tag | default .Chart.AppVersion}}"
+        image: "{{ .Values.guac.ociCollector.image.repository }}:{{ .Values.guac.ociCollector.image.tag | default .Chart.AppVersion}}"
         {{- end }}
-        imagePullPolicy: "{{ .Values.guac.oci_collector.image.pullPolicy }}"
+        imagePullPolicy: "{{ .Values.guac.ociCollector.image.pullPolicy }}"
         command: ['sh', '-c', '/tmp/guac/ingest-sample-data.sh']
         workingDir: {{ .Values.guac.workingDir }}
         volumeMounts:
@@ -45,7 +53,15 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ingest-sample-data
+  name: {{ .Values.guac.sampleData.jobName }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+    app.kubernetes.io/component: {{ .Values.guac.sampleData.jobName }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/part-of: "guac"
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 data:
   ingest-sample-data.sh: |
     #!/usr/bin/env bash

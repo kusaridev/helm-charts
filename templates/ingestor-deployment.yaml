@@ -4,20 +4,26 @@ kind: Deployment
 metadata:
   name: {{ .Values.guac.ingestor.name }}
 {{- if .Values.guac.ingestor.annotations }}
-  annotations:
+  annotations: 
 {{ toYaml .Values.guac.ingestor.annotations | indent 4 }}
 {{- end }}
   labels:
-    app: {{ .Values.guac.ingestor.name }}
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+    app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
 spec:
   replicas:  {{ .Values.guac.ingestor.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.guac.ingestor.name }}
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+      app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.guac.ingestor.name }}
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+        app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
     spec:
       containers:
       - name: {{ .Values.guac.ingestor.name }}
