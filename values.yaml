@@ -10,7 +10,10 @@ imagePullSecrets:
 guac:
   workingDir: /guac
 
-  oci_collector:
+  observability:
+    deployServiceMonitor: false
+
+  ociCollector:
     name: oci-collector 
     annotations: 
       reloader.stakater.com/auto: "true"
@@ -38,7 +41,7 @@ guac:
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/opt/guac/ingest ingest']
 
-  collectsub:
+  collectSub:
     name: collectsub 
     annotations: 
       reloader.stakater.com/auto: "true"
@@ -54,7 +57,7 @@ guac:
       ports:
         - containerPort: 2782
 
-  graphql_server:
+  graphqlServer:
     name: graphql-server 
     annotations: 
       reloader.stakater.com/auto: "true"
@@ -70,26 +73,45 @@ guac:
       ports:
         - containerPort: 8080
 
-  ingestSampleData: true
+  sampleData: 
+    ingest: true
+    jobName: ingest-sample-data
 
+# neo4j-standalone:
 neo4j:
   neo4j:
     name: guac-neo4j
     # The chart will generate a secret if password is not specified
     password: "s3cr3ts3cr3t"
+
+    edition: "community"
+    # edition: "enterprise"
+    # acceptLicenseAgreement: "yes"
+
+    labels:
+      release: monitoring
+      app.kubernetes.io/part-of: "guac"
+
     resources:
-      cpu: "1"
+      # cpu: "1"
+      cpu: "1000m"
       memory: "4Gi"
+
+  services:
+    neo4j:
+      spec:
+        type: ClusterIP
+
   config:
+
     server.directories.plugins: "/var/lib/neo4j/labs"
     dbms.security.procedures.unrestricted: "apoc.*"
     server.config.strict_validation.enabled: "false"
     dbms.security.procedures.allowlist: "gds.*,apoc.*"
 
     server.metrics.enabled: "true"
-    server.metrics.csv.interval: "10s"
-    server.metrics.csv.rotation.keep_number: "2"
-    server.metrics.csv.rotation.compression: "NONE"
+    server.metrics.prometheus.enabled: "true"
+    server.metrics.prometheus.endpoint: "0.0.0.0:2004"
 
   # Jvm configuration for Neo4j
   jvm:
@@ -107,7 +129,12 @@ neo4j:
       mode: "dynamic"
       dynamic:
        # gp2 is a general-purpose SSD volume
-       storageClassName: gp2
+      #  storageClassName: gp2
+        storageClassName: standard
+        requests:
+          storage: 100Gi
+      # accessModes:
+      #   - ReadWriteOnce
 
 # https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts
 nats:
@@ -117,4 +144,20 @@ nats:
     limits:
       # change max payload from default 1MB to 64MB
       maxPayload: 64MB
+    statefulSetPodLabels:
+      app.kubernetes.io/part-of: "guac"
 
+  natsbox:
+    additionalLabels:
+      app.kubernetes.io/part-of: "guac"
+    podLabels:
+      app.kubernetes.io/part-of: "guac"
+
+  exporter:
+    enabled: true
+    serviceMonitor:
+      enabled: false
+      ## Specify the namespace where Prometheus Operator is running
+      namespace: monitoring
+      labels:
+        release: monitoring

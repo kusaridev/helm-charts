@@ -2,37 +2,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.guac.collectsub.name }}
-{{- if .Values.guac.collectsub.annotations }}
+  name: {{ .Values.guac.collectSub.name }}
+{{- if .Values.guac.collectSub.annotations }}
   annotations: 
-{{ toYaml .Values.guac.collectsub.annotations | indent 4 }}
+{{ toYaml .Values.guac.collectSub.annotations | indent 4 }}
 {{- end }}
-  labels:
-    app: {{ .Values.guac.collectsub.name }}
+  labels: 
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+    app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
 spec:
-  replicas:  {{ .Values.guac.collectsub.replicas }}
+  replicas:  {{ .Values.guac.collectSub.replicas }}
   selector:
-    matchLabels:
-      app: {{ .Values.guac.collectsub.name }}
+    matchLabels: 
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+      app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
   template:
     metadata:
-      labels:
-        app: {{ .Values.guac.collectsub.name }}
+      labels: 
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+        app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
     spec:
       containers:
-      - name: {{ .Values.guac.collectsub.name }}
-        {{- if .Values.guac.collectsub.image.digest }}
-        image: "{{ .Values.guac.collectsub.image.repository }}@{{ .Values.guac.collectsub.image.digest }}"
+      - name: {{ .Values.guac.collectSub.name }}
+        {{- if .Values.guac.collectSub.image.digest }}
+        image: "{{ .Values.guac.collectSub.image.repository }}@{{ .Values.guac.collectSub.image.digest }}"
         {{- else }}
-        image: "{{ .Values.guac.collectsub.image.repository }}:{{ .Values.guac.collectsub.image.tag | default .Chart.AppVersion}}"
+        image: "{{ .Values.guac.collectSub.image.repository }}:{{ .Values.guac.collectSub.image.tag | default .Chart.AppVersion}}"
         {{- end }}
-        imagePullPolicy: "{{ .Values.guac.collectsub.image.pullPolicy }}"
+        imagePullPolicy: "{{ .Values.guac.collectSub.image.pullPolicy }}"
         command:
-{{ toYaml .Values.guac.collectsub.image.command | indent 10 }}
+{{ toYaml .Values.guac.collectSub.image.command | indent 10 }}
         workingDir: {{ .Values.guac.workingDir }}
-{{- if .Values.guac.collectsub.image.ports }}
+{{- if .Values.guac.collectSub.image.ports }}
         ports:
-{{ toYaml .Values.guac.collectsub.image.ports | indent 10 }}
+{{ toYaml .Values.guac.collectSub.image.ports | indent 10 }}
 {{- end }}
         volumeMounts:
           - name: guac-config
@@ -46,4 +52,3 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
-            
