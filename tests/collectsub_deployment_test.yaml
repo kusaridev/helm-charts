@@ -1,4 +1,4 @@
-suite: Collector deployment tests
+suite: Collectsub Deployment tests
 templates:
   - collectsub-deployment.yaml
 
@@ -35,7 +35,20 @@ tests:
           path: spec.template.spec.containers[0].command[2]
           value: "/opt/guac/guacone csub-server"
 
-  
+  - it: should respect spec level parameters
+    values:
+      - ./collectsub_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path:  spec.replicas
+          value:  1
+      - equal:
+          path:  spec.selector.matchLabels.app
+          value:  collectsub
+      - equal:
+          path:  spec.template.metadata.labels.app
+          value:  collectsub
+
   - it: should use tag if only tag is specified
     values:
       - ./collectsub_values_tag_no_digest.yaml
