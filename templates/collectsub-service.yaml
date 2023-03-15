@@ -1,0 +1,16 @@
+# TO-DO: generate service based on values.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.guac.collectsub.name }}
+  labels:
+    app: {{ .Values.guac.collectsub.name }}
+spec:
+  selector:
+    app: {{ .Values.guac.collectsub.name }}
+  ports:
+    # TO-DO: generate this from the list of ports
+    - protocol: TCP
+      port: 2782
+      targetPort: 2782
