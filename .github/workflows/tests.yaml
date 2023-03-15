@@ -1,0 +1,16 @@
+name:  Helm Tests
+
+on: 
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run helm unittest
+        run: |
+          helm plugin install https://github.com/quintush/helm-unittest
+          helm unittest charts/node-red -3
