@@ -1,0 +1,58 @@
+suite: Ingestor Deployment tests
+templates:
+  - ingestor-deployment.yaml
+
+tests:
+  - it: deployment should render
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+
+  - it: should run the ingestor image
+    values:
+      - ./ingestor_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path:  spec.template.spec.containers[0].name
+          value:  ingestor
+      - equal:
+          path:  spec.template.spec.containers[0].image
+          value:  ghcr.io/kusaridev/local-organic-guac@sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646
+
+  - it: should run the collector sub command
+    values: 
+      - ./ingestor_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].command[0]
+          value: "sh"
+      - equal:
+          path: spec.template.spec.containers[0].command[1]
+          value: "-c"
+      - equal:
+          path: spec.template.spec.containers[0].command[2]
+          value: "/opt/guac/ingest ingest"
+
+  - it: should respect spec level parameters
+    values:
+      - ./ingestor_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path:  spec.replicas
+          value:  1
+      - equal:
+          path:  spec.selector.matchLabels.app\.kubernetes\.io/name
+          value:  ingestor
+      - equal:
+          path:  spec.template.metadata.labels.app\.kubernetes\.io/name
+          value:  ingestor
+
+  - it: should use tag if only tag is specified
+    values:
+      - ./ingestor_values_tag_no_digest.yaml
+    asserts:
+      - equal:
+          path:  spec.template.spec.containers[0].image
+          value:  ghcr.io/kusaridev/tagged-guac-image:latest
