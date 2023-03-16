@@ -4,7 +4,7 @@ imagePullSecrets:
 guac:
   workingDir: /guac
 
-  collectsub:
+  collectSub:
     name: collectsub 
     annotations: 
       reloader.stakater.com/auto: "true"

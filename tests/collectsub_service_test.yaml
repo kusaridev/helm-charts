@@ -18,8 +18,8 @@ tests:
           path:  metadata.name
           value:  collectsub
       - equal:
-          path:  metadata.labels.app.kubernetes.io/name
+          path:  metadata.labels.app\.kubernetes\.io/name
           value:  collectsub
       - equal:
-          path:  spec.selector.app.kubernetes.io/name
+          path:  spec.selector.app\.kubernetes\.io/name
           value:  collectsub

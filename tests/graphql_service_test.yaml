@@ -1,6 +1,6 @@
 suite: GraphQL Service tests
 templates:
-  - graphql-service.yaml
+  - graphql-server-service.yaml
 
 tests:
   - it: service should render
@@ -18,8 +18,8 @@ tests:
           path:  metadata.name
           value:  graphql-server
       - equal:
-          path:  metadata.labels.app
+          path:  metadata.labels.app\.kubernetes\.io/name
           value:  graphql-server
       - equal:
-          path:  spec.selector.app
+          path:  spec.selector.app\.kubernetes\.io/name
           value:  graphql-server
