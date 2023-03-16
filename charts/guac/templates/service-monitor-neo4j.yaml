@@ -1,0 +1,20 @@
+{{- if .Values.guac.observability.deployServiceMonitor }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: neo4j-{{ .Release.Name }}-{{ .Release.Namespace }}
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  endpoints:
+  - path: /metrics
+    port: tcp-prometheus
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: {{ .Values.neo4j.neo4j.name }}
+
+{{- end }}
