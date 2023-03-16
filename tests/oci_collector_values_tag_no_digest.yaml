@@ -1,0 +1,19 @@
+imagePullSecrets:
+  - name: imagepullsecret
+
+guac:
+  workingDir: /guac
+
+  ociCollector:
+    name: oci-collector 
+    annotations: 
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/tagged-guac-image
+      # if not set appVersion field from Chart.yaml is used
+      tag: "latest"
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: 
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/opt/guac/collector image --use-csub']

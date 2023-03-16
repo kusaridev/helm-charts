@@ -4,7 +4,7 @@ imagePullSecrets:
 guac:
   workingDir: /guac
 
-  graphql_server:
+  graphqlServer:
     name: graphql-server 
     annotations: 
       reloader.stakater.com/auto: "true"
