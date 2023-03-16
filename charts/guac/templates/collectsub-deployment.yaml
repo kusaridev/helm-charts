@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.collectSub.name }}
+{{- if .Values.guac.collectSub.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.collectSub.annotations | indent 4 }}
+{{- end }}
+  labels: 
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+    app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+spec:
+  replicas:  {{ .Values.guac.collectSub.replicas }}
+  selector:
+    matchLabels: 
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+      app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+  template:
+    metadata:
+      labels: 
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+        app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.collectSub.name }}
+        {{- if .Values.guac.collectSub.image.digest }}
+        image: "{{ .Values.guac.collectSub.image.repository }}@{{ .Values.guac.collectSub.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.collectSub.image.repository }}:{{ .Values.guac.collectSub.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.collectSub.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.collectSub.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.collectSub.image.ports }}
+        ports:
+{{ toYaml .Values.guac.collectSub.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm

@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.ingestor.name }}
+{{- if .Values.guac.ingestor.annotations }}
+  annotations: 
+{{ toYaml .Values.guac.ingestor.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+    app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
+spec:
+  replicas:  {{ .Values.guac.ingestor.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+      app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+        app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.ingestor.name }}
+        {{- if .Values.guac.ingestor.image.digest }}
+        image: "{{ .Values.guac.ingestor.image.repository }}@{{ .Values.guac.ingestor.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.ingestor.image.repository }}:{{ .Values.guac.ingestor.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.ingestor.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.ingestor.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.ingestor.image.ports }}
+        ports:
+{{ toYaml .Values.guac.ingestor.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm

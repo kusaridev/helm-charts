@@ -1,0 +1,79 @@
+{{- if .Values.guac.sampleData.ingest }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ingest-sample-data
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      labels:
+        {{- include "guac.labels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+    spec:
+      containers:
+      - name: ingest-sample-data
+        # Use same image as oci-collector for now
+        {{- if .Values.guac.ociCollector.image.digest }}
+        image: "{{ .Values.guac.ociCollector.image.repository }}@{{ .Values.guac.ociCollector.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.ociCollector.image.repository }}:{{ .Values.guac.ociCollector.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.ociCollector.image.pullPolicy }}"
+        command: ['sh', '-c', '/tmp/guac/ingest-sample-data.sh']
+        workingDir: {{ .Values.guac.workingDir }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+          - name: ingest-sample-data
+            mountPath: /tmp/guac
+      restartPolicy: OnFailure
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
+        - name: ingest-sample-data
+          configMap:
+            name: ingest-sample-data
+            defaultMode: 0755
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.guac.sampleData.jobName }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+    app.kubernetes.io/component: {{ .Values.guac.sampleData.jobName }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/part-of: "guac"
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+data:
+  ingest-sample-data.sh: |
+    #!/usr/bin/env bash
+    set -e
+    
+    apt-get update && apt-get install -y git
+
+    export GUACSEC_HOME="/guac"
+    cd ${GUACSEC_HOME}
+    git clone https://github.com/guacsec/guac-data.git /tmp/guac-data
+    /opt/guac/guacone files /tmp/guac-data/docs
+    /opt/guac/guacone files /tmp/guac-data/top-dh-sboms
+    /opt/guac/guacone files /tmp/guac-data/some-sboms
+
+{{- end }}

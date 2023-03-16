@@ -1,0 +1,25 @@
+suite: Collectsub Service tests
+templates:
+  - collectsub-service.yaml
+
+tests:
+  - it: service should render
+    asserts:
+      - isKind:
+          of: Service
+      - hasDocuments:
+          count: 1
+  
+  - it: should respect spec level parameters
+    values:
+      - ./collectsub_values_digest_and_tag.yaml
+    asserts:
+      - equal:
+          path:  metadata.name
+          value:  collectsub
+      - equal:
+          path:  metadata.labels.app.kubernetes.io/name
+          value:  collectsub
+      - equal:
+          path:  spec.selector.app.kubernetes.io/name
+          value:  collectsub
