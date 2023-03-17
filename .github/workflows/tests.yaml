@@ -57,15 +57,21 @@ jobs:
            kubeconfig: ${HOME}/.kube/config 
            context: kind-chart-testing
 
-      - name: Set imagePullSecret
-        uses: azure/k8s-create-secret@v4
+      # - name: Set imagePullSecret
+      #   uses: azure/k8s-create-secret@v4
+      #   with:
+      #      namespace: 'guac-ct'
+      #      secret-name: 'imagepullsecret'
+      #      container-registry-url: 'ghcr.io'
+      #      container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+      #      container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+      #   id: create-secret
+
+      - uses: actions-hub/kubectl@master
+        # env:
+        #   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
-           namespace: 'guac-ct'
-           secret-name: 'imagepullsecret'
-           container-registry-url: 'ghcr.io'
-           container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-           container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        id: create-secret
+          args: cluster-info
 
       - uses: actions-hub/kubectl@master
         # env:
