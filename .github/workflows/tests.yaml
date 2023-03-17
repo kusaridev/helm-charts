@@ -60,7 +60,7 @@ jobs:
         run: |
           export NS=guac-ct
           kubectl create ns ${NS}
-          kubectl config set-context –current –namespace=${NS}
+          kubectl config set-context --current --namespace ${NS}
           kubectl create secret docker-registry imagepullsecret \
             --docker-username=${{ secrets.REGISTRY_USERNAME }} \
             --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
