@@ -54,7 +54,7 @@ jobs:
       - uses: azure/k8s-set-context@v3
         with:
            method: kubeconfig
-          #  kubeconfig: <your kubeconfig>
+           kubeconfig: ${HOME}/.kube/config 
            context: kind-chart-testing
 
       - name: Set imagePullSecret
