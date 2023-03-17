@@ -27,6 +27,11 @@ jobs:
           python-version: '3.9'
           check-latest: true
 
+      - name: Add Helm repos
+        run: |
+          helm repo add neo4j https://helm.neo4j.com/neo4j
+          helm repo add nats https://nats-io.github.io/k8s/helm/charts
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.3.1
 
