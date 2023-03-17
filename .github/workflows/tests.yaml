@@ -69,6 +69,7 @@ jobs:
 
       - name: set up KUBE_CONFIG
         run: |
+          cat $HOME/.kube/config
           cat $HOME/.kube/config | base64 -w0 > $HOME/.kube/config.base64 
 
       - uses: actions-hub/kubectl@master
