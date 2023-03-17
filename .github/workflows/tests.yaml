@@ -51,49 +51,21 @@ jobs:
         uses: helm/kind-action@v1.5.0
         # if: steps.list-changed.outputs.changed == 'true'
 
-      # - uses: azure/k8s-set-context@v3
-      #   with:
-      #      method: kubeconfig
-      #      kubeconfig: ${HOME}/.kube/config 
-          #  context: kind-chart-testing
-
-      # - name: Set imagePullSecret
-      #   uses: azure/k8s-create-secret@v4
-      #   with:
-      #      namespace: 'guac-ct'
-      #      secret-name: 'imagepullsecret'
-      #      container-registry-url: 'ghcr.io'
-      #      container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-      #      container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-      #   id: create-secret
-
       - uses: azure/setup-kubectl@v3
         with:
            version: 'v1.26.0'
         id: install
 
-      - name: create imagepullsecret
+      - name: set up namespace and imagepullsecret
         run: |
-          kubectl create ns guac-ct 
+          export NS=guac-ct
+          kubectl create ns ${NS}
+          kubectl config set-context –current –namespace=${NS}
           kubectl create secret docker-registry imagepullsecret \
             --docker-username=${{ secrets.REGISTRY_USERNAME }} \
             --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
-            --docker-server=ghcr.io -n guac-ct
-          kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}" -n guac-ct
-          kubectl get secret
-
-
-      # - uses: actions-hub/kubectl@master
-      #   env:
-      #     KUBE_CONFIG: ${HOME}/.kube/config.base64
-      #   with:
-      #     args: cluster-info
-
-      - uses: actions-hub/kubectl@master
-        # env:
-        #   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        with:
-          args: 'patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}" -n guac-ct'
+            --docker-server=ghcr.io 
+          kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}"
 
       - name: Run chart-testing (install)
         run: ct install --all --namespace guac-ct --helm-extra-args --timeout=600s
