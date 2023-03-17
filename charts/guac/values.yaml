@@ -123,7 +123,7 @@ neo4j:
   #   apoc.trigger.enabled: "true"
   #   apoc.jdbc.neo4j.url: "jdbc:foo:bar"
   #   apoc.import.file.enabled: "true"
- 
+
   volumes:
     data:
       mode: "dynamic"
