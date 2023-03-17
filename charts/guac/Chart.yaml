@@ -1,6 +1,10 @@
 apiVersion: v2
 name: guac
-description: A Helm chart for Kubernetes
+description: A Helm chart for deploying GUAC to Kubernetes
+
+maintainers:
+  - name: Kusari
+    url: https://github.com/kusaridev/guac-helm-charts 
 
 # A chart can be either an 'application' or a 'library' chart.
 #
