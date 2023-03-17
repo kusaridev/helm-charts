@@ -72,8 +72,7 @@ data:
     export GUACSEC_HOME="/guac"
     cd ${GUACSEC_HOME}
     git clone https://github.com/guacsec/guac-data.git /tmp/guac-data
-    /opt/guac/guacone files /tmp/guac-data/docs
-    /opt/guac/guacone files /tmp/guac-data/top-dh-sboms
     /opt/guac/guacone files /tmp/guac-data/some-sboms
-
+    #/opt/guac/guacone files /tmp/guac-data/top-dh-sboms
+    #/opt/guac/guacone files /tmp/guac-data/docs
 {{- end }}
