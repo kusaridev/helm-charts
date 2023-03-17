@@ -52,5 +52,5 @@ jobs:
         # if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --all --helm-extra-args --timeout 600s
+        run: ct install --all --helm-extra-args --timeout=600s
         # if: steps.list-changed.outputs.changed == 'true'
