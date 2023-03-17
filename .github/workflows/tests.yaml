@@ -74,10 +74,14 @@ jobs:
 
       - name: create imagepullsecret
         run: |
-          cat $HOME/.kube/config
-          # cat $HOME/.kube/config | base64 -w0 > $HOME/.kube/config.base64 
-          kubectl get secret
+          kubectl create ns guac-ct 
+          kubectl create secret docker-registry imagepullsecret \
+            --docker-username=${{ secrets.REGISTRY_USERNAME }} \
+            --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
+            --docker-server=ghcr.io -n guac-ct
           kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}" -n guac-ct
+          kubectl get secret
+
 
       # - uses: actions-hub/kubectl@master
       #   env:
