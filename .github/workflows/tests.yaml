@@ -55,7 +55,7 @@ jobs:
         with:
            method: kubeconfig
            kubeconfig: ${HOME}/.kube/config 
-           context: kind-chart-testing
+          #  context: kind-chart-testing
 
       # - name: Set imagePullSecret
       #   uses: azure/k8s-create-secret@v4
@@ -67,9 +67,13 @@ jobs:
       #      container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
       #   id: create-secret
 
+      - name: Add Helm repos
+        run: |
+          cat $HOME/.kube/config | base64 > $HOME/.kube/config.base64 
+
       - uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG: ${HOME}/.kube/config 
+          KUBE_CONFIG: ${HOME}/.kube/config.base64
         with:
           args: cluster-info
 
