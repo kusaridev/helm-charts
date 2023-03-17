@@ -51,6 +51,12 @@ jobs:
         uses: helm/kind-action@v1.5.0
         # if: steps.list-changed.outputs.changed == 'true'
 
+      - uses: azure/k8s-set-context@v3
+        with:
+           method: kubeconfig
+          #  kubeconfig: <your kubeconfig>
+           context: kind-chart-testing
+
       - name: Set imagePullSecret
         uses: azure/k8s-create-secret@v4
         with:
