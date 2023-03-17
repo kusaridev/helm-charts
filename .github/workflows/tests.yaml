@@ -57,26 +57,33 @@ jobs:
            kubeconfig: ${HOME}/.kube/config 
           #  context: kind-chart-testing
 
-      - name: Set imagePullSecret
-        uses: azure/k8s-create-secret@v4
-        with:
-           namespace: 'guac-ct'
-           secret-name: 'imagepullsecret'
-           container-registry-url: 'ghcr.io'
-           container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-           container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        id: create-secret
+      # - name: Set imagePullSecret
+      #   uses: azure/k8s-create-secret@v4
+      #   with:
+      #      namespace: 'guac-ct'
+      #      secret-name: 'imagepullsecret'
+      #      container-registry-url: 'ghcr.io'
+      #      container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+      #      container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+      #   id: create-secret
 
-      - name: set up KUBE_CONFIG
+      - uses: azure/setup-kubectl@v3
+        with:
+           version: 'v3.2'
+        id: install
+
+      - name: create imagepullsecret
         run: |
           cat $HOME/.kube/config
-          cat $HOME/.kube/config | base64 -w0 > $HOME/.kube/config.base64 
+          # cat $HOME/.kube/config | base64 -w0 > $HOME/.kube/config.base64 
+          kubectl get secret
+          kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}" -n guac-ct
 
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${HOME}/.kube/config.base64
-        with:
-          args: cluster-info
+      # - uses: actions-hub/kubectl@master
+      #   env:
+      #     KUBE_CONFIG: ${HOME}/.kube/config.base64
+      #   with:
+      #     args: cluster-info
 
       - uses: actions-hub/kubectl@master
         # env:
