@@ -3,7 +3,7 @@ name: guac
 description: A Helm chart for deploying GUAC to Kubernetes
 
 maintainers:
-  - name: Kusari
+  - name: kusaridev
     url: https://github.com/kusaridev/guac-helm-charts
 
 # A chart can be either an 'application' or a 'library' chart.
