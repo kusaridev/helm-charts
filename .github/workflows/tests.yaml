@@ -67,9 +67,9 @@ jobs:
       #      container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
       #   id: create-secret
 
-      - name: Add Helm repos
+      - name: set up KUBE_CONFIG
         run: |
-          cat $HOME/.kube/config | base64 -w 0 > $HOME/.kube/config.base64 
+          cat $HOME/.kube/config | base64 -w0 > $HOME/.kube/config.base64 
 
       - uses: actions-hub/kubectl@master
         env:
