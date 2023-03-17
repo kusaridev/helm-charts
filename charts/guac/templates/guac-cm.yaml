@@ -4,6 +4,7 @@ metadata:
   name: guac-cm
 data:
   guac.yaml: |
+
     # neo4j
     gdbuser: neo4j
     gdbpass: s3cr3ts3cr3t
