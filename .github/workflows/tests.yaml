@@ -69,7 +69,7 @@ jobs:
 
       - name: Add Helm repos
         run: |
-          cat $HOME/.kube/config | base64 > $HOME/.kube/config.base64 
+          cat $HOME/.kube/config | base64 -w 0 > $HOME/.kube/config.base64 
 
       - uses: actions-hub/kubectl@master
         env:
