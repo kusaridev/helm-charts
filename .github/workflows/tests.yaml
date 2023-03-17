@@ -68,8 +68,8 @@ jobs:
       #   id: create-secret
 
       - uses: actions-hub/kubectl@master
-        # env:
-        #   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        env:
+          KUBE_CONFIG: ${HOME}/.kube/config 
         with:
           args: cluster-info
 
