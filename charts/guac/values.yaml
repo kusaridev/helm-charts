@@ -75,13 +75,12 @@ guac:
     ports:
       - protocol: TCP
         port: 8080
-        targetPort: 8080 
+        targetPort: 8080
 
   sampleData:
     ingest: true
     jobName: ingest-sample-data
 
-# neo4j-standalone:
 neo4j:
   neo4j:
     name: guac-neo4j
@@ -97,7 +96,6 @@ neo4j:
       app.kubernetes.io/part-of: "guac"
 
     resources:
-      # cpu: "1"
       cpu: "1000m"
       memory: "4Gi"
 
@@ -107,7 +105,6 @@ neo4j:
         type: ClusterIP
 
   config:
-
     server.directories.plugins: "/var/lib/neo4j/labs"
     dbms.security.procedures.unrestricted: "apoc.*"
     server.config.strict_validation.enabled: "false"
