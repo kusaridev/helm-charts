@@ -54,8 +54,10 @@ guac:
       digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/opt/guac/guacone csub-server']
-      ports:
-        - containerPort: 2782
+    ports:
+      - protocol: TCP
+        port: 2782
+        targetPort: 2782
 
   graphqlServer:
     name: graphql-server
@@ -70,8 +72,10 @@ guac:
       digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/opt/guac/guacone gql-server']
-      ports:
-        - containerPort: 8080
+    ports:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080 
 
   sampleData:
     ingest: true
