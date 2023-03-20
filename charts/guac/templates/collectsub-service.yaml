@@ -1,4 +1,4 @@
-# TO-DO: generate service based on values.yaml
+{{- if .Values.guac.collectSub.ports }}
 ---
 apiVersion: v1
 kind: Service
@@ -13,7 +13,7 @@ spec:
     app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
     app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
   ports:
-    # TO-DO: generate this from the list of ports
-    - protocol: TCP
-      port: 2782
-      targetPort: 2782
+  {{- range .Values.guac.collectSub.ports }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}   
+{{- end }} 

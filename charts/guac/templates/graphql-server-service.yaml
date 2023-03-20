@@ -1,4 +1,4 @@
-# TO-DO: generate service based on values.yaml
+{{- if .Values.guac.graphqlServer.ports }}
 ---
 apiVersion: v1
 kind: Service
@@ -14,7 +14,7 @@ spec:
     app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
     app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
   ports:
-    # TO-DO: generate this from the list of ports
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+  {{- range .Values.guac.graphqlServer.ports }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}   
+{{- end }} 

@@ -25,7 +25,7 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      
+
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
@@ -36,7 +36,16 @@ jobs:
           helm repo add neo4j https://helm.neo4j.com/neo4j
           helm repo add nats https://nats-io.github.io/k8s/helm/charts
 
+      - name: Set up GPG Keys
+        run: |
+          cat <(echo -e "${{ secrets.GPG_KEYRING_BASE64 }}") | base64 -d | gpg --import --batch
+          gpg --export-secret-keys > /home/runner/.gnupg/keyring.gpg
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SIGN: "true"
+          # GPG_KEY_NAME is set at key creation time and is used to identify the key in the keyring here
+          CR_KEY: "${{ secrets.GPG_KEY_NAME }}"
+          CR_KEYRING: "/home/runner/.gnupg/keyring.gpg"

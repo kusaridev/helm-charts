@@ -16,3 +16,59 @@ jobs:
         run: |
           helm plugin install https://github.com/quintush/helm-unittest
           helm unittest charts/guac -3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+           version: 'v3.11.2' 
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          check-latest: true
+
+      - name: Add Helm repos
+        run: |
+          helm repo add neo4j https://helm.neo4j.com/neo4j
+          helm repo add nats https://nats-io.github.io/k8s/helm/charts
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.3.1
+
+      # TO-DO: make this step work to avoid creating cluster and run ct when charts are changed
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          echo "::set-output name=changed::true"
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Run chart-testing (lint)
+        run: ct lint --all --target-branch ${{ github.event.repository.default_branch }}
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.5.0
+        # if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+           version: 'v1.26.0'
+        id: install
+
+      - name: Set up namespace and imagepullsecret
+        run: |
+          export NS=guac-ct
+          kubectl create ns ${NS}
+          kubectl config set-context --current --namespace ${NS}
+          kubectl create secret docker-registry imagepullsecret \
+            --docker-username=${{ secrets.REGISTRY_USERNAME }} \
+            --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
+            --docker-server=ghcr.io 
+          kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}"
+
+      - name: Run chart-testing (install)
+        run: ct install --all --namespace guac-ct --helm-extra-args --timeout=600s
+        # if: steps.list-changed.outputs.changed == 'true'
