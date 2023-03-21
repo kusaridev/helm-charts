@@ -2,22 +2,35 @@
 
 This is a [Helm Chart](https://helm.sh/docs/topics/charts/) for deploying [GUAC](https://github.com/guacsec/guac) to [Kubernetes](https://kubernetes.io/).  This chart offers the following features
 * Neo4j deployment - community or enterprise
-  
+
 
 ## Prerequisites
 
 * Kubernetes 1.19+
 * Helm v3.9.4+
 
-## Install
+## Get Repository Info
 
-`helm install --name guac guac-helm-chart`
+```console
+helm repo add kusaridev https://kusaridev.github.io/helm-charts
+helm repo update
+```
+
+_See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
+
+## Install Chart
+
+```console
+helm install [RELEASE_NAME] kusaridev/guac
+```
 
 ## Uninstall
 
-`helm delete guac`
+`helm delete [RELEASE_NAME]`
 
 ## Parameters
+
+See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing). To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml).  Below you will find the configuration details, descriptions, and defaults.
 
 ### Global parameters
 
@@ -27,7 +40,7 @@ This is a [Helm Chart](https://helm.sh/docs/topics/charts/) for deploying [GUAC]
 
 ### Guac
 
-This section contains parameters for configuring the different GUAC components.  
+This section contains parameters for configuring the different GUAC components.
 
 | Name                                                        | Description                                                                      | Value                                                |
 | ----------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------- |
@@ -72,7 +85,7 @@ This section contains parameters for configuring the different GUAC components.
 
 ### neo4j
 
-This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).  
+This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).
 
 | Name                                                   | Description                                                       | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | ------------------------------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -98,7 +111,7 @@ This is the configuration for neo4j if being used.  This is a subchart.  See ful
 
 ### neo4j
 
-This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).  
+This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).
 
 | Name                                                       | Description                                                                                | Value                                                                                                                                                                                                                                                                                                                                                                               |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,8 +124,9 @@ This is the configuration for nats.  This is a subchart.  See full documentation
 | `nats.exporter.serviceMonitor.enabled`                     | Boolean to enable nats service monitor                                                     | `false`                                                                                                                                                                                                                                                                                                                                                                             |
 | `nats.exporter.serviceMonitor.namespace`                   | nats service monitor namespace - this is for monitoring purposes and is used by Prometheus | `monitoring`                                                                                                                                                                                                                                                                                                                                                                        |
 | `nats.exporter.serviceMonitor.labels.release`              | Label to associate nats service monitor with GUAC for monitoring purposes                  | `monitoring`                                                                                                                                                                                                                                                                                                                                                                        |
+## Developing
 
-In order to ensure proper development, run the following
+For running the unit tests, install the unittest plugin.
 
 `helm plugin install https://github.com/quintush/helm-unittest`
 
