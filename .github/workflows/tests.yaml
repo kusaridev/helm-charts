@@ -1,17 +1,17 @@
 name:  Helm Tests
 
-on: 
+on:
   push:
   pull_request:
     branches:
       - main
 
 jobs:
-  build: 
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Run helm unittest
         run: |
           helm plugin install https://github.com/quintush/helm-unittest
@@ -20,7 +20,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
-           version: 'v3.11.2' 
+           version: 'v3.11.2'
 
       - uses: actions/setup-python@v4
         with:
@@ -36,14 +36,14 @@ jobs:
         uses: helm/chart-testing-action@v2.3.1
 
       # TO-DO: make this step work to avoid creating cluster and run ct when charts are changed
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          echo "::set-output name=changed::true"
-          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
+      # - name: Run chart-testing (list-changed)
+      #   id: list-changed
+      #   run: |
+      #     echo "::set-output name=changed::true"
+      #     changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+      #     if [[ -n "$changed" ]]; then
+      #       echo "::set-output name=changed::true"
+      #     fi
 
       - name: Run chart-testing (lint)
         run: ct lint --all --target-branch ${{ github.event.repository.default_branch }}
@@ -66,7 +66,7 @@ jobs:
           kubectl create secret docker-registry imagepullsecret \
             --docker-username=${{ secrets.REGISTRY_USERNAME }} \
             --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
-            --docker-server=ghcr.io 
+            --docker-server=ghcr.io
           kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}"
 
       - name: Run chart-testing (install)

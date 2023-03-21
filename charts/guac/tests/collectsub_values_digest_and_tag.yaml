@@ -5,11 +5,15 @@ guac:
   workingDir: /guac
 
   collectSub:
-    name: collectsub 
-    annotations: 
+    name: collectsub
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
       tag:  "this_should_not_be_used"
       repository: ghcr.io/kusaridev/local-organic-guac
       digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+    ports:
+      - protocol: TCP
+        port: 2782
+        targetPort: 2782
