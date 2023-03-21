@@ -129,10 +129,10 @@ guac:
 ## @param neo4j.neo4j.resources.cpu CPU allocation for neo4j
 ## @param neo4j.neo4j.resources.memory Memory allocation for neo4j
 ## @param neo4j.services.neo4j.spec.type Kubernetes service type for neo4j service
-## @param neo4j.config.server.directories.plugins Plugin directory for any neo4j plugins (i.e. APOC)
-## @param neo4j.config.dbms.security.procedures.unrestricted TODO
-## @param neo4j.config.server.config.strict_validation.enabled Boolean for strict validation
-## @param neo4j.config.dbms.security.procedures.allowlist Procedures which should be allowed to execute.  
+## @param neo4j.config.server.directories.plugins Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
+## @param neo4j.config.dbms.security.procedures.unrestricted Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
+## @param neo4j.config.server.config.strict_validation.enabled Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
+## @param neo4j.config.dbms.security.procedures.allowlist Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
 ## @param neo4j.config.server.metrics.enabled Boolean to turn on server metrics.  
 ## @param neo4j.config.server.metrics.prometheus.enabled Boolean to turn on prometheus
 ## @param neo4j.config.server.metrics.prometheus.endpoint Endpoint location for prometheus
