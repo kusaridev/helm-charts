@@ -9,7 +9,7 @@ imagePullSecrets:
   - name: imagepullsecret
 
 ## @section Guac
-## @descriptionStart This section contains parameters for configuring the different GUAC components.  
+## @descriptionStart This section contains parameters for configuring the different GUAC components.
 ## @descriptionEnd
 ## @param guac.workingDir Working Directory for GUAC
 ## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
@@ -55,12 +55,12 @@ guac:
     deployServiceMonitor: false
 
   ociCollector:
-    name: oci-collector 
-    annotations: 
+    name: oci-collector
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/kusaridev/local-organic-guac 
+      repository: ghcr.io/kusaridev/local-organic-guac
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
@@ -69,12 +69,12 @@ guac:
       command: ['sh', '-c', '/opt/guac/collector image --use-csub']
 
   ingestor:
-    name: ingestor 
-    annotations: 
+    name: ingestor
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/kusaridev/local-organic-guac 
+      repository: ghcr.io/kusaridev/local-organic-guac
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
@@ -83,12 +83,12 @@ guac:
       command: ['sh', '-c', '/opt/guac/ingest ingest']
 
   collectSub:
-    name: collectsub 
-    annotations: 
+    name: collectsub
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/kusaridev/local-organic-guac 
+      repository: ghcr.io/kusaridev/local-organic-guac
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
@@ -99,12 +99,12 @@ guac:
         - containerPort: 2782
 
   graphqlServer:
-    name: graphql-server 
-    annotations: 
+    name: graphql-server
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/kusaridev/local-organic-guac 
+      repository: ghcr.io/kusaridev/local-organic-guac
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
@@ -114,12 +114,12 @@ guac:
       ports:
         - containerPort: 8080
 
-  sampleData: 
+  sampleData:
     ingest: true
     jobName: ingest-sample-data
 
 ## @section neo4j
-## @descriptionStart This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).  
+## @descriptionStart This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).
 ## @descriptionEnd
 ## @param neo4j.neo4j.name Name of the neo4j instance
 ## @param neo4j.neo4j.password Initial password for neo4j instance
@@ -133,11 +133,11 @@ guac:
 ## @param neo4j.config.dbms.security.procedures.unrestricted Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
 ## @param neo4j.config.server.config.strict_validation.enabled Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
 ## @param neo4j.config.dbms.security.procedures.allowlist Required for APOC plugin.  See [here](https://neo4j.com/docs/operations-manual/current/kubernetes/configuration/)
-## @param neo4j.config.server.metrics.enabled Boolean to turn on server metrics.  
+## @param neo4j.config.server.metrics.enabled Boolean to turn on server metrics.
 ## @param neo4j.config.server.metrics.prometheus.enabled Boolean to turn on prometheus
 ## @param neo4j.config.server.metrics.prometheus.endpoint Endpoint location for prometheus
-## @param neo4j.jvm.additionalJvmArguments JVM Arguments for the neo4j server.  
-## @param neo4j.volumes.data.mode Data mode for neo4j volume mount.  
+## @param neo4j.jvm.additionalJvmArguments JVM Arguments for the neo4j server.
+## @param neo4j.volumes.data.mode Data mode for neo4j volume mount.
 ## @param neo4j.volumes.data.dynamic.storageClassName Storage class for neo4j volume mount.
 ## @param neo4j.volumes.data.dynamic.requests.storage Size of neo4j volume mount.
 neo4j:
@@ -185,7 +185,7 @@ neo4j:
   #   apoc.trigger.enabled: "true"
   #   apoc.jdbc.neo4j.url: "jdbc:foo:bar"
   #   apoc.import.file.enabled: "true"
-  
+
   volumes:
     data:
       mode: "dynamic"
@@ -200,9 +200,9 @@ neo4j:
 
 
 ## @section neo4j
-## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).  
+## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).
 ## @descriptionEnd
-## @param nats.nats.jetstream.enabled Boolean for enabling JetStream.  
+## @param nats.nats.jetstream.enabled Boolean for enabling JetStream.
 ## @param nats.nats.limits.maxPayload Max Payload size for nats
 ## @param nats.nats.statefulSetPodLabels.app.kubernetes.io/part-of Label to associate nats with GUAC for monitoring purposes
 ## @param nats.natsbox.additionalLabels.app.kubernetes.io/part-of Label to associate natsbox with GUAC for monitoring purposes
