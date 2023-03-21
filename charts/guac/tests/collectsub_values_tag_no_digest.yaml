@@ -5,11 +5,15 @@ guac:
   workingDir: /guac
 
   collectSub:
-    name: collectsub 
-    annotations: 
+    name: collectsub
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
       repository: ghcr.io/kusaridev/tagged-guac-image
       tag: "latest"
       digest:
+    ports:
+      - protocol: TCP
+        port: 2782
+        targetPort: 2782

@@ -5,15 +5,17 @@ guac:
   workingDir: /guac
 
   graphqlServer:
-    name: graphql-server 
-    annotations: 
+    name: graphql-server
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
       repository: ghcr.io/kusaridev/tagged-guac-image
-      tag: "latest"      
-      digest: 
+      tag: "latest"
+      digest:
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/opt/guac/guacone gql-server']
-      ports:
-        - containerPort: 8080
+    ports:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080
