@@ -32,6 +32,7 @@ dependencies:
 - name: neo4j
   version: "~5.5.0"
   repository: "https://helm.neo4j.com/neo4j"
+  condition: neo4j.enabled
 - name: nats
   version: "~0.19.12"
   repository: "https://nats-io.github.io/k8s/helm/charts/"

@@ -12,7 +12,6 @@ imagePullSecrets:
 ## @descriptionStart This section contains parameters for configuring the different GUAC components.
 ## @descriptionEnd
 ## @param guac.workingDir Working Directory for GUAC
-## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
 ## @param guac.ociCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ociCollector.replicas Number of replicas for oci collector deployment
@@ -37,7 +36,9 @@ imagePullSecrets:
 ## @param guac.collectSub.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.collectSub.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.collectSub.image.command Command for the Collector Sub image.  It is not recommended to override this.
-## @param guac.collectSub.image.ports[0].containerPort Port the Collector Sub listens on
+## @param guac.collectSub.ports[0].protocol Protocol used at Collector Sub
+## @param guac.collectSub.ports[0].port Port the Collector Sub service listens on
+## @param guac.collectSub.ports[0].targetPort Port the Collector Sub container listens on
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
 ## @param guac.graphqlServer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.graphqlServer.replicas Number of replicas for GraphQL Server deployment
@@ -46,14 +47,16 @@ imagePullSecrets:
 ## @param guac.graphqlServer.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.graphqlServer.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.graphqlServer.image.command Command for the GraphQL Server image.  It is not recommended to override this.
-## @param guac.graphqlServer.image.ports[0].containerPort Port the GraphQL Server listens on
+## @param guac.graphqlServer.ports[0].protocol Protocol used at the the GraphQL Server
+## @param guac.graphqlServer.ports[0].port Port the GraphQL Server service listens on
+## @param guac.graphqlServer.ports[0].targetPort Port the GraphQL Server container listens on
+## @param guac.graphqlServer.backend Which backend to use - inmem or neo4j. If neo4j, neo4j.enabled must be set to true.
+## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
+## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
 ## @param guac.sampleData.ingest Boolean - set to true to ingest sample data after deployment
 ## @param guac.sampleData.jobName Name of the sample data ingest job
 guac:
   workingDir: /guac
-
-  observability:
-    deployServiceMonitor: false
 
   ociCollector:
     name: oci-collector
@@ -118,6 +121,11 @@ guac:
       - protocol: TCP
         port: 8080
         targetPort: 8080
+    backend: inmem
+    debug: false
+
+  observability:
+    deployServiceMonitor: false
 
   sampleData:
     ingest: true
@@ -126,6 +134,7 @@ guac:
 ## @section neo4j
 ## @descriptionStart This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).
 ## @descriptionEnd
+## @param neo4j.enabled If false, neo4j will not be installed
 ## @param neo4j.neo4j.name Name of the neo4j instance
 ## @param neo4j.neo4j.password Initial password for neo4j instance
 ## @param neo4j.neo4j.edition Type of instance being used.  Example "community" or "enterprise"
@@ -146,6 +155,8 @@ guac:
 ## @param neo4j.volumes.data.dynamic.storageClassName Storage class for neo4j volume mount.
 ## @param neo4j.volumes.data.dynamic.requests.storage Size of neo4j volume mount.
 neo4j:
+  enabled: false
+
   neo4j:
     name: guac-neo4j
     # The chart will generate a secret if password is not specified
