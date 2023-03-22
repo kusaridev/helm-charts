@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 suite: GraphQL Service tests
 templates:
   - graphql-server-service.yaml
@@ -9,7 +10,7 @@ tests:
           of: Service
       - hasDocuments:
           count: 1
-  
+
   - it: should respect spec level parameters
     values:
       - ./graphql_values_digest_and_tag.yaml

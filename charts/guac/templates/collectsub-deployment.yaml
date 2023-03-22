@@ -1,26 +1,27 @@
+# Copyright 2023 Kusari, Inc.
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.guac.collectSub.name }}
 {{- if .Values.guac.collectSub.annotations }}
-  annotations: 
+  annotations:
 {{ toYaml .Values.guac.collectSub.annotations | indent 4 }}
 {{- end }}
-  labels: 
+  labels:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
     app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
 spec:
   replicas:  {{ .Values.guac.collectSub.replicas }}
   selector:
-    matchLabels: 
+    matchLabels:
       {{- include "guac.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
       app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
   template:
     metadata:
-      labels: 
+      labels:
         {{- include "guac.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
         app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
