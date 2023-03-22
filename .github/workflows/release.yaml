@@ -7,6 +7,9 @@ on:
     paths:
       - "charts/**"
 
+permissions:  # added using https://github.com/step-security/secure-repo
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,8 +19,13 @@ jobs:
       packages: write
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@1f99358870fe1c846a3ccba386cc2b2246836776 # v2.2.1
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0
         with:
           fetch-depth: 0
 
@@ -27,7 +35,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3.5
         with:
            version: 'v3.11.2'
 
@@ -42,7 +50,7 @@ jobs:
           gpg --export-secret-keys > /home/runner/.gnupg/keyring.gpg
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
+        uses: helm/chart-releaser-action@be16258da8010256c6e82849661221415f031968 # v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SIGN: "true"
