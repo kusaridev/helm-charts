@@ -1,4 +1,4 @@
-# Copyright 2023 Kusari, Inc.
+# Copyright Kusari, Inc. and contributors
 suite: GraphQL Deployment tests
 templates:
   - graphql-server-deployment.yaml

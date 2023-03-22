@@ -1,4 +1,4 @@
-# Copyright 2023 Kusari, Inc.
+# Copyright Kusari, Inc. and contributors
 suite: GraphQL Service tests
 templates:
   - graphql-server-service.yaml

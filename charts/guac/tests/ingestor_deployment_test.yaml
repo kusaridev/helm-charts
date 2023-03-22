@@ -1,4 +1,4 @@
-# Copyright 2023 Kusari, Inc.
+# Copyright Kusari, Inc. and contributors
 suite: Ingestor Deployment tests
 templates:
   - ingestor-deployment.yaml
