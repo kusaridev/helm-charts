@@ -1,4 +1,5 @@
-# Copyright 2023 Kusari, Inc.
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
 {{- if .Values.guac.graphqlServer.ports }}
 ---
 apiVersion: v1
