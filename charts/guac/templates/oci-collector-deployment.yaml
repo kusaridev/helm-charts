@@ -1,10 +1,11 @@
+# Copyright 2023 Kusari, Inc.
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.guac.ociCollector.name }}
 {{- if .Values.guac.ociCollector.annotations }}
-  annotations: 
+  annotations:
 {{ toYaml .Values.guac.ociCollector.annotations | indent 4 }}
 {{- end }}
   labels:

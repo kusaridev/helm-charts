@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 suite: GraphQL Deployment tests
 templates:
   - graphql-server-deployment.yaml
@@ -22,7 +23,7 @@ tests:
           value:  ghcr.io/kusaridev/local-organic-guac@sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646
 
   - it: should run the gql-server command
-    values: 
+    values:
       - ./graphql_values_digest_and_tag.yaml
     asserts:
       - equal:
@@ -33,7 +34,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/opt/guac/guacone gql-server"          
+          value: "/opt/guac/guacone gql-server"
 
   - it: should respect spec level parameters
     values:

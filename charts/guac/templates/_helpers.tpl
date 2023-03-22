@@ -1,3 +1,5 @@
+{* Copyright 2023 Kusari, Inc *}
+
 {{/*
 Expand the name of the chart.
 */}}

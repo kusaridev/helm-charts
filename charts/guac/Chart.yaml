@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 apiVersion: v2
 name: guac
 description: A Helm chart for deploying GUAC to Kubernetes

@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 {{- if .Values.guac.graphqlServer.ports }}
 ---
 apiVersion: v1
@@ -16,5 +17,5 @@ spec:
   ports:
   {{- range .Values.guac.graphqlServer.ports }}
     - {{ . | toYaml | indent 6 | trim }}
-  {{- end }}   
-{{- end }} 
+  {{- end }}
+{{- end }}
