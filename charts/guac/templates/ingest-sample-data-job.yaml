@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 {{- if .Values.guac.sampleData.ingest }}
 ---
 apiVersion: batch/v1
@@ -66,7 +67,7 @@ data:
   ingest-sample-data.sh: |
     #!/usr/bin/env bash
     set -e
-    
+
     apt-get update && apt-get install -y git
 
     export GUACSEC_HOME="/guac"

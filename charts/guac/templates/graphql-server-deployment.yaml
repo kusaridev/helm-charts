@@ -1,10 +1,11 @@
+# Copyright 2023 Kusari, Inc.
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.guac.graphqlServer.name }}
 {{- if .Values.guac.graphqlServer.annotations }}
-  annotations: 
+  annotations:
 {{ toYaml .Values.guac.graphqlServer.annotations | indent 4 }}
 {{- end }}
   labels:

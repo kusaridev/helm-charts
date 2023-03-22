@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 suite: Collectsub Service tests
 templates:
   - collectsub-service.yaml
@@ -9,7 +10,7 @@ tests:
           of: Service
       - hasDocuments:
           count: 1
-  
+
   - it: should respect spec level parameters
     values:
       - ./collectsub_values_digest_and_tag.yaml

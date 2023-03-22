@@ -1,10 +1,11 @@
+# Copyright 2023 Kusari, Inc.
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.guac.ingestor.name }}
 {{- if .Values.guac.ingestor.annotations }}
-  annotations: 
+  annotations:
 {{ toYaml .Values.guac.ingestor.annotations | indent 4 }}
 {{- end }}
   labels:

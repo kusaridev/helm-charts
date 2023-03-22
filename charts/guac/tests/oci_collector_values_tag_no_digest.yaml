@@ -1,3 +1,4 @@
+# Copyright 2023 Kusari, Inc.
 imagePullSecrets:
   - name: imagepullsecret
 
@@ -5,8 +6,8 @@ guac:
   workingDir: /guac
 
   ociCollector:
-    name: oci-collector 
-    annotations: 
+    name: oci-collector
+    annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
@@ -14,6 +15,6 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: "latest"
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: 
+      digest:
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/opt/guac/collector image --use-csub']
