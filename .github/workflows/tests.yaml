@@ -22,7 +22,7 @@ jobs:
 
       - name: Run helm unittest
         run: |
-          helm plugin install https://github.com/quintush/helm-unittest
+          helm plugin install https://github.com/quintush/helm-unittest --version 0.2.11
           helm unittest charts/guac -3
 
       - name: Install Helm
