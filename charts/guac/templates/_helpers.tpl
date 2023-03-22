@@ -1,4 +1,7 @@
-{* Copyright Kusari, Inc. and contributors *}
+{*
+  Copyright Kusari, Inc. and contributors
+  Licensed under the MIT license. See LICENSE file in the project root for details.
+*}
 
 {{/*
 Expand the name of the chart.
