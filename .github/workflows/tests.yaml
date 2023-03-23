@@ -66,17 +66,6 @@ jobs:
            version: 'v1.26.0'
         id: install
 
-      - name: Set up namespace and imagepullsecret
-        run: |
-          export NS=guac-ct
-          kubectl create ns ${NS}
-          kubectl config set-context --current --namespace ${NS}
-          kubectl create secret docker-registry imagepullsecret \
-            --docker-username=${{ secrets.REGISTRY_USERNAME }} \
-            --docker-password=${{ secrets.REGISTRY_PASSWORD }} \
-            --docker-server=ghcr.io
-          kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"imagepullsecret\"}]}"
-
       - name: Run chart-testing (install)
-        run: ct install --all --namespace guac-ct --helm-extra-args --timeout=600s
+        run: ct install --all --helm-extra-args --timeout=600s
         # if: steps.list-changed.outputs.changed == 'true'
