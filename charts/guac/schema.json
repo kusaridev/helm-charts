@@ -23,16 +23,6 @@
                     "description": "Working Directory for GUAC",
                     "default": "/guac"
                 },
-                "observability": {
-                    "type": "object",
-                    "properties": {
-                        "deployServiceMonitor": {
-                            "type": "boolean",
-                            "description": "Boolean Deploy the service monitor for observability",
-                            "default": false
-                        }
-                    }
-                },
                 "ociCollector": {
                     "type": "object",
                     "properties": {
@@ -187,18 +177,26 @@
                                     "items": {
                                         "type": "string"
                                     }
-                                },
-                                "ports": {
-                                    "type": "array",
-                                    "description": "Port the Collector Sub listens on",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "containerPort": {
-                                                "type": "number",
-                                                "description": "Port the Collector Sub listens on"
-                                            }
-                                        }
+                                }
+                            }
+                        },
+                        "ports": {
+                            "type": "array",
+                            "description": "Protocol used at Collector Sub",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "protocol": {
+                                        "type": "string",
+                                        "description": "Protocol used at Collector Sub"
+                                    },
+                                    "port": {
+                                        "type": "number",
+                                        "description": "Port the Collector Sub service listens on"
+                                    },
+                                    "targetPort": {
+                                        "type": "number",
+                                        "description": "Port the Collector Sub container listens on"
                                     }
                                 }
                             }
@@ -253,21 +251,49 @@
                                     "items": {
                                         "type": "string"
                                     }
-                                },
-                                "ports": {
-                                    "type": "array",
-                                    "description": "Port the GraphQL Server listens on",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "containerPort": {
-                                                "type": "number",
-                                                "description": "Port the GraphQL Server listens on"
-                                            }
-                                        }
+                                }
+                            }
+                        },
+                        "ports": {
+                            "type": "array",
+                            "description": "Protocol used at the the GraphQL Server",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "protocol": {
+                                        "type": "string",
+                                        "description": "Protocol used at the the GraphQL Server"
+                                    },
+                                    "port": {
+                                        "type": "number",
+                                        "description": "Port the GraphQL Server service listens on"
+                                    },
+                                    "targetPort": {
+                                        "type": "number",
+                                        "description": "Port the GraphQL Server container listens on"
                                     }
                                 }
                             }
+                        },
+                        "backend": {
+                            "type": "string",
+                            "description": "Which backend to use - inmem or neo4j. If neo4j, neo4j.enabled must be set to true.",
+                            "default": "inmem"
+                        },
+                        "debug": {
+                            "type": "boolean",
+                            "description": "Enable debug mode for graphql server; also enable the UI",
+                            "default": false
+                        }
+                    }
+                },
+                "observability": {
+                    "type": "object",
+                    "properties": {
+                        "deployServiceMonitor": {
+                            "type": "boolean",
+                            "description": "Boolean Deploy the service monitor for observability",
+                            "default": false
                         }
                     }
                 },
@@ -291,6 +317,11 @@
         "neo4j": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If false, neo4j will not be installed",
+                    "default": false
+                },
                 "neo4j": {
                     "type": "object",
                     "properties": {
@@ -361,7 +392,7 @@
                     "properties": {
                         "additionalJvmArguments": {
                             "type": "array",
-                            "description": "JVM Arguments for the neo4j server.  ",
+                            "description": "JVM Arguments for the neo4j server.",
                             "default": [
                                 "-XX:+HeapDumpOnOutOfMemoryError",
                                 "-XX:HeapDumpPath=/logs/neo4j.hprof"
@@ -380,7 +411,7 @@
                             "properties": {
                                 "mode": {
                                     "type": "string",
-                                    "description": "Data mode for neo4j volume mount.  ",
+                                    "description": "Data mode for neo4j volume mount.",
                                     "default": "dynamic"
                                 },
                                 "dynamic": {
@@ -420,7 +451,7 @@
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
-                                    "description": "Boolean for enabling JetStream.  ",
+                                    "description": "Boolean for enabling JetStream.",
                                     "default": true
                                 }
                             }

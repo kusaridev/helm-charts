@@ -26,8 +26,8 @@ data:
 
     # graphql-server
 {{- with (index .Values.guac.graphqlServer.ports 0) }}
-    gql-backend: neo4j
+    gql-backend: {{ $.Values.guac.graphqlServer.backend }}
+    gql-debug: {{ $.Values.guac.graphqlServer.debug }}
     gql-port: {{ .targetPort }}
-    gql-debug: false
     gql-endpoint: http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query
 {{- end }}
