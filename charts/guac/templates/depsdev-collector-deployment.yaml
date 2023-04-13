@@ -1,0 +1,56 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.depsDevCollector.name }}
+{{- if .Values.guac.depsDevCollector.annotations }}
+  annotations:
+{{ toYaml .Values.guac.depsDevCollector.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.depsDevCollector.name }}
+    app.kubernetes.io/component: {{ .Values.guac.depsDevCollector.name }}
+spec:
+  replicas:  {{ .Values.guac.depsDevCollector.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.depsDevCollector.name }}
+      app.kubernetes.io/component: {{ .Values.guac.depsDevCollector.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.depsDevCollector.name }}
+        app.kubernetes.io/component: {{ .Values.guac.depsDevCollector.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.depsDevCollector.name }}
+        {{- if .Values.guac.depsDevCollector.image.digest }}
+        image: "{{ .Values.guac.depsDevCollector.image.repository }}@{{ .Values.guac.depsDevCollector.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.depsDevCollector.image.repository }}:{{ .Values.guac.depsDevCollector.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.depsDevCollector.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.depsDevCollector.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.depsDevCollector.image.ports }}
+        ports:
+{{ toYaml .Values.guac.depsDevCollector.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm

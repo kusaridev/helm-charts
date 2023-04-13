@@ -21,7 +21,7 @@
                 "workingDir": {
                     "type": "string",
                     "description": "Working Directory for GUAC",
-                    "default": "/guac"
+                    "default": "/workspace"
                 },
                 "ociCollector": {
                     "type": "object",
@@ -53,7 +53,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -66,7 +66,113 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/opt/guac/collector image --use-csub"
+                                        "/cnb/process/collector image --use-csub"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "depsDevCollector": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "String Name of the Deps.Dev Collector component.",
+                            "default": "depsdev-collector"
+                        },
+                        "replicas": {
+                            "type": "number",
+                            "description": "Number of replicas for depsdev collector deployment",
+                            "default": 1
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "type": "string",
+                                    "description": "Path to the Deps.Dev Collector image",
+                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                },
+                                "tag": {
+                                    "type": "string",
+                                    "description": "Tag if using an image tag.  Optional",
+                                    "default": "",
+                                    "nullable": true
+                                },
+                                "digest": {
+                                    "type": "string",
+                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                },
+                                "pullPolicy": {
+                                    "type": "string",
+                                    "description": "ImagePullPolicy for kubernetes",
+                                    "default": "IfNotPresent"
+                                },
+                                "command": {
+                                    "type": "array",
+                                    "description": "Command for the Deps.Dev Collector image.  It is not recommended to override this.",
+                                    "default": [
+                                        "sh",
+                                        "-c",
+                                        "/cnb/process/collector deps_dev --use-csub"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "osvCertifier": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "String Name of the OSV Certifier component.",
+                            "default": "osv-certifier"
+                        },
+                        "replicas": {
+                            "type": "number",
+                            "description": "Number of replicas for OSV Certifier deployment",
+                            "default": 1
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "type": "string",
+                                    "description": "Path to the OSV Certifier Collector image",
+                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                },
+                                "tag": {
+                                    "type": "string",
+                                    "description": "Tag if using an image tag.  Optional",
+                                    "default": "",
+                                    "nullable": true
+                                },
+                                "digest": {
+                                    "type": "string",
+                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                },
+                                "pullPolicy": {
+                                    "type": "string",
+                                    "description": "ImagePullPolicy for kubernetes",
+                                    "default": "IfNotPresent"
+                                },
+                                "command": {
+                                    "type": "array",
+                                    "description": "Command for the OSV Certifier Collector image.  It is not recommended to override this.",
+                                    "default": [
+                                        "sh",
+                                        "-c",
+                                        "/cnb/process/guacone osv --poll --interval 5"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -106,7 +212,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -119,7 +225,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/opt/guac/ingest ingest"
+                                        "/cnb/process/ingest ingest"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -159,7 +265,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -172,7 +278,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/opt/guac/guacone csub-server"
+                                        "/cnb/process/guacone csub-server"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -233,7 +339,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -246,7 +352,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/opt/guac/guacone gql-server"
+                                        "/cnb/process/guacone gql-server"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -308,7 +414,7 @@
                         "jobName": {
                             "type": "string",
                             "description": "Name of the sample data ingest job",
-                            "default": "ingest-sample-data"
+                            "default": "ingest-guac-data"
                         }
                     }
                 }

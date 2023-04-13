@@ -20,6 +20,22 @@ imagePullSecrets:
 ## @param guac.ociCollector.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.ociCollector.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.ociCollector.image.command Command for the OCI Collector image.  It is not recommended to override this.
+## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
+## @param guac.depsDevCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
+## @param guac.depsDevCollector.replicas Number of replicas for depsdev collector deployment
+## @param guac.depsDevCollector.image.repository Path to the Deps.Dev Collector image
+## @param guac.depsDevCollector.image.tag [nullable] Tag if using an image tag.  Optional
+## @param guac.depsDevCollector.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
+## @param guac.depsDevCollector.image.pullPolicy ImagePullPolicy for kubernetes
+## @param guac.depsDevCollector.image.command Command for the Deps.Dev Collector image.  It is not recommended to override this.
+## @param guac.osvCertifier.name String Name of the OSV Certifier component.
+## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
+## @param guac.osvCertifier.replicas Number of replicas for OSV Certifier deployment
+## @param guac.osvCertifier.image.repository Path to the OSV Certifier Collector image
+## @param guac.osvCertifier.image.tag [nullable] Tag if using an image tag.  Optional
+## @param guac.osvCertifier.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
+## @param guac.osvCertifier.image.pullPolicy ImagePullPolicy for kubernetes
+## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ingestor.replicas Number of replicas for ingestor deployment
@@ -56,7 +72,8 @@ imagePullSecrets:
 ## @param guac.sampleData.ingest Boolean - set to true to ingest sample data after deployment
 ## @param guac.sampleData.jobName Name of the sample data ingest job
 guac:
-  workingDir: /guac
+  workingDir: /workspace
+  # workingDir: /guac
 
   ociCollector:
     name: oci-collector
@@ -68,9 +85,37 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/opt/guac/collector image --use-csub']
+      command: ['sh', '-c', '/cnb/process/collector image --use-csub']
+
+  depsDevCollector:
+    name: depsdev-collector
+    annotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/cnb/process/collector deps_dev --use-csub']
+
+  osvCertifier:
+    name: osv-certifier 
+    annotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      repository: ghcr.io/kusaridev/local-organic-guac
+      # if not set appVersion field from Chart.yaml is used
+      tag: ""
+      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+      pullPolicy: IfNotPresent
+      command: ['sh', '-c', '/cnb/process/guacone osv --poll --interval 5']
 
   ingestor:
     name: ingestor
@@ -82,9 +127,9 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/opt/guac/ingest ingest']
+      command: ['sh', '-c', '/cnb/process/ingest ingest']
 
   collectSub:
     name: collectsub
@@ -96,9 +141,9 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/opt/guac/guacone csub-server']
+      command: ['sh', '-c', '/cnb/process/guacone csub-server']
     ports:
       - protocol: TCP
         port: 2782
@@ -114,9 +159,9 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
+      digest: "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/opt/guac/guacone gql-server']
+      command: ['sh', '-c', '/cnb/process/guacone gql-server']
     ports:
       - protocol: TCP
         port: 8080
@@ -129,7 +174,7 @@ guac:
 
   sampleData:
     ingest: true
-    jobName: ingest-sample-data
+    jobName: ingest-guac-data
 
 ## @section neo4j
 ## @descriptionStart This is the configuration for neo4j if being used.  This is a subchart.  See full documentation [here](https://neo4j.com/labs/neo4j-helm/1.0.0/).
