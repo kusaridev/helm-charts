@@ -104,7 +104,7 @@ guac:
       command: ['sh', '-c', '/cnb/process/collector deps_dev --use-csub']
 
   osvCertifier:
-    name: osv-certifier 
+    name: osv-certifier
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
