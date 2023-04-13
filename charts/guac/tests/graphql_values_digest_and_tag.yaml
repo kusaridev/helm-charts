@@ -16,7 +16,7 @@ guac:
       tag: ""
       digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/opt/guac/guacone gql-server']
+      command: ['sh', '-c', '/cnb/process/guacone gql-server']
     ports:
       - protocol: TCP
         port: 8080
