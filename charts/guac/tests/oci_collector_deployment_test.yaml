@@ -35,7 +35,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/opt/guac/collector image --use-csub"
+          value: "/cnb/process/collector image --use-csub"
 
   - it: should respect spec level parameters
     values:

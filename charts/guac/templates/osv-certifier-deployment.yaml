@@ -1,0 +1,56 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.osvCertifier.name }}
+{{- if .Values.guac.osvCertifier.annotations }}
+  annotations:
+{{ toYaml .Values.guac.osvCertifier.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.osvCertifier.name }}
+    app.kubernetes.io/component: {{ .Values.guac.osvCertifier.name }}
+spec:
+  replicas:  {{ .Values.guac.osvCertifier.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.osvCertifier.name }}
+      app.kubernetes.io/component: {{ .Values.guac.osvCertifier.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.osvCertifier.name }}
+        app.kubernetes.io/component: {{ .Values.guac.osvCertifier.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.osvCertifier.name }}
+        {{- if .Values.guac.osvCertifier.image.digest }}
+        image: "{{ .Values.guac.osvCertifier.image.repository }}@{{ .Values.guac.osvCertifier.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.osvCertifier.image.repository }}:{{ .Values.guac.osvCertifier.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.osvCertifier.image.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.osvCertifier.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.workingDir }}
+{{- if .Values.guac.osvCertifier.image.ports }}
+        ports:
+{{ toYaml .Values.guac.osvCertifier.image.ports | indent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.workingDir }}
+            readOnly: true
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
