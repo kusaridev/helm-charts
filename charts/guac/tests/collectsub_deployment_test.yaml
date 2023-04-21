@@ -35,7 +35,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/cnb/process/guacone csub-server"
+          value: "/cnb/process/guaccsub"
 
   - it: should respect spec level parameters
     values:

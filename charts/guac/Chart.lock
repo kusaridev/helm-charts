@@ -1,9 +1,6 @@
 dependencies:
-- name: neo4j
-  repository: https://helm.neo4j.com/neo4j
-  version: 5.5.0
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
-  version: 0.19.12
-digest: sha256:733aa2fd94eb4f0f1630774c9c36ba6000bc3c05464bf2aa5f6b88da522fa14e
-generated: "2023-03-22T20:41:39.402823-04:00"
+  version: 0.19.13
+digest: sha256:0a95bc02983da7ecbf35491e386410cc964e56c65f98c1e3d350f53e48dfab39
+generated: "2023-04-21T12:24:40.739458-04:00"
