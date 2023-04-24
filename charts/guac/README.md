@@ -13,7 +13,7 @@ Production support will be provided when [GUAC](https://github.com/guacsec/guac)
 
 The full GUAC component deployment is a set of asynchronous services that combine to form a robust and scaleable pipeline. This is represented by the area in green in the diagrom below and is also the scope of this chart.
 
-![Guac Diagram](docs/GUAC-diagram.svg)
+![Guac Diagram](../../docs/images/GUAC-diagram.svg)
 
 ### What is being deployed?
 
