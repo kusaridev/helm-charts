@@ -1,0 +1,49 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.visualizer.name }}
+{{- if .Values.guac.visualizer.annotations }}
+  annotations:
+{{ toYaml .Values.guac.visualizer.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+spec:
+  replicas:  {{ .Values.guac.visualizer.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
+      app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
+        app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+    spec:
+      containers:
+      - name: {{ .Values.guac.visualizer.name }}
+        {{- if .Values.guac.visualizer.image.digest }}
+        image: "{{ .Values.guac.visualizer.image.repository }}@{{ .Values.guac.visualizer.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.visualizer.image.repository }}:{{ .Values.guac.visualizer.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.visualizer.image.pullPolicy }}"
+{{- if .Values.guac.visualizer.image.command }}
+        command:
+{{ toYaml .Values.guac.visualizer.image.command | indent 10 }}
+{{- end }}
+{{- if .Values.guac.visualizer.image.ports }}
+        ports:
+{{ toYaml .Values.guac.visualizer.image.ports | indent 10 }}
+{{- end }}
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}

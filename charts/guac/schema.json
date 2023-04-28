@@ -42,7 +42,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the OCI Collector image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -53,7 +53,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -66,7 +66,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/collector image --use-csub"
+                                        "/cnb/process/guaccollect image --use-csub"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -95,7 +95,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Deps.Dev Collector image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -106,7 +106,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -119,7 +119,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/collector deps_dev --use-csub"
+                                        "/cnb/process/guaccollect deps_dev --use-csub"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -148,7 +148,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the OSV Certifier Collector image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -159,7 +159,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -201,7 +201,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Ingestor image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -212,7 +212,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -225,7 +225,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/ingest ingest"
+                                        "/cnb/process/guacingest"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -254,7 +254,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Collector Sub image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -265,7 +265,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -278,7 +278,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacone csub-server"
+                                        "/cnb/process/guaccsub"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -328,7 +328,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the GraphQL Server image",
-                                    "default": "ghcr.io/kusaridev/local-organic-guac"
+                                    "default": "ghcr.io/kusaridev/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -339,7 +339,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b11d8361368409333c6ed8c0a94dc395814a23828d15cfe54a3e45e973fb3b99"
+                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -352,7 +352,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacone gql-server"
+                                        "/cnb/process/guacgql --gql-debug"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -383,13 +383,75 @@
                         },
                         "backend": {
                             "type": "string",
-                            "description": "Which backend to use - inmem or neo4j. If neo4j, neo4j.enabled must be set to true.",
+                            "description": "which backend to use - only support inmem at the moment. ",
                             "default": "inmem"
                         },
                         "debug": {
                             "type": "boolean",
                             "description": "Enable debug mode for graphql server; also enable the UI",
                             "default": false
+                        }
+                    }
+                },
+                "visualizer": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "String Name of the visualizer component.",
+                            "default": "visualizer"
+                        },
+                        "replicas": {
+                            "type": "number",
+                            "description": "Number of replicas for visualizer deployment",
+                            "default": 1
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "type": "string",
+                                    "description": "Path to the Ingestor image",
+                                    "default": "ghcr.io/kusaridev/guac-visualizer"
+                                },
+                                "tag": {
+                                    "type": "string",
+                                    "description": "Tag if using an image tag.  Optional",
+                                    "default": "",
+                                    "nullable": true
+                                },
+                                "digest": {
+                                    "type": "string",
+                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
+                                    "default": "sha256:b0f5e881f1255f6d585e2b0eb65faf0acf6dd1f7006bf32b562496cc1cdb7664"
+                                },
+                                "pullPolicy": {
+                                    "type": "string",
+                                    "description": "ImagePullPolicy for kubernetes",
+                                    "default": "IfNotPresent"
+                                }
+                            }
+                        },
+                        "ports": {
+                            "type": "array",
+                            "description": "Protocol used at the visualizer",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "protocol": {
+                                        "type": "string",
+                                        "description": "Protocol used at the visualizer"
+                                    },
+                                    "port": {
+                                        "type": "number",
+                                        "description": "Port the visualizer service listens on"
+                                    },
+                                    "targetPort": {
+                                        "type": "number",
+                                        "description": "Port the visualizer container listens on"
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -409,138 +471,12 @@
                         "ingest": {
                             "type": "boolean",
                             "description": "Boolean - set to true to ingest sample data after deployment",
-                            "default": true
+                            "default": false
                         },
                         "jobName": {
                             "type": "string",
                             "description": "Name of the sample data ingest job",
                             "default": "ingest-guac-data"
-                        }
-                    }
-                }
-            }
-        },
-        "neo4j": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "If false, neo4j will not be installed",
-                    "default": false
-                },
-                "neo4j": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "description": "Name of the neo4j instance",
-                            "default": "guac-neo4j"
-                        },
-                        "password": {
-                            "type": "string",
-                            "description": "Initial password for neo4j instance",
-                            "default": "s3cr3ts3cr3t"
-                        },
-                        "edition": {
-                            "type": "string",
-                            "description": "Type of instance being used.  Example \"community\" or \"enterprise\"",
-                            "default": "community"
-                        },
-                        "labels": {
-                            "type": "object",
-                            "properties": {
-                                "release": {
-                                    "type": "string",
-                                    "description": "Label for release.  This is used as part of monitoring",
-                                    "default": "monitoring"
-                                }
-                            }
-                        },
-                        "resources": {
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "type": "string",
-                                    "description": "CPU allocation for neo4j",
-                                    "default": "1000m"
-                                },
-                                "memory": {
-                                    "type": "string",
-                                    "description": "Memory allocation for neo4j",
-                                    "default": "4Gi"
-                                }
-                            }
-                        }
-                    }
-                },
-                "services": {
-                    "type": "object",
-                    "properties": {
-                        "neo4j": {
-                            "type": "object",
-                            "properties": {
-                                "spec": {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": {
-                                            "type": "string",
-                                            "description": "Kubernetes service type for neo4j service",
-                                            "default": "ClusterIP"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "jvm": {
-                    "type": "object",
-                    "properties": {
-                        "additionalJvmArguments": {
-                            "type": "array",
-                            "description": "JVM Arguments for the neo4j server.",
-                            "default": [
-                                "-XX:+HeapDumpOnOutOfMemoryError",
-                                "-XX:HeapDumpPath=/logs/neo4j.hprof"
-                            ],
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "volumes": {
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "mode": {
-                                    "type": "string",
-                                    "description": "Data mode for neo4j volume mount.",
-                                    "default": "dynamic"
-                                },
-                                "dynamic": {
-                                    "type": "object",
-                                    "properties": {
-                                        "storageClassName": {
-                                            "type": "string",
-                                            "description": "Storage class for neo4j volume mount.",
-                                            "default": "standard"
-                                        },
-                                        "requests": {
-                                            "type": "object",
-                                            "properties": {
-                                                "storage": {
-                                                    "type": "string",
-                                                    "description": "Size of neo4j volume mount.",
-                                                    "default": "100Gi"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }

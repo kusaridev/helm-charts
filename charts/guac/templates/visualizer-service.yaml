@@ -1,0 +1,21 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{- if .Values.guac.visualizer.ports }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.guac.visualizer.name }}
+  labels: {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+spec:
+  selector:
+    {{- include "guac.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+  ports:
+  {{- range .Values.guac.visualizer.ports }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}
+{{- end }}

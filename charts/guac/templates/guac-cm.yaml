@@ -8,13 +8,6 @@ metadata:
 data:
   guac.yaml: |
 
-    # TO-DO: externalize secrets from CM
-    # neo4j
-    gdbuser: neo4j
-    gdbpass: {{ .Values.neo4j.neo4j.password }}
-    gdbaddr: neo4j://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:7687
-    realm: neo4j
-
     # nats
     natsaddr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
 

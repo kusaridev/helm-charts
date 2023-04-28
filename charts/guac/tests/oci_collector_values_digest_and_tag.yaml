@@ -18,4 +18,4 @@ guac:
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: "sha256:4ceb73778530d652755777c6e81de6994f7f94e103ee4a3ff55b797e813ac646"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/collector image --use-csub']
+      command: ['sh', '-c', '/cnb/process/guaccollect image --use-csub']
