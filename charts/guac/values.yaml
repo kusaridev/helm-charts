@@ -96,7 +96,7 @@ guac:
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guaccollect image --use-csub']
+      command: ['sh', '-c', '/cnb/process/guaccollect image']
 
   depsDevCollector:
     name: depsdev-collector
@@ -110,7 +110,7 @@ guac:
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guaccollect deps_dev --use-csub']
+      command: ['sh', '-c', '/cnb/process/guaccollect deps_dev']
 
   osvCertifier:
     name: osv-certifier
@@ -124,7 +124,7 @@ guac:
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
       pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guacone osv --poll --interval 5']
+      command: ['sh', '-c', '/cnb/process/guacone certifier osv --poll']
 
   ingestor:
     name: ingestor
