@@ -42,7 +42,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the OCI Collector image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -53,7 +53,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -66,7 +66,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guaccollect image --use-csub"
+                                        "/cnb/process/guaccollect image"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -95,7 +95,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Deps.Dev Collector image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -106,7 +106,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -119,7 +119,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guaccollect deps_dev --use-csub"
+                                        "/cnb/process/guaccollect deps_dev"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -148,7 +148,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the OSV Certifier Collector image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -159,7 +159,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -172,7 +172,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacone osv --poll --interval 5"
+                                        "/cnb/process/guacone certifier osv --poll"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -201,7 +201,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Ingestor image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -212,7 +212,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -254,7 +254,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Collector Sub image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -265,7 +265,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -328,7 +328,7 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the GraphQL Server image",
-                                    "default": "ghcr.io/kusaridev/guac"
+                                    "default": "ghcr.io/guacsec/guac"
                                 },
                                 "tag": {
                                     "type": "string",
@@ -339,7 +339,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:748b538ac0e66d748d3b19e9fe800a955c0c86f1fd087d89c5d9f03b5ebb32d9"
+                                    "default": "sha256:770ad1e9b6300e27ea3ac03d3808f4fbfdec5e78e0f82019d18d6fd3b3943d22"
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -352,7 +352,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacgql --gql-debug"
+                                        "/cnb/process/guacgql"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -383,13 +383,13 @@
                         },
                         "backend": {
                             "type": "string",
-                            "description": "which backend to use - only support inmem at the moment. ",
+                            "description": "which backend to use - only support inmem at the moment.",
                             "default": "inmem"
                         },
                         "debug": {
                             "type": "boolean",
                             "description": "Enable debug mode for graphql server; also enable the UI",
-                            "default": false
+                            "default": true
                         }
                     }
                 },
