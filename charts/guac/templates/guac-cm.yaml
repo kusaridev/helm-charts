@@ -8,19 +8,24 @@ metadata:
 data:
   guac.yaml: |
 
-    # nats
-    natsaddr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
+    # Nats setup
+    nats-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
 
-    # collect-sub
+    # CSub setup
 {{- with (index .Values.guac.collectSub.ports 0) }}
     csub-addr: {{ $.Values.guac.collectSub.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}
     csub-listen-port: {{ .targetPort }}
 {{- end }}
 
-    # graphql-server
+    # GQL setup
 {{- with (index .Values.guac.graphqlServer.ports 0) }}
     gql-backend: {{ $.Values.guac.graphqlServer.backend }}
+    gql-listen-port: {{ .targetPort }}
     gql-debug: {{ $.Values.guac.graphqlServer.debug }}
-    gql-port: {{ .targetPort }}
-    gql-endpoint: http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query
+    gql-test-data: false
+    gql-addr: http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query
 {{- end }}
+    
+    # Collector behavior
+    service-poll: true
+    use-csub: true
