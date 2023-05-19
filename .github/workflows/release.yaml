@@ -1,9 +1,12 @@
 name: Release Charts
 
 on:
+  # run release job when changes are pushed to main
+  # chart-releaser will only cut release when changes are detected
+  # hence a tag push will not trigger chart release
   push:
-    tags:
-      - '*'
+    branches:
+      - main
 
 permissions:  # added using https://github.com/step-security/secure-repo
   contents: read
