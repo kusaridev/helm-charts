@@ -68,7 +68,8 @@ imagePullSecrets:
 ## @param guac.graphqlServer.ports[0].targetPort Port the GraphQL Server container listens on
 ## @param guac.graphqlServer.backend which backend to use - only support inmem at the moment.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
-## @param guac.visualizer.name String Name of the visualizer component.
+## @param guac.visualizer.enabled String Whether to deploy the visualizer.
+## @param guac.visualizer.name String Name of the visualizer.
 ## @param guac.visualizer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.visualizer.replicas Number of replicas for visualizer deployment
 ## @param guac.visualizer.image.repository Path to the Ingestor image
@@ -94,7 +95,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guaccollect image']
 
@@ -108,7 +109,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guaccollect deps_dev']
 
@@ -122,7 +123,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guacone certifier osv --poll']
 
@@ -136,7 +137,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guacingest']
 
@@ -150,7 +151,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guaccsub']
     ports:
@@ -168,7 +169,7 @@ guac:
       # if not set appVersion field from Chart.yaml is used
       tag: ""
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+      digest: ""
       pullPolicy: IfNotPresent
       command: ['sh', '-c', '/cnb/process/guacgql']
     ports:
@@ -179,6 +180,7 @@ guac:
     debug: true
 
   visualizer:
+    enabled: false
     name: visualizer
     annotations:
       reloader.stakater.com/auto: "true"

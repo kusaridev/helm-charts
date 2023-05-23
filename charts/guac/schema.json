@@ -53,7 +53,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -106,7 +106,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -159,7 +159,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -212,7 +212,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -265,7 +265,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -339,7 +339,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:088e2b7a90a3af363a88e78a9dff1caa0b8c3671fe42a50a5ce0202557f625a3"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -396,9 +396,14 @@
                 "visualizer": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy the visualizer.",
+                            "default": false
+                        },
                         "name": {
                             "type": "string",
-                            "description": "String Name of the visualizer component.",
+                            "description": "String Name of the visualizer.",
                             "default": "visualizer"
                         },
                         "replicas": {
