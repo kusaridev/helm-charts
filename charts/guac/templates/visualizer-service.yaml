@@ -1,5 +1,6 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.visualizer.enabled }}
 {{- if .Values.guac.visualizer.ports }}
 ---
 apiVersion: v1
@@ -18,4 +19,5 @@ spec:
   {{- range .Values.guac.visualizer.ports }}
     - {{ . | toYaml | indent 6 | trim }}
   {{- end }}
+{{- end }}
 {{- end }}

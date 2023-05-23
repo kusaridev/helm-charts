@@ -2,8 +2,9 @@
 
 This is a [Helm Chart](https://helm.sh/docs/topics/charts/) for deploying [GUAC](https://github.com/guacsec/guac) to [Kubernetes](https://kubernetes.io/).
 
-For a complete demo on how to utilize [GUAC](https://github.com/guacsec/guac) using the services deployed by this chart, see [link to demo].
+For a complete demo on how to utilize [GUAC](https://github.com/guacsec/guac) using the services deployed by this chart, see the [guac use cases](https://docs.guac.sh/guac-use-cases/).
 
+Please visit the web site at https://guac.sh for latest news and documentation of [GUAC](https://github.com/guacsec/guac).
 
 :exclamation: **Not Production Ready** - [GUAC](https://github.com/guacsec/guac) is still under active development. This chart is provided for rapidly deploying [GUAC](https://github.com/guacsec/guac) for experiment purposes. 
 Production support will be provided when [GUAC](https://github.com/guacsec/guac) is production ready.
@@ -68,18 +69,18 @@ See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_h
 
 
 ### Accessing GUAC 
-GUAC exposes a few interfaces for user interaction - including the GraphQL Server/Playground, and the Visualizer. You can access them via ```kubectl port-forward```
+GUAC exposes a few interfaces for user interaction - including the GraphQL Server/Playground, NATS, and CollectSub service. You can access them via ```kubectl port-forward```
 ```
 kubectl port-forward svc/graphql-server 8080:8080
-kubectl port-forward svc/visualizer 3000:3000 
-```
-
-If there is a need to access the NATS and CollectSub service, you can run
-```
 kubectl port-forward svc/guac-nats 4222:4222
 kubectl port-forward svc/collectsub 2782:2782
 ```
 
+### GUAC Visualizer
+The GUAC visualizer can be set up following the documentation at https://docs.guac.sh/guac-visualizer/. 
+Note that you will need to port-forward to the graphql service for the visualizer to work.
+
+We will support deploying the Visualizer at a later release.
 
 ## Uninstall
 
@@ -156,7 +157,8 @@ This section contains parameters for configuring the different GUAC components.
 | `guac.graphqlServer.ports[0].targetPort`                       | Port the GraphQL Server container listens on                                            | `8080`                                                    |
 | `guac.graphqlServer.backend`                                   | which backend to use - only support inmem at the moment.                                | `inmem`                                                   |
 | `guac.graphqlServer.debug`                                     | Enable debug mode for graphql server; also enable the UI                                | `true`                                                    |
-| `guac.visualizer.name`                                         | String Name of the visualizer component.                                                | `visualizer`                                              |
+| `guac.visualizer.enabled`                                      | String Whether to deploy the visualizer.                                                | `false`                                                   |
+| `guac.visualizer.name`                                         | String Name of the visualizer.                                                          | `visualizer`                                              |
 | `guac.visualizer.annotations.reloader.stakater.com/auto`       | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)        | `""`                                                      |
 | `guac.visualizer.replicas`                                     | Number of replicas for visualizer deployment                                            | `1`                                                       |
 | `guac.visualizer.image.repository`                             | Path to the Ingestor image                                                              | `ghcr.io/kusaridev/guac-visualizer`                       |

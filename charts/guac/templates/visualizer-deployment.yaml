@@ -1,5 +1,6 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.visualizer.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,4 +47,5 @@ spec:
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
 {{- end }}
