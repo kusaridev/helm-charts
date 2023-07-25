@@ -1,6 +1,7 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
-{{- if .Values.guac.graphqlServer.ports }}
+{{ if .Values.guac.graphqlServer.enabled }}
+{{- if .Values.guac.graphqlServer.svcPorts }}
 ---
 apiVersion: v1
 kind: Service
@@ -16,7 +17,8 @@ spec:
     app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
     app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
   ports:
-  {{- range .Values.guac.graphqlServer.ports }}
+  {{- range .Values.guac.graphqlServer.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}
   {{- end }}
+{{- end }}
 {{- end }}

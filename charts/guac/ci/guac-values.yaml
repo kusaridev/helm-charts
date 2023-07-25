@@ -1,0 +1,4 @@
+# Ingest sample data to ensure the test instance is fully functional
+guac:
+  sampleData:
+    ingest: true

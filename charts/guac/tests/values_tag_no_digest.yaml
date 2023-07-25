@@ -1,0 +1,30 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+imagePullSecrets:
+  - name: imagepullsecret
+
+guac:
+
+  guacImage:
+    repository: ghcr.io/guacsec/guac
+    tag: "latest"
+    digest: ""
+    workingDir: /guac
+
+  ociCollector:
+    name: oci-collector
+
+  depsDevCollector:
+    name: depsdev-collector
+
+  osvCertifier:
+    name: osv-certifier
+
+  ingestor:
+    name: ingestor
+ 
+  collectSub:
+    name: collectsub
+
+  graphqlServer:
+    name: graphql-server

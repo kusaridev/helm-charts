@@ -1,7 +1,7 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
 {{ if .Values.guac.visualizer.enabled }}
-{{- if .Values.guac.visualizer.ports }}
+{{- if .Values.guac.visualizer.svcPorts }}
 ---
 apiVersion: v1
 kind: Service
@@ -16,7 +16,7 @@ spec:
     app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
     app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
   ports:
-  {{- range .Values.guac.visualizer.ports }}
+  {{- range .Values.guac.visualizer.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}
   {{- end }}
 {{- end }}

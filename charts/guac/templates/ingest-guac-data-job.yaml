@@ -22,18 +22,12 @@ spec:
     spec:
       containers:
       - name: data-ingestor
-        # Use same image as oci-collector for now
-        {{- if .Values.guac.ociCollector.image.digest }}
-        image: "{{ .Values.guac.ociCollector.image.repository }}@{{ .Values.guac.ociCollector.image.digest }}"
-        {{- else }}
-        image: "{{ .Values.guac.ociCollector.image.repository }}:{{ .Values.guac.ociCollector.image.tag | default .Chart.AppVersion}}"
-        {{- end }}
-        imagePullPolicy: "{{ .Values.guac.ociCollector.image.pullPolicy }}"
+        image: "ubuntu:22.04"
         command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh ingest-data']
         workingDir: {{ .Values.guac.workingDir }}
         volumeMounts:
           - name: guac-config
-            mountPath: {{ .Values.guac.workingDir }}
+            mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
           - name: ingest-guac-data
             mountPath: /tmp/guac
@@ -42,10 +36,10 @@ spec:
       - name: data-preper
         image: "ubuntu:22.04"
         command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh prep-data']
-        workingDir: {{ .Values.guac.workingDir }}
+        workingDir: {{ .Values.guac.guacImage.workingDir }}
         volumeMounts:
           - name: guac-config
-            mountPath: {{ .Values.guac.workingDir }}
+            mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
           - name: ingest-guac-data
             mountPath: /tmp/guac
@@ -98,8 +92,11 @@ data:
         ;;
 
     ingest-data)  echo "Ingesting sample data"
-        export GUACSEC_HOME="/workspace"
-        export GUAC_BIN="/cnb/process"
+        export GUACSEC_HOME="/guac"
+
+        apt-get update && apt-get install -y curl
+        curl -L https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64 -o /tmp/guacone
+        chmod +x /tmp/guacone
 
         while [ ! -f ${INDICATOR_FILE} ]
         do
@@ -107,10 +104,11 @@ data:
         done
 
         cd ${GUACSEC_HOME}
-        for d in guac-data/some-sboms
+        for d in guac-data/docs
+        # guac-data/some-sboms
         # guac-data/top-dh-sboms guac-data/docs
         do 
-            ${GUAC_BIN}/guacone files ${SHARED_DATA}/${d}
+            time /tmp/guacone collect files ${SHARED_DATA}/${d}
         done
 
         rm ${INDICATOR_FILE}
