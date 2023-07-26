@@ -1,5 +1,6 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.depsDevCollector.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,22 +30,22 @@ spec:
     spec:
       containers:
       - name: {{ .Values.guac.depsDevCollector.name }}
-        {{- if .Values.guac.depsDevCollector.image.digest }}
-        image: "{{ .Values.guac.depsDevCollector.image.repository }}@{{ .Values.guac.depsDevCollector.image.digest }}"
+        {{- if .Values.guac.guacImage.digest }}
+        image: "{{ .Values.guac.guacImage.repository }}@{{ .Values.guac.guacImage.digest }}"
         {{- else }}
-        image: "{{ .Values.guac.depsDevCollector.image.repository }}:{{ .Values.guac.depsDevCollector.image.tag | default .Chart.AppVersion}}"
+        image: "{{ .Values.guac.guacImage.repository }}:{{ .Values.guac.guacImage.tag | default .Chart.AppVersion}}"
         {{- end }}
-        imagePullPolicy: "{{ .Values.guac.depsDevCollector.image.pullPolicy }}"
+        imagePullPolicy: "{{ .Values.guac.guacImage.pullPolicy }}"
         command:
 {{ toYaml .Values.guac.depsDevCollector.image.command | indent 10 }}
-        workingDir: {{ .Values.guac.workingDir }}
-{{- if .Values.guac.depsDevCollector.image.ports }}
+        workingDir: {{ .Values.guac.guacImage.workingDir }}
+{{- if .Values.guac.depsDevCollector.ports }}
         ports:
 {{ toYaml .Values.guac.depsDevCollector.image.ports | indent 10 }}
 {{- end }}
         volumeMounts:
           - name: guac-config
-            mountPath: {{ .Values.guac.workingDir }}
+            mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -54,3 +55,4 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
+{{- end }}

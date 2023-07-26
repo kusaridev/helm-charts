@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-
 ## @section Global parameters
 ## @param imagePullSecrets[0].name Docker registry secret name for pulling images
 imagePullSecrets:
@@ -11,61 +10,43 @@ imagePullSecrets:
 ## @section Guac
 ## @descriptionStart This section contains parameters for configuring the different GUAC components.
 ## @descriptionEnd
-## @param guac.workingDir Working Directory for GUAC
+## @param guac.guacImage.repository Path to the GUAC image
+## @param guac.guacImage.tag [nullable] Tag if using an image tag.  Optional
+## @param guac.guacImage.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
+## @param guac.guacImage.pullPolicy ImagePullPolicy for kubernetes
+## @param guac.guacImage.workingDir Working Directory for GUAC
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
 ## @param guac.ociCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ociCollector.replicas Number of replicas for oci collector deployment
-## @param guac.ociCollector.image.repository Path to the OCI Collector image
-## @param guac.ociCollector.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.ociCollector.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.ociCollector.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.ociCollector.image.command Command for the OCI Collector image.  It is not recommended to override this.
 ## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
 ## @param guac.depsDevCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.depsDevCollector.replicas Number of replicas for depsdev collector deployment
-## @param guac.depsDevCollector.image.repository Path to the Deps.Dev Collector image
-## @param guac.depsDevCollector.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.depsDevCollector.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.depsDevCollector.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.depsDevCollector.image.command Command for the Deps.Dev Collector image.  It is not recommended to override this.
 ## @param guac.osvCertifier.name String Name of the OSV Certifier component.
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.osvCertifier.replicas Number of replicas for OSV Certifier deployment
-## @param guac.osvCertifier.image.repository Path to the OSV Certifier Collector image
-## @param guac.osvCertifier.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.osvCertifier.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.osvCertifier.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ingestor.replicas Number of replicas for ingestor deployment
-## @param guac.ingestor.image.repository Path to the Ingestor image
-## @param guac.ingestor.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.ingestor.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.ingestor.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.ingestor.image.command Command for the ingestor image.  It is not recommended to override this.
 ## @param guac.collectSub.name String Name of the Collector Sub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.collectSub.replicas Number of replicas for Collector Sub deployment
-## @param guac.collectSub.image.repository Path to the Collector Sub image
-## @param guac.collectSub.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.collectSub.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.collectSub.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.collectSub.image.command Command for the Collector Sub image.  It is not recommended to override this.
-## @param guac.collectSub.ports[0].protocol Protocol used at Collector Sub
-## @param guac.collectSub.ports[0].port Port the Collector Sub service listens on
-## @param guac.collectSub.ports[0].targetPort Port the Collector Sub container listens on
+## @param guac.collectSub.image.ports[0].containerPort Port the Collector Sub container listens on
+## @param guac.collectSub.svcPorts[0].protocol Protocol used at Collector Sub
+## @param guac.collectSub.svcPorts[0].port Port the Collector Sub service listens on
+## @param guac.collectSub.svcPorts[0].targetPort Port the Collector Sub container listens on
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
 ## @param guac.graphqlServer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.graphqlServer.replicas Number of replicas for GraphQL Server deployment
-## @param guac.graphqlServer.image.repository Path to the GraphQL Server image
-## @param guac.graphqlServer.image.tag [nullable] Tag if using an image tag.  Optional
-## @param guac.graphqlServer.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
-## @param guac.graphqlServer.image.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.graphqlServer.image.command Command for the GraphQL Server image.  It is not recommended to override this.
-## @param guac.graphqlServer.ports[0].protocol Protocol used at the the GraphQL Server
-## @param guac.graphqlServer.ports[0].port Port the GraphQL Server service listens on
-## @param guac.graphqlServer.ports[0].targetPort Port the GraphQL Server container listens on
+## @param guac.graphqlServer.image.ports[0].containerPort Port the GraphQL Server container listens on
+## @param guac.graphqlServer.svcPorts[0].protocol Protocol used at the the GraphQL Server
+## @param guac.graphqlServer.svcPorts[0].port Port the GraphQL Server service listens on
+## @param guac.graphqlServer.svcPorts[0].targetPort Port the GraphQL Server container listens on
 ## @param guac.graphqlServer.backend which backend to use - only support inmem at the moment.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
@@ -76,103 +57,86 @@ imagePullSecrets:
 ## @param guac.visualizer.image.tag [nullable] Tag if using an image tag.  Optional
 ## @param guac.visualizer.image.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.visualizer.image.pullPolicy ImagePullPolicy for kubernetes
-## @param guac.visualizer.ports[0].protocol Protocol used at the visualizer
-## @param guac.visualizer.ports[0].port Port the visualizer service listens on
-## @param guac.visualizer.ports[0].targetPort Port the visualizer container listens on
+## @param guac.visualizer.image.ports[0].containerPort Port the visualizer container listens on
+## @param guac.visualizer.svcPorts[0].protocol Protocol used at the visualizer
+## @param guac.visualizer.svcPorts[0].port Port the visualizer service listens on
+## @param guac.visualizer.svcPorts[0].targetPort Port the visualizer container listens on
 ## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
-## @param guac.sampleData.ingest Boolean - set to true to ingest sample data after deployment
+## @param guac.sampleData.ingest Boolean - whether to ingest sample data after deployment
 ## @param guac.sampleData.jobName Name of the sample data ingest job
 guac:
-  workingDir: /workspace
+
+  guacImage:
+    repository: ghcr.io/guacsec/guac
+    # if not set appVersion field from Chart.yaml is used
+    tag: v0.1.1
+    # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+    digest: ""
+    pullPolicy: IfNotPresent
+    workingDir: /guac
 
   ociCollector:
+    enabled: true
     name: oci-collector
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guaccollect image']
+      command: ['sh', '-c', '/opt/guac/guaccollect image']
 
   depsDevCollector:
+    enabled: true
     name: depsdev-collector
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guaccollect deps_dev']
+      command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
 
   osvCertifier:
+    enabled: true
     name: osv-certifier
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guacone certifier osv --poll']
+      command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
 
   ingestor:
+    enabled: true
     name: ingestor
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guacingest']
+      command: ['sh', '-c', '/opt/guac/guacingest']
 
   collectSub:
+    enabled: true
     name: collectsub
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guaccsub']
-    ports:
+      command: ['sh', '-c', '/opt/guac/guaccsub']
+      ports:
+        - containerPort: 2782
+    svcPorts:
       - protocol: TCP
         port: 2782
         targetPort: 2782
 
   graphqlServer:
+    enabled: true
     name: graphql-server
     annotations:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      repository: ghcr.io/guacsec/guac
-      # if not set appVersion field from Chart.yaml is used
-      tag: ""
-      # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
-      digest: ""
-      pullPolicy: IfNotPresent
-      command: ['sh', '-c', '/cnb/process/guacgql']
-    ports:
+      command: ['sh', '-c', '/opt/guac/guacgql']
+      ports:
+        - containerPort: 8080
+    svcPorts:
       - protocol: TCP
         port: 8080
         targetPort: 8080
@@ -192,7 +156,9 @@ guac:
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: "sha256:b0f5e881f1255f6d585e2b0eb65faf0acf6dd1f7006bf32b562496cc1cdb7664"    # cluster-local
       pullPolicy: IfNotPresent
-    ports:
+      ports:
+        - containerPort: 3000
+    svcPorts:
       - protocol: TCP
         port: 3000
         targetPort: 3000

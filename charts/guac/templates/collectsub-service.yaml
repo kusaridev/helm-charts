@@ -1,6 +1,7 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
-{{- if .Values.guac.collectSub.ports }}
+{{ if .Values.guac.collectSub.enabled }}
+{{- if .Values.guac.collectSub.svcPorts }}
 ---
 apiVersion: v1
 kind: Service
@@ -15,7 +16,8 @@ spec:
     app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
     app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
   ports:
-  {{- range .Values.guac.collectSub.ports }}
+  {{- range .Values.guac.collectSub.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}
   {{- end }}
+{{- end }}
 {{- end }}

@@ -44,8 +44,26 @@ spec:
         ports:
 {{ toYaml .Values.guac.visualizer.image.ports | indent 10 }}
 {{- end }}
+        env:
+        - name: GUAC_GQL_ADDR
+{{- with (index .Values.guac.graphqlServer.ports 0) }}
+          value: http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query
+{{- end }}
+        - name: GUAC_CONFIG_PATH  
+          value: /workspace/guac/guac.yaml
+        # workingDir: /workspace
+        # workingDir: /cnb/process {{ .Values.guac.workingDir }}
+        volumeMounts:
+          - name: guac-config
+            # mountPath: {{ .Values.guac.workingDir }}
+            mountPath: /workspace/guac
+            readOnly: true
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
 {{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
 {{- end }}

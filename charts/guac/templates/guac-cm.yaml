@@ -12,13 +12,13 @@ data:
     nats-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
 
     # CSub setup
-{{- with (index .Values.guac.collectSub.ports 0) }}
+{{- with (index .Values.guac.collectSub.svcPorts 0) }}
     csub-addr: {{ $.Values.guac.collectSub.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}
     csub-listen-port: {{ .targetPort }}
 {{- end }}
 
     # GQL setup
-{{- with (index .Values.guac.graphqlServer.ports 0) }}
+{{- with (index .Values.guac.graphqlServer.svcPorts 0) }}
     gql-backend: {{ $.Values.guac.graphqlServer.backend }}
     gql-listen-port: {{ .targetPort }}
     gql-debug: {{ $.Values.guac.graphqlServer.debug }}

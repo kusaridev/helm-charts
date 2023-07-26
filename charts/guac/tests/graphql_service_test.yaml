@@ -14,7 +14,7 @@ tests:
 
   - it: should respect spec level parameters
     values:
-      - ./graphql_values_digest_and_tag.yaml
+      - ./values_digest_and_tag.yaml
     asserts:
       - equal:
           path:  metadata.name
