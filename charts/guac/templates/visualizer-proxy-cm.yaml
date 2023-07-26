@@ -1,0 +1,39 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: visualizer-proxy-cm
+data:
+  default.conf: |
+    server {
+        listen       8080;
+        listen  [::]:8080;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        location /query {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-NginX-Proxy true;
+            proxy_ssl_session_reuse off;
+{{- with (index .Values.guac.graphqlServer.svcPorts 0) }}
+            proxy_pass http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query;
+{{- end }}
+            proxy_set_header Host $http_host;
+            proxy_cache_bypass $http_upgrade;
+            proxy_redirect off;
+        }
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
