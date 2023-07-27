@@ -29,6 +29,16 @@ spec:
         app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
     spec:
       containers:
+      # workaround the problem that next.config.js can't set gql-addr dynamically
+      - name: nginx
+        image: nginx:1.25.1
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - name: visualizer-proxy-config
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: default.conf
+            readOnly: true
       - name: {{ .Values.guac.visualizer.name }}
         {{- if .Values.guac.visualizer.image.digest }}
         image: "{{ .Values.guac.visualizer.image.repository }}@{{ .Values.guac.visualizer.image.digest }}"
@@ -44,19 +54,10 @@ spec:
         ports:
 {{ toYaml .Values.guac.visualizer.image.ports | indent 10 }}
 {{- end }}
-        env:
-        - name: GUAC_GQL_ADDR
-{{- with (index .Values.guac.graphqlServer.ports 0) }}
-          value: http://{{ $.Values.guac.graphqlServer.name }}.{{ $.Release.Namespace }}.svc.cluster.local:{{ .targetPort }}/query
-{{- end }}
-        - name: GUAC_CONFIG_PATH  
-          value: /workspace/guac/guac.yaml
-        # workingDir: /workspace
-        # workingDir: /cnb/process {{ .Values.guac.workingDir }}
         volumeMounts:
           - name: guac-config
-            # mountPath: {{ .Values.guac.workingDir }}
-            mountPath: /workspace/guac
+            mountPath: /workspace/guac/guac.yaml
+            subPath: guac.yaml
             readOnly: true
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -66,4 +67,7 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
+        - name: visualizer-proxy-config
+          configMap:
+            name: visualizer-proxy-cm
 {{- end }}
