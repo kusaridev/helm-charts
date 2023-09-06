@@ -71,3 +71,7 @@ spec:
           configMap:
             name: visualizer-proxy-cm
 {{- end }}
+{{- if .Values.guac.visualizer.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.guac.visualizer.nodeSelector | indent 8 }}
+{{- end }}
