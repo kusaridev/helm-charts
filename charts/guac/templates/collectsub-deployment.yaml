@@ -56,3 +56,7 @@ spec:
           configMap:
             name: guac-cm
 {{- end }}
+{{- if .Values.guac.collectSub.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.guac.collectSub.nodeSelector | indent 8 }}
+{{- end }}

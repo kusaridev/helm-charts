@@ -56,3 +56,7 @@ spec:
           configMap:
             name: guac-cm
 {{- end }}
+{{- if .Values.guac.graphqlServer.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.guac.graphqlServer.nodeSelector | indent 8 }}
+{{- end }}
