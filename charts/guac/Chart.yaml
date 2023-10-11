@@ -9,8 +9,8 @@ maintainers:
     email: guac-info@kusari.dev
 
 type: application
-version: 0.2.3
-appVersion: "v0.1.2"
+version: 0.2.4
+appVersion: "v0.2.0"
 
 dependencies:
 - name: nats

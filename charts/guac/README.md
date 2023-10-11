@@ -37,6 +37,10 @@ The full GUAC component deployment is a set of asynchronous services that combin
 - **OSV Certifier**: This certifier gathers OSV vulnerability information from
   [osv.dev](https://osv.dev/) about packages.
 
+- **GUAC Visualizer**: The GUAC Visualizer is an experimental utility that can be used to interact with GUAC services. It acts as a way to visualize the software supply chain graph, as well as a means to explore the supply chain and prototype policies. 
+
+  **Note**: you will need to port-forward to the graphql service for the visualizer to work.
+
 - **NATS**: [NATS](https://nats.io/) is a messaging middleware used for communication between the GUAC components.
 
 
@@ -75,12 +79,6 @@ kubectl port-forward svc/graphql-server 8080:8080
 kubectl port-forward svc/guac-nats 4222:4222
 kubectl port-forward svc/collectsub 2782:2782
 ```
-
-### GUAC Visualizer
-The GUAC visualizer can be set up following the documentation at https://docs.guac.sh/guac-visualizer/. 
-Note that you will need to port-forward to the graphql service for the visualizer to work.
-
-We will support deploying the Visualizer at a later release.
 
 ## Uninstall
 
