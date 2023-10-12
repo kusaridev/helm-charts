@@ -15,26 +15,31 @@ imagePullSecrets:
 ## @param guac.guacImage.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.guacImage.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.guacImage.workingDir Working Directory for GUAC
+## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
 ## @param guac.ociCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ociCollector.replicas Number of replicas for oci collector deployment
 ## @param guac.ociCollector.image.command Command for the OCI Collector image.  It is not recommended to override this.
 ## @param guac.ociCollector.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.depsDevCollector.enabled String Whether to deploy Deps.Dev Collector
 ## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
 ## @param guac.depsDevCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.depsDevCollector.replicas Number of replicas for depsdev collector deployment
 ## @param guac.depsDevCollector.image.command Command for the Deps.Dev Collector image.  It is not recommended to override this.
 ## @param guac.depsDevCollector.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.osvCertifier.enabled String Whether to deploy OSV Certifier
 ## @param guac.osvCertifier.name String Name of the OSV Certifier component.
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.osvCertifier.replicas Number of replicas for OSV Certifier deployment
 ## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.ingestor.replicas Number of replicas for ingestor deployment
 ## @param guac.ingestor.image.command Command for the ingestor image.  It is not recommended to override this.
 ## @param guac.ingestor.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.collectSub.enabled String Whether to deploy Collector Sub
 ## @param guac.collectSub.name String Name of the Collector Sub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.collectSub.replicas Number of replicas for Collector Sub deployment
@@ -44,6 +49,7 @@ imagePullSecrets:
 ## @param guac.collectSub.svcPorts[0].port Port the Collector Sub service listens on
 ## @param guac.collectSub.svcPorts[0].targetPort Port the Collector Sub container listens on
 ## @param guac.collectSub.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.graphqlServer.enabled String Whether to deploy GraphQL Server
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
 ## @param guac.graphqlServer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.graphqlServer.replicas Number of replicas for GraphQL Server deployment
@@ -90,6 +96,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect image']
+    nodeSelector: {}
 
   depsDevCollector:
     enabled: true
@@ -99,6 +106,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
+    nodeSelector: {}
 
   osvCertifier:
     enabled: true
@@ -108,6 +116,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
+    nodeSelector: {}
 
   ingestor:
     enabled: true
@@ -117,6 +126,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacingest']
+    nodeSelector: {}
 
   collectSub:
     enabled: true
@@ -132,6 +142,7 @@ guac:
       - protocol: TCP
         port: 2782
         targetPort: 2782
+    nodeSelector: {}
 
   graphqlServer:
     enabled: true
@@ -149,8 +160,7 @@ guac:
         targetPort: 8080
     backend: inmem
     debug: true
-    # nodeSelector:
-    #   highmem: "true"
+    nodeSelector: {}
 
   visualizer:
     enabled: true
@@ -171,6 +181,7 @@ guac:
       - protocol: TCP
         port: 3000
         targetPort: 3000
+    nodeSelector: {}
 
   observability:
     deployServiceMonitor: false
