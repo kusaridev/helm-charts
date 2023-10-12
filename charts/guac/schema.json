@@ -18,14 +18,45 @@
         "guac": {
             "type": "object",
             "properties": {
-                "workingDir": {
-                    "type": "string",
-                    "description": "Working Directory for GUAC",
-                    "default": "/workspace"
+                "guacImage": {
+                    "type": "object",
+                    "properties": {
+                        "repository": {
+                            "type": "string",
+                            "description": "Path to the GUAC image",
+                            "default": "ghcr.io/guacsec/guac"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "Tag if using an image tag.  Optional",
+                            "default": "v0.2.0",
+                            "nullable": true
+                        },
+                        "digest": {
+                            "type": "string",
+                            "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
+                            "default": ""
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "ImagePullPolicy for kubernetes",
+                            "default": "IfNotPresent"
+                        },
+                        "workingDir": {
+                            "type": "string",
+                            "description": "Working Directory for GUAC",
+                            "default": "/guac"
+                        }
+                    }
                 },
                 "ociCollector": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy OCI Collector",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the OCI Collector component.",
@@ -39,46 +70,35 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the OCI Collector image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the OCI Collector image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guaccollect image"
+                                        "/opt/guac/guaccollect image"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
                 "depsDevCollector": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy Deps.Dev Collector",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the Deps.Dev Collector component.",
@@ -92,46 +112,35 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the Deps.Dev Collector image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the Deps.Dev Collector image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guaccollect deps_dev"
+                                        "/opt/guac/guaccollect deps_dev"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
                 "osvCertifier": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy OSV Certifier",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the OSV Certifier component.",
@@ -145,46 +154,35 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the OSV Certifier Collector image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the OSV Certifier Collector image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacone certifier osv --poll"
+                                        "/opt/guac/guacone certifier osv --poll"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
                 "ingestor": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy Ingestor",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the ingestor component.",
@@ -198,46 +196,35 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the Ingestor image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the ingestor image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacingest"
+                                        "/opt/guac/guacingest"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
                 "collectSub": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy Collector Sub",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the Collector Sub component.",
@@ -251,42 +238,34 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the Collector Sub image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the Collector Sub image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guaccsub"
+                                        "/opt/guac/guaccsub"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "description": "Port the Collector Sub container listens on",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "containerPort": {
+                                                "type": "number",
+                                                "description": "Port the Collector Sub container listens on"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         },
-                        "ports": {
+                        "svcPorts": {
                             "type": "array",
                             "description": "Protocol used at Collector Sub",
                             "items": {
@@ -306,12 +285,22 @@
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
                 "graphqlServer": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy GraphQL Server",
+                            "default": true
+                        },
                         "name": {
                             "type": "string",
                             "description": "String Name of the GraphQL Server component.",
@@ -325,42 +314,34 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "repository": {
-                                    "type": "string",
-                                    "description": "Path to the GraphQL Server image",
-                                    "default": "ghcr.io/guacsec/guac"
-                                },
-                                "tag": {
-                                    "type": "string",
-                                    "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
-                                    "nullable": true
-                                },
-                                "digest": {
-                                    "type": "string",
-                                    "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
-                                },
-                                "pullPolicy": {
-                                    "type": "string",
-                                    "description": "ImagePullPolicy for kubernetes",
-                                    "default": "IfNotPresent"
-                                },
                                 "command": {
                                     "type": "array",
                                     "description": "Command for the GraphQL Server image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/cnb/process/guacgql"
+                                        "/opt/guac/guacgql"
                                     ],
                                     "items": {
                                         "type": "string"
                                     }
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "description": "Port the GraphQL Server container listens on",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "containerPort": {
+                                                "type": "number",
+                                                "description": "Port the GraphQL Server container listens on"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         },
-                        "ports": {
+                        "svcPorts": {
                             "type": "array",
                             "description": "Protocol used at the the GraphQL Server",
                             "items": {
@@ -390,6 +371,11 @@
                             "type": "boolean",
                             "description": "Enable debug mode for graphql server; also enable the UI",
                             "default": true
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
@@ -399,7 +385,7 @@
                         "enabled": {
                             "type": "boolean",
                             "description": "String Whether to deploy the visualizer.",
-                            "default": false
+                            "default": true
                         },
                         "name": {
                             "type": "string",
@@ -417,27 +403,40 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Path to the Ingestor image",
-                                    "default": "ghcr.io/kusaridev/guac-visualizer"
+                                    "default": "ghcr.io/guacsec/guac-visualizer"
                                 },
                                 "tag": {
                                     "type": "string",
                                     "description": "Tag if using an image tag.  Optional",
-                                    "default": "",
+                                    "default": "v0.0.3",
                                     "nullable": true
                                 },
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": "sha256:b0f5e881f1255f6d585e2b0eb65faf0acf6dd1f7006bf32b562496cc1cdb7664"
+                                    "default": ""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
                                     "description": "ImagePullPolicy for kubernetes",
                                     "default": "IfNotPresent"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "description": "Port the visualizer container listens on",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "containerPort": {
+                                                "type": "number",
+                                                "description": "Port the visualizer container listens on"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         },
-                        "ports": {
+                        "svcPorts": {
                             "type": "array",
                             "description": "Protocol used at the visualizer",
                             "items": {
@@ -457,6 +456,11 @@
                                     }
                                 }
                             }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
                         }
                     }
                 },
@@ -475,7 +479,7 @@
                     "properties": {
                         "ingest": {
                             "type": "boolean",
-                            "description": "Boolean - set to true to ingest sample data after deployment",
+                            "description": "Boolean - whether to ingest sample data after deployment",
                             "default": false
                         },
                         "jobName": {
