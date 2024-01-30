@@ -21,4 +21,4 @@ The source code of all [Kusari](https://kusari.dev) [Helm](https://helm.sh) char
 
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
 ## Helm charts build status
-![Release Charts](https://github.com/kusaridev/helm-charts/workflows/Release%20Charts/badge.svg?branch=main)
+![Release Charts](https://github.com/kusaridev/helm-charts/actions/workflows/release.yaml/badge.svg)
