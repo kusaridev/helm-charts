@@ -82,7 +82,7 @@ guac:
   guacImage:
     repository: ghcr.io/guacsec/guac
     # if not set appVersion field from Chart.yaml is used
-    tag: v0.2.0
+    tag: v0.4.0
     # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
     digest: ""
     pullPolicy: IfNotPresent
