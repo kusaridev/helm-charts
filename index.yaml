@@ -3,6 +3,24 @@ entries:
   guac:
   - apiVersion: v2
     appVersion: v0.4.0
+    created: "2024-01-30T21:37:00.219967522Z"
+    dependencies:
+    - name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: ~0.19.12
+    description: A Helm chart for deploying GUAC to Kubernetes
+    digest: 1848bc1e48b1c68f809743bc802e543d6ee81c14cffee6ebb59d050b4c6e560b
+    maintainers:
+    - email: guac-info@kusari.dev
+      name: kusaridev
+      url: https://github.com/kusaridev/helm-charts
+    name: guac
+    type: application
+    urls:
+    - https://github.com/kusaridev/helm-charts/releases/download/guac-0.2.6/guac-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
+    appVersion: v0.4.0
     created: "2024-01-30T21:09:55.856307257Z"
     dependencies:
     - name: nats
@@ -231,4 +249,4 @@ entries:
     urls:
     - https://github.com/kusaridev/helm-charts/releases/download/guac-0.1.0/guac-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-30T21:09:55.856361217Z"
+generated: "2024-01-30T21:37:00.220071516Z"
