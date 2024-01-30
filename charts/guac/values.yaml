@@ -158,7 +158,7 @@ guac:
       - protocol: TCP
         port: 8080
         targetPort: 8080
-    backend: inmem
+    backend: keyvalue
     debug: true
     nodeSelector: {}
 
