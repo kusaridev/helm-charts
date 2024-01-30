@@ -1,6 +1,6 @@
 # Kusari Helm Charts
 
-[![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/license/mit/) ![Release Charts](https://github.com/kusaridev/helm-charts/workflows/Release%20Charts/badge.svg?branch=main) [![Releases downloads](https://img.shields.io/github/downloads/kusaridev/helm-charts/total.svg)](https://github.com/kusaridev/helm-charts/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/license/mit/) ![Release Charts](https://github.com/kusaridev/helm-charts/actions/workflows/release.yaml/badge.svg) [![Releases downloads](https://img.shields.io/github/downloads/kusaridev/helm-charts/total.svg)](https://github.com/kusaridev/helm-charts/releases)
 
 This is a repository of [Helm](https://helm.sh) Charts provided by [Kusari](https://kusari.dev)
 
