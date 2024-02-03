@@ -190,6 +190,12 @@ guac:
     ingest: false
     jobName: ingest-guac-data
 
+  ingress:
+    enabled: false
+    # ingressClassName: 
+    # webuiHostname: 
+    # apiHostname: 
+
 
 ## @section nats
 ## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).
