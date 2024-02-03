@@ -192,9 +192,9 @@ guac:
 
   ingress:
     enabled: false
-    # ingressClassName: 
-    # webuiHostname: 
-    # apiHostname: 
+    # ingressClassName:
+    # webuiHostname:
+    # apiHostname:
 
 
 ## @section nats
