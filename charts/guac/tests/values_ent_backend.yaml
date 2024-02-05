@@ -1,0 +1,9 @@
+# Ingest sample data to ensure the test instance is fully functional
+guac:
+  graphqlServer:
+    backend: ent
+  backend:
+    ent:
+      db-driver: postgres
+      db-address: postgres://guac:guac@host:port/guacDB
+      db-migrate: true

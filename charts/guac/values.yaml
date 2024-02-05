@@ -58,7 +58,7 @@ imagePullSecrets:
 ## @param guac.graphqlServer.svcPorts[0].protocol Protocol used at the the GraphQL Server
 ## @param guac.graphqlServer.svcPorts[0].port Port the GraphQL Server service listens on
 ## @param guac.graphqlServer.svcPorts[0].targetPort Port the GraphQL Server container listens on
-## @param guac.graphqlServer.backend which backend to use - only support inmem at the moment.
+## @param guac.graphqlServer.backend which backend to use - keyvalue (default) | arango | ent.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.graphqlServer.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
@@ -77,6 +77,13 @@ imagePullSecrets:
 ## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
 ## @param guac.sampleData.ingest Boolean - whether to ingest sample data after deployment
 ## @param guac.sampleData.jobName Name of the sample data ingest job
+## @param guac.ingress.enabled Whether to deploy an Ingress object
+## @param guac.ingress.ingressClassName Ingress class name
+## @param guac.ingress.webuiHostname DNS name for the UI components - e.g. Visualizer, GQL playground
+## @param guac.ingress.apiHostname DNS name for the GQL API. When specified, GQL API won't be served at webuiHostname
+## @param guac.backend.ent.db-driver DB driver of ENT backend
+## @param guac.backend.ent.db-address DB address of ENT backend
+## @param guac.backend.ent.db-migrate Wether to run DB migration from the GQL API process
 guac:
 
   guacImage:
@@ -195,11 +202,18 @@ guac:
     # ingressClassName:
     # webuiHostname:
     # apiHostname:
+  
+  backend:
+    ent:
+      db-driver: postgres
+      db-address: postgres://guac:guac@host:port/dbName?sslmode=disable
+      db-migrate: true
 
 
 ## @section nats
 ## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).
 ## @descriptionEnd
+## @param nats.nats.enabled Whehter to deploy nats as part of the Helm deployment
 ## @param nats.nats.jetstream.enabled Boolean for enabling JetStream.
 ## @param nats.nats.limits.maxPayload Max Payload size for nats
 ## @param nats.nats.statefulSetPodLabels.app.kubernetes.io/part-of Label to associate nats with GUAC for monitoring purposes

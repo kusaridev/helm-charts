@@ -8,7 +8,7 @@ tests:
   - it: ingress should render
     values:
       # use Chart Testing config
-      - ../ci/guac-ingress-values.yaml
+      - ./values_ingress.yaml
     asserts:
       - isKind:
           of: Ingress
