@@ -6,7 +6,7 @@ kind: ConfigMap
 metadata:
   name: guac-cm
 data:
-  guac.yaml:
+  guac.yaml: |-
 
 {{- if $.Values.nats.enabled }}    
     # Nats setup
