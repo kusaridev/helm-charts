@@ -210,6 +210,7 @@ guac:
 ## @param nats.exporter.serviceMonitor.namespace nats service monitor namespace - this is for monitoring purposes and is used by Prometheus
 ## @param nats.exporter.serviceMonitor.labels.release Label to associate nats service monitor with GUAC for monitoring purposes
 nats:
+  enabled: true
   nats:
     jetstream:
       enabled: true

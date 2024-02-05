@@ -12,8 +12,6 @@ metadata:
 {{- end }}
   labels:
     {{- include "guac.labels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
-    app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
 spec:
   replicas:  {{ .Values.guac.collectSub.replicas }}
   selector:

@@ -45,11 +45,12 @@ tests:
           path:  spec.replicas
           value:  1
       - equal:
-          path:  spec.selector.matchLabels.app\.kubernetes\.io/name
+          path:  spec.selector.matchLabels["app.kubernetes.io/name"]
           value:  graphql-server
       - equal:
-          path:  spec.template.metadata.labels.app\.kubernetes\.io/name
+          path:  spec.template.metadata.labels["app.kubernetes.io/name"]
           value:  graphql-server
+
 
   - it: should use tag if only tag is specified
     values:

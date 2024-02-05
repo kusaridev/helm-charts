@@ -8,3 +8,10 @@ guac:
     ingressClassName: traefik
     webuiHostname: web.guac.com
     apiHostname: api.guac.com
+    annotations:
+      test-annotation: test-value
+    extraLabels:
+      test-label: test-value
+
+nats:
+  enabled: true
