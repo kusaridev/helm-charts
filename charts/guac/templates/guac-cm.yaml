@@ -6,13 +6,11 @@ kind: ConfigMap
 metadata:
   name: guac-cm
 data:
-  guac.yaml: |-
+  guac.yaml: |
 
 {{- if $.Values.nats.enabled }}    
     # Nats setup
     nats-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
-{{- else }}    
-    # Nats is disabled!
 {{- end }}
 
     # CSub setup
@@ -38,10 +36,12 @@ data:
     poll: true
     interval: 5m
 
+    pubsub-addr: {{ $.Values.guac.pubSubAddr }}
+    blob-addr: {{ $.Values.guac.blobAddr }}
 
-{{- if eq $.Values.guac.graphqlServer.backend "ent" }}    
+{{ if eq $.Values.guac.graphqlServer.backend "ent" }}    
     # Ent config
     {{- range $key, $val := $.Values.guac.backend.ent }}
     {{ $key }}: {{ $val }}
     {{- end }}
-{{- end }}
+{{ end }}
