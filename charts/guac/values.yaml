@@ -81,6 +81,11 @@ imagePullSecrets:
 ## @param guac.ingress.ingressClassName Ingress class name
 ## @param guac.ingress.webuiHostname DNS name for the UI components - e.g. Visualizer, GQL playground
 ## @param guac.ingress.apiHostname DNS name for the GQL API. When specified, GQL API won't be served at webuiHostname
+## @param guac.ingress.annotations Annotations for the ingress object
+## @param guac.apiOnlyIngress.enabled Whether to deploy an Ingress object to expose API only 
+## @param guac.apiOnlyIngress.ingressClassName Ingress class name for API only ingress
+## @param guac.apiOnlyIngress.apiHostname DNS name for the GQL API.
+## @param guac.apiOnlyIngress.annotations Annotations for the API only ingress object
 ## @param guac.backend.ent.db-driver database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB
 ## @param guac.backend.ent.db-address Full URL of database to connect to
 ## @param guac.backend.ent.db-migrate Wether to automatically run database migrations on start
@@ -205,6 +210,13 @@ guac:
     # ingressClassName:
     # webuiHostname:
     # apiHostname:
+    # annotations:
+
+  apiOnlyIngress:
+    enabled: false
+    # ingressClassName:
+    # apiHostname:
+    # annotations:
 
   backend:
     ent:
@@ -213,8 +225,12 @@ guac:
       db-migrate: true
       db-debug: false
 
-  pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
-  blobAddr: s3://[bucket_name]?region=[aws_region]
+  # Default to use NATS; specify a value here to override
+  # pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
+
+  # Default to use filesystem; specify a value here to override
+  blobAddr: file:///tmp/blobstore?no_tmp_dir=true
+  # e.g. blobAddr: s3://[bucket_name]?region=[aws_region]
 
 ## @section nats
 ## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).

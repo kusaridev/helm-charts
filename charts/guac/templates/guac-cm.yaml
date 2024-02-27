@@ -8,10 +8,13 @@ metadata:
 data:
   guac.yaml: |
 
-{{- if $.Values.nats.enabled }}    
-    # Nats setup
-    nats-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
+{{- if $.Values.guac.pubSubAddr }}
+    pubsub-addr: {{ $.Values.guac.pubSubAddr }}
+{{- else }}
+    pubsub-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
 {{- end }}
+
+    blob-addr: {{ $.Values.guac.blobAddr }}
 
     # CSub setup
 {{- with (index .Values.guac.collectSub.svcPorts 0) }}
@@ -35,9 +38,6 @@ data:
     # certifier polling
     poll: true
     interval: 5m
-
-    pubsub-addr: {{ $.Values.guac.pubSubAddr }}
-    blob-addr: {{ $.Values.guac.blobAddr }}
 
 {{ if eq $.Values.guac.graphqlServer.backend "ent" }}    
     # Ent config
