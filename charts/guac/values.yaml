@@ -82,7 +82,7 @@ imagePullSecrets:
 ## @param guac.ingress.webuiHostname DNS name for the UI components - e.g. Visualizer, GQL playground
 ## @param guac.ingress.apiHostname DNS name for the GQL API. When specified, GQL API won't be served at webuiHostname
 ## @param guac.ingress.annotations Annotations for the ingress object
-## @param guac.apiOnlyIngress.enabled Whether to deploy an Ingress object to expose API only 
+## @param guac.apiOnlyIngress.enabled Whether to deploy an Ingress object to expose API only
 ## @param guac.apiOnlyIngress.ingressClassName Ingress class name for API only ingress
 ## @param guac.apiOnlyIngress.apiHostname DNS name for the GQL API.
 ## @param guac.apiOnlyIngress.annotations Annotations for the API only ingress object
