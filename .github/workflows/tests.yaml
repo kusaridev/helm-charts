@@ -39,6 +39,7 @@ jobs:
         run: |
           helm repo add neo4j https://helm.neo4j.com/neo4j
           helm repo add nats https://nats-io.github.io/k8s/helm/charts
+          helm repo add minio https://charts.min.io/
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@afea100a513515fbd68b0e72a7bb0ae34cb62aec # v2.3.1
