@@ -14,7 +14,12 @@ data:
     pubsub-addr: nats://{{ .Release.Name }}-nats.{{ .Release.Namespace }}.svc.cluster.local:4222
 {{- end }}
 
+{{- if $.Values.guac.blobAddr }}
     blob-addr: {{ $.Values.guac.blobAddr }}
+{{- else }}
+    blob-addr: s3://bucketname?endpoint={{ .Release.Namespace }}-minio.{{ .Release.Namespace }}.svc.cluster.local:9000&region=us-east-1&disableSSL=true&s3ForcePathStyle=true
+{{- end }}
+    
 
     # CSub setup
 {{- with (index .Values.guac.collectSub.svcPorts 0) }}

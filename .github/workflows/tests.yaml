@@ -68,5 +68,7 @@ jobs:
         id: install
 
       - name: Run chart-testing (install)
-        run: ct install --all --helm-extra-args --timeout=600s ---namespace chart-testing
+        run: |
+          kubectl create ns chart-testing
+          ct install --all --helm-extra-args --timeout=600s --namespace chart-testing
         # if: steps.list-changed.outputs.changed == 'true'

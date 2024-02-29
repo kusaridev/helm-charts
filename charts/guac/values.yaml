@@ -242,7 +242,7 @@ guac:
   # pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
 
   # Default to use minio; specify a value here to override
-  blobAddr: file:///tmp/blobstore?no_tmp_dir=true
+  # blobAddr: file:///tmp/blobstore?no_tmp_dir=true
   # e.g. blobAddr: s3://[bucket_name]?region=[aws_region]
 
 ## @section nats

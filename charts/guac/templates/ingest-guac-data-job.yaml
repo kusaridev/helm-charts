@@ -121,7 +121,7 @@ data:
         echo running guaccollect...
         time /opt/guac/guaccollect files --service-poll=false ${SHARED_DATA}
 
-        rm ${INDICATOR_FILE}
+        # rm ${INDICATOR_FILE}
         ;;
 
     *) echo "$1 is not supported"
