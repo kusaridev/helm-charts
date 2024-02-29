@@ -13,4 +13,3 @@ guac:
       AWS_SECRET_ACCESS_KEY: secretKey
 
   blobAddr: s3://bucketname?endpoint=guac-minio.chart-testing.svc.cluster.local:9000&region=us-east-1&disableSSL=true&s3ForcePathStyle=true
-

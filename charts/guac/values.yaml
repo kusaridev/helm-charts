@@ -292,9 +292,9 @@ nats:
 ## @param minio.persistenace Persistence volume configure.
 minio:
   enabled: true
-  replicas: 1 
+  replicas: 1
   persistence:
-    enabled: false 
+    enabled: false
   mode: standalone
   rootUser: "rootUser"
   rootPassword: "rootPassword"
@@ -310,6 +310,6 @@ minio:
     ## Add new policies as explained here https://min.io/docs/minio/kubernetes/upstream/administration/identity-access-management.html#access-management
     ## NOTE: this will fail if LDAP is enabled in your MinIO deployment
     ## make sure to disable this if you are using LDAP.
-    - accessKey: accessKey 
-      secretKey: secretKey 
-      policy: readwrite 
+    - accessKey: accessKey
+      secretKey: secretKey
+      policy: readwrite
