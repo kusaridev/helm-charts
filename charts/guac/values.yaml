@@ -237,6 +237,11 @@ guac:
       db-address: postgres://guac:guac@host:port/dbName?sslmode=disable
       db-migrate: true
       db-debug: false
+grouseadmin
+Ogw.dnx0uHLZZVuDrcPRzRYDmrsAs-
+
+      grouse.cluster-cdmdpyfr2mk4.us-east-1.rds.amazonaws.com
+postgres://grouseadmin:Ogw.dnx0uHLZZVuDrcPRzRYDmrsAs-@grouse.cluster-cdmdpyfr2mk4.us-east-1.rds.amazonaws.com:5432/kurzhaar
 
   # Default to use NATS; specify a value here to override
   # pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
@@ -270,6 +275,7 @@ nats:
       app.kubernetes.io/part-of: "guac"
 
   natsbox:
+    enabled: false
     additionalLabels:
       app.kubernetes.io/part-of: "guac"
     podLabels:
@@ -296,6 +302,9 @@ minio:
   persistence:
     enabled: false
   mode: standalone
+  resources:
+    requests:
+      memory: 1Gi
   rootUser: "rootUser"
   rootPassword: "rootPassword"
   buckets:
