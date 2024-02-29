@@ -48,6 +48,17 @@ spec:
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
 {{- if .Values.imagePullSecrets }}
+{{- if or .Values.guac.common.env .Values.guac.osvCertifier.env }}
+        env:
+        {{- range $key, $value := .Values.guac.common.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+        {{- range $key, $value := .Values.guac.osvCertifier.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+{{- end }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
 {{- end }}

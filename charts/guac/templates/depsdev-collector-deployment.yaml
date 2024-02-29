@@ -47,6 +47,17 @@ spec:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
+{{- if or .Values.guac.common.env .Values.guac.depsDevCollector.env }}
+        env:
+        {{- range $key, $value := .Values.guac.common.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+        {{- range $key, $value := .Values.guac.depsDevCollector.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+{{- end }}
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}

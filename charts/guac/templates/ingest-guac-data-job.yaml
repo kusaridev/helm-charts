@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
   annotations:
     "helm.sh/hook": post-install, post-upgrade
+    # "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
     "helm.sh/hook-weight": "10"
 spec:
   backoffLimit: 5
@@ -22,29 +23,51 @@ spec:
     spec:
       containers:
       - name: data-ingestor
-        image: "ubuntu:22.04"
+        # image: "ubuntu:22.04"
+        {{- if .Values.guac.guacImage.digest }}
+        image: "{{ .Values.guac.guacImage.repository }}@{{ .Values.guac.guacImage.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.guacImage.repository }}:{{ .Values.guac.guacImage.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.guacImage.pullPolicy }}" 
         command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh ingest-data']
         workingDir: {{ .Values.guac.workingDir }}
+{{- if or .Values.guac.common.env .Values.guac.sampleData.env }}
+        env:
+        {{- range $key, $value := .Values.guac.common.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+        {{- range $key, $value := .Values.guac.sampleData.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}  
+{{- end }}
         volumeMounts:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
           - name: ingest-guac-data
             mountPath: /tmp/guac
-          - name: shared-data
-            mountPath: /shared-data
-      - name: data-preper
-        image: "ubuntu:22.04"
-        command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh prep-data']
-        workingDir: {{ .Values.guac.guacImage.workingDir }}
-        volumeMounts:
-          - name: guac-config
-            mountPath: {{ .Values.guac.guacImage.workingDir }}
-            readOnly: true
-          - name: ingest-guac-data
-            mountPath: /tmp/guac
-          - name: shared-data
-            mountPath: /shared-data
+     
+     
+      # - name: data-preper
+      #   # image: "ubuntu:22.04"
+      #   {{- if .Values.guac.guacImage.digest }}
+      #   image: "{{ .Values.guac.guacImage.repository }}@{{ .Values.guac.guacImage.digest }}"
+      #   {{- else }}
+      #   image: "{{ .Values.guac.guacImage.repository }}:{{ .Values.guac.guacImage.tag | default .Chart.AppVersion}}"
+      #   {{- end }}
+      #   command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh prep-data']
+      #   workingDir: {{ .Values.guac.guacImage.workingDir }}
+      #   volumeMounts:
+      #     - name: guac-config
+      #       mountPath: {{ .Values.guac.guacImage.workingDir }}
+      #       readOnly: true
+      #     - name: ingest-guac-data
+      #       mountPath: /tmp/guac
+      #     - name: shared-data
+      #       mountPath: /shared-data
       restartPolicy: OnFailure
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -75,41 +98,28 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 data:
-  ingest-guac-data.sh: |
+  ingest-guac-data.sh: |-
     #!/usr/bin/env bash
     set -e
 
-    SHARED_DATA=/shared-data
+    # SHARED_DATA=/shared-data
+    SHARED_DATA=/guac-data/docs
     INDICATOR_FILE=${SHARED_DATA}/done_loading_data
     GUAC_DATA_REPO=https://github.com/guacsec/guac-data.git
 
     case "$1" in
 
     prep-data)  echo  "Preparing sample data"
-        apt-get update && apt-get install -y git
-        git clone ${GUAC_DATA_REPO} ${SHARED_DATA}/guac-data
-        touch ${INDICATOR_FILE}
+        # apt-get update && apt-get install -y git
+        # git clone ${GUAC_DATA_REPO} ${SHARED_DATA}/guac-data
+        # touch ${INDICATOR_FILE}
         ;;
 
     ingest-data)  echo "Ingesting sample data"
         export GUACSEC_HOME="/guac"
-
-        apt-get update && apt-get install -y curl
-        curl -L https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64 -o /tmp/guacone
-        chmod +x /tmp/guacone
-
-        while [ ! -f ${INDICATOR_FILE} ]
-        do
-            sleep 3
-        done
-
         cd ${GUACSEC_HOME}
-        for d in guac-data/docs
-        # guac-data/some-sboms
-        # guac-data/top-dh-sboms guac-data/docs
-        do 
-            time /tmp/guacone collect files ${SHARED_DATA}/${d}
-        done
+        echo running guaccollect...
+        time /opt/guac/guaccollect files --service-poll=false ${SHARED_DATA}
 
         rm ${INDICATOR_FILE}
         ;;

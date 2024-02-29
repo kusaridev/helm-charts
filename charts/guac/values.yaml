@@ -103,6 +103,10 @@ guac:
     pullPolicy: IfNotPresent
     workingDir: /guac
 
+  common:
+    env: {}
+    # COMMON_ENV: COMMON_ENV_VALUE
+
   ociCollector:
     enabled: true
     name: oci-collector
@@ -111,6 +115,8 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect image']
+    env: {}
+    # ENV: ENV_VALUE
     nodeSelector: {}
 
   depsDevCollector:
@@ -121,6 +127,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
+    env: {}
     nodeSelector: {}
 
   osvCertifier:
@@ -131,6 +138,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
+    env: {}
     nodeSelector: {}
 
   ingestor:
@@ -141,6 +149,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacingest']
+    env: {}
     nodeSelector: {}
 
   collectSub:
@@ -153,6 +162,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guaccsub']
       ports:
         - containerPort: 2782
+    env: {}
     svcPorts:
       - protocol: TCP
         port: 2782
@@ -169,6 +179,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacgql']
       ports:
         - containerPort: 8080
+    env: {}
     svcPorts:
       - protocol: TCP
         port: 8080
@@ -192,6 +203,7 @@ guac:
       pullPolicy: IfNotPresent
       ports:
         - containerPort: 3000
+    env: {}
     svcPorts:
       - protocol: TCP
         port: 3000
@@ -204,6 +216,7 @@ guac:
   sampleData:
     ingest: false
     jobName: ingest-guac-data
+    env: {}
 
   ingress:
     enabled: false
@@ -228,7 +241,7 @@ guac:
   # Default to use NATS; specify a value here to override
   # pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
 
-  # Default to use filesystem; specify a value here to override
+  # Default to use minio; specify a value here to override
   blobAddr: file:///tmp/blobstore?no_tmp_dir=true
   # e.g. blobAddr: s3://[bucket_name]?region=[aws_region]
 
@@ -270,3 +283,33 @@ nats:
       namespace: monitoring
       labels:
         release: monitoring
+
+## @section minio
+## @descriptionStart This is the configuration for minio.  This is a subchart.  See full documentation [here](https://github.com/minio/minio/tree/master/helm/minio).
+## @descriptionEnd
+## @param minio.enabled Whehter to deploy minio as part of the Helm deployment
+## @param minio.replicas Number of replicas.
+## @param minio.persistenace Persistence volume configure.
+minio:
+  enabled: true
+  replicas: 1 
+  persistence:
+    enabled: false 
+  mode: standalone
+  rootUser: "rootUser"
+  rootPassword: "rootPassword"
+  buckets:
+    - name: bucketname
+      policy: none
+      purge: false
+      versioning: false
+      objectlocking: false
+  users:
+    ## Username, password and policy to be assigned to the user
+    ## Default policies are [readonly|readwrite|writeonly|consoleAdmin|diagnostics]
+    ## Add new policies as explained here https://min.io/docs/minio/kubernetes/upstream/administration/identity-access-management.html#access-management
+    ## NOTE: this will fail if LDAP is enabled in your MinIO deployment
+    ## make sure to disable this if you are using LDAP.
+    - accessKey: accessKey 
+      secretKey: secretKey 
+      policy: readwrite 
