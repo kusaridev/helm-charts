@@ -4,7 +4,8 @@ guac:
     ingest: true
 
   guacImage:
-    repository: 767397973649.dkr.ecr.us-east-1.amazonaws.com/guacsec/guac
+    # repository: 767397973649.dkr.ecr.us-east-1.amazonaws.com/guacsec/guac
+    repository: ghcr.io/kusaridev/guacsec/guac
     tag: main.sha.99a4d54405d2a066e4d5b6d06a2728d95078f700
 
   common:
