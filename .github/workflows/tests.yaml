@@ -38,7 +38,7 @@ jobs:
 
       - name: Add Helm repos
         run: |
-          helm repo add neo4j https://helm.neo4j.com/neo4j
+          # helm repo add neo4j https://helm.neo4j.com/neo4j
           helm repo add nats https://nats-io.github.io/k8s/helm/charts
           helm repo add minio https://charts.min.io/
 
@@ -78,5 +78,5 @@ jobs:
       - name: Run chart-testing (install)
         run: |
           kubectl create ns chart-testing
-          ct install --all --helm-extra-args --timeout=600s --namespace chart-testing
+          ct install --all --helm-extra-args --timeout=600s
         # if: steps.list-changed.outputs.changed == 'true'
