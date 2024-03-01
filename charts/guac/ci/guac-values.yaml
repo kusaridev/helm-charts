@@ -6,7 +6,7 @@ guac:
   guacImage:
     # repository: 767397973649.dkr.ecr.us-east-1.amazonaws.com/guacsec/guac
     repository: ghcr.io/kusaridev/guacsec/guac
-    tag: main.sha.99a4d54405d2a066e4d5b6d06a2728d95078f700
+    tag: main.sha.d5feab145165f144f006045736ffb65a767e0643
 
   common:
     env:
