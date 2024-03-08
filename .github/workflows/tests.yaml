@@ -22,8 +22,8 @@ jobs:
 
       - name: Run helm unittest
         run: |
-          helm plugin install https://github.com/quintush/helm-unittest --version 0.2.11
-          helm unittest charts/guac -3
+          helm plugin install https://github.com/helm-unittest/helm-unittest.git --version 0.4.1
+          helm unittest charts/guac
 
       - name: Install Helm
         uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3.5
@@ -37,8 +37,9 @@ jobs:
 
       - name: Add Helm repos
         run: |
-          helm repo add neo4j https://helm.neo4j.com/neo4j
+          # helm repo add neo4j https://helm.neo4j.com/neo4j
           helm repo add nats https://nats-io.github.io/k8s/helm/charts
+          helm repo add minio https://charts.min.io/
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@afea100a513515fbd68b0e72a7bb0ae34cb62aec # v2.3.1
@@ -66,6 +67,15 @@ jobs:
            version: 'v1.26.0'
         id: install
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run chart-testing (install)
-        run: ct install --all --helm-extra-args --timeout=600s
+        run: |
+          kubectl create ns chart-testing
+          ct install --all --helm-extra-args --timeout=600s
         # if: steps.list-changed.outputs.changed == 'true'

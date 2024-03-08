@@ -1,0 +1,28 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+suite: ConfigMap tests
+templates:
+  - guac-cm.yaml
+
+tests:
+  - it: configmap should render
+    values:
+      - ./values_ent_backend.yaml
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: guac-cm
+      # commenting this out as data["guac.yaml"] can't be accessed as object when '|' is added to make it a multi-line string
+      # - equal:
+      #     path: data["guac.yaml"]["db-driver"]
+      #     value: postgres
+      # - equal:
+      #     path: data["guac.yaml"]["db-address"]
+      #     value: postgres://guac:guac@host:port/guacDB
+      # - equal:
+      #     path: data["guac.yaml"]["db-migrate"]
+      #     value: true

@@ -9,10 +9,17 @@ maintainers:
     email: guac-info@kusari.dev
 
 type: application
-version: 0.2.6
-appVersion: "v0.4.0"
+version: 0.2.7
+appVersion: "v0.5.0"
 
 dependencies:
 - name: nats
   version: "~0.19.12"
   repository: "https://nats-io.github.io/k8s/helm/charts/"
+  condition: nats.enabled
+
+# See s3 compatible storage config for MinIO at https://gocloud.dev/howto/blob/#s3
+- name: minio
+  version: "~5.0.15"
+  repository: "https://charts.min.io/"
+  condition: minio.enabled

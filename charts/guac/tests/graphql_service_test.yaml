@@ -20,8 +20,8 @@ tests:
           path:  metadata.name
           value:  graphql-server
       - equal:
-          path:  metadata.labels.app\.kubernetes\.io/name
+          path:  metadata.labels["app.kubernetes.io/name"]
           value:  graphql-server
       - equal:
-          path:  spec.selector.app\.kubernetes\.io/name
+          path:  spec.selector["app.kubernetes.io/name"]
           value:  graphql-server
