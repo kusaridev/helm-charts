@@ -2,13 +2,3 @@
 guac:
   sampleData:
     ingest: true
-
-  guacImage:
-    # repository: 767397973649.dkr.ecr.us-east-1.amazonaws.com/guacsec/guac
-    repository: ghcr.io/kusaridev/guacsec/guac
-    tag: main.sha.d5feab145165f144f006045736ffb65a767e0643
-
-  common:
-    env:
-      AWS_ACCESS_KEY_ID: accessKey
-      AWS_SECRET_ACCESS_KEY: secretKey
