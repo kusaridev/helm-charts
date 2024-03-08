@@ -29,13 +29,13 @@
                         "tag": {
                             "type": "string",
                             "description": "Tag if using an image tag.  Optional",
-                            "default": "v0.2.0",
+                            "default": "v0.5.0",
                             "nullable": true
                         },
                         "digest": {
                             "type": "string",
                             "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                            "default": ""
+                            "default": "\"\""
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -84,6 +84,11 @@
                                 }
                             }
                         },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for OCI Collector.",
+                            "default": {}
+                        },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
@@ -125,6 +130,11 @@
                                     }
                                 }
                             }
+                        },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for Deps.Dev Collector.",
+                            "default": {}
                         },
                         "nodeSelector": {
                             "type": "object",
@@ -168,6 +178,11 @@
                                 }
                             }
                         },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for OSV Certifier Collector.",
+                            "default": {}
+                        },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
@@ -209,6 +224,11 @@
                                     }
                                 }
                             }
+                        },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for ingestor.",
+                            "default": {}
                         },
                         "nodeSelector": {
                             "type": "object",
@@ -264,6 +284,11 @@
                                     }
                                 }
                             }
+                        },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for Collector Sub.",
+                            "default": {}
                         },
                         "svcPorts": {
                             "type": "array",
@@ -341,6 +366,11 @@
                                 }
                             }
                         },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for GraphQL Server.",
+                            "default": {}
+                        },
                         "svcPorts": {
                             "type": "array",
                             "description": "Protocol used at the the GraphQL Server",
@@ -364,8 +394,8 @@
                         },
                         "backend": {
                             "type": "string",
-                            "description": "which backend to use - only support inmem at the moment.",
-                            "default": "inmem"
+                            "description": "which backend to use - keyvalue (default) | arango | ent.",
+                            "default": "keyvalue"
                         },
                         "debug": {
                             "type": "boolean",
@@ -414,7 +444,7 @@
                                 "digest": {
                                     "type": "string",
                                     "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
-                                    "default": ""
+                                    "default": "\"\""
                                 },
                                 "pullPolicy": {
                                     "type": "string",
@@ -457,6 +487,11 @@
                                 }
                             }
                         },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for the visualizer.",
+                            "default": {}
+                        },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
@@ -486,6 +521,61 @@
                             "type": "string",
                             "description": "Name of the sample data ingest job",
                             "default": "ingest-guac-data"
+                        },
+                        "env": {
+                            "type": "object",
+                            "description": "Environment variables for the sample data ingest job",
+                            "default": {}
+                        }
+                    }
+                },
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Whether to deploy an Ingress object",
+                            "default": false
+                        }
+                    }
+                },
+                "apiOnlyIngress": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Whether to deploy an Ingress object to expose API only",
+                            "default": false
+                        }
+                    }
+                },
+                "backend": {
+                    "type": "object",
+                    "properties": {
+                        "ent": {
+                            "type": "object",
+                            "properties": {
+                                "db-driver": {
+                                    "type": "string",
+                                    "description": "database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB",
+                                    "default": "postgres"
+                                },
+                                "db-address": {
+                                    "type": "string",
+                                    "description": "Full URL of database to connect to",
+                                    "default": "postgres://guac:guac@host:port/dbName?sslmode=disable"
+                                },
+                                "db-migrate": {
+                                    "type": "boolean",
+                                    "description": "Wether to automatically run database migrations on start",
+                                    "default": true
+                                },
+                                "db-debug": {
+                                    "type": "boolean",
+                                    "description": "Enable debug logging for database queries",
+                                    "default": true
+                                }
+                            }
                         }
                     }
                 }
@@ -494,6 +584,11 @@
         "nats": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whehter to deploy nats",
+                    "default": true
+                },
                 "nats": {
                     "type": "object",
                     "properties": {
@@ -519,13 +614,23 @@
                         }
                     }
                 },
+                "natsbox": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Whehter to run natsbox",
+                            "default": false
+                        }
+                    }
+                },
                 "exporter": {
                     "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean",
                             "description": "Boolean to enable data collection",
-                            "default": true
+                            "default": false
                         },
                         "serviceMonitor": {
                             "type": "object",
@@ -537,7 +642,7 @@
                                 },
                                 "namespace": {
                                     "type": "string",
-                                    "description": "nats service monitor namespace - this is for monitoring purposes and is used by Prometheus",
+                                    "description": "String nats service monitor namespace - this is for monitoring purposes and is used by Prometheus",
                                     "default": "monitoring"
                                 },
                                 "labels": {
@@ -553,6 +658,36 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "minio": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whehter to deploy minio as part of the Helm deployment",
+                    "default": true
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "Number of replicas.",
+                    "default": 1
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "minio mode, i.e. standalone or distributed",
+                    "default": "standalone"
+                },
+                "rootUser": {
+                    "type": "string",
+                    "description": "root user name.",
+                    "default": "rootUser"
+                },
+                "rootPassword": {
+                    "type": "string",
+                    "description": "root user password.",
+                    "default": "rootPassword"
                 }
             }
         }
