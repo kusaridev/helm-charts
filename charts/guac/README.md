@@ -95,89 +95,99 @@ kubectl port-forward svc/collectsub 2782:2782
 
 This section contains parameters for configuring the different GUAC components.
 
-| Name                                                           | Description                                                                                 | Value                                                   |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `guac.guacImage.repository`                                    | Path to the GUAC image                                                                      | `ghcr.io/guacsec/guac`                                  |
-| `guac.guacImage.tag`                                           | Tag if using an image tag.  Optional                                                        | `v0.5.0`                                                |
-| `guac.guacImage.digest`                                        | Sha256 Image Digest.  It is strongly recommended to use this for verification.              | `""`                                                    |
-| `guac.guacImage.pullPolicy`                                    | ImagePullPolicy for kubernetes                                                              | `IfNotPresent`                                          |
-| `guac.guacImage.workingDir`                                    | Working Directory for GUAC                                                                  | `/guac`                                                 |
-| `guac.ociCollector.enabled`                                    | String Whether to deploy OCI Collector                                                      | `true`                                                  |
-| `guac.ociCollector.name`                                       | String Name of the OCI Collector component.                                                 | `oci-collector`                                         |
-| `guac.ociCollector.annotations.reloader.stakater.com/auto`     | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.ociCollector.replicas`                                   | Number of replicas for oci collector deployment                                             | `1`                                                     |
-| `guac.ociCollector.image.command`                              | Command for the OCI Collector image.  It is not recommended to override this.               | `["sh","-c","/opt/guac/guaccollect image"]`             |
-| `guac.ociCollector.env`                                        | Environment variables for OCI Collector.                                                    | `{}`                                                    |
-| `guac.ociCollector.nodeSelector`                               | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.depsDevCollector.enabled`                                | String Whether to deploy Deps.Dev Collector                                                 | `true`                                                  |
-| `guac.depsDevCollector.name`                                   | String Name of the Deps.Dev Collector component.                                            | `depsdev-collector`                                     |
-| `guac.depsDevCollector.annotations.reloader.stakater.com/auto` | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.depsDevCollector.replicas`                               | Number of replicas for depsdev collector deployment                                         | `1`                                                     |
-| `guac.depsDevCollector.image.command`                          | Command for the Deps.Dev Collector image.  It is not recommended to override this.          | `["sh","-c","/opt/guac/guaccollect deps_dev"]`          |
-| `guac.depsDevCollector.env`                                    | Environment variables for Deps.Dev Collector.                                               | `{}`                                                    |
-| `guac.depsDevCollector.nodeSelector`                           | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.osvCertifier.enabled`                                    | String Whether to deploy OSV Certifier                                                      | `true`                                                  |
-| `guac.osvCertifier.name`                                       | String Name of the OSV Certifier component.                                                 | `osv-certifier`                                         |
-| `guac.osvCertifier.annotations.reloader.stakater.com/auto`     | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.osvCertifier.replicas`                                   | Number of replicas for OSV Certifier deployment                                             | `1`                                                     |
-| `guac.osvCertifier.image.command`                              | Command for the OSV Certifier Collector image.  It is not recommended to override this.     | `["sh","-c","/opt/guac/guacone certifier osv --poll"]`  |
-| `guac.osvCertifier.env`                                        | Environment variables for OSV Certifier Collector.                                          | `{}`                                                    |
-| `guac.osvCertifier.nodeSelector`                               | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.ingestor.enabled`                                        | String Whether to deploy Ingestor                                                           | `true`                                                  |
-| `guac.ingestor.name`                                           | String Name of the ingestor component.                                                      | `ingestor`                                              |
-| `guac.ingestor.annotations.reloader.stakater.com/auto`         | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.ingestor.replicas`                                       | Number of replicas for ingestor deployment                                                  | `1`                                                     |
-| `guac.ingestor.image.command`                                  | Command for the ingestor image.  It is not recommended to override this.                    | `["sh","-c","/opt/guac/guacingest"]`                    |
-| `guac.ingestor.env`                                            | Environment variables for ingestor.                                                         | `{}`                                                    |
-| `guac.ingestor.nodeSelector`                                   | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.collectSub.enabled`                                      | String Whether to deploy Collector Sub                                                      | `true`                                                  |
-| `guac.collectSub.name`                                         | String Name of the Collector Sub component.                                                 | `collectsub`                                            |
-| `guac.collectSub.annotations.reloader.stakater.com/auto`       | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.collectSub.replicas`                                     | Number of replicas for Collector Sub deployment                                             | `1`                                                     |
-| `guac.collectSub.image.command`                                | Command for the Collector Sub image.  It is not recommended to override this.               | `["sh","-c","/opt/guac/guaccsub"]`                      |
-| `guac.collectSub.env`                                          | Environment variables for Collector Sub.                                                    | `{}`                                                    |
-| `guac.collectSub.image.ports[0].containerPort`                 | Port the Collector Sub container listens on                                                 | `2782`                                                  |
-| `guac.collectSub.svcPorts[0].protocol`                         | Protocol used at Collector Sub                                                              | `TCP`                                                   |
-| `guac.collectSub.svcPorts[0].port`                             | Port the Collector Sub service listens on                                                   | `2782`                                                  |
-| `guac.collectSub.svcPorts[0].targetPort`                       | Port the Collector Sub container listens on                                                 | `2782`                                                  |
-| `guac.collectSub.nodeSelector`                                 | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.graphqlServer.enabled`                                   | String Whether to deploy GraphQL Server                                                     | `true`                                                  |
-| `guac.graphqlServer.name`                                      | String Name of the GraphQL Server component.                                                | `graphql-server`                                        |
-| `guac.graphqlServer.annotations.reloader.stakater.com/auto`    | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.graphqlServer.replicas`                                  | Number of replicas for GraphQL Server deployment                                            | `1`                                                     |
-| `guac.graphqlServer.image.command`                             | Command for the GraphQL Server image.  It is not recommended to override this.              | `["sh","-c","/opt/guac/guacgql"]`                       |
-| `guac.graphqlServer.env`                                       | Environment variables for GraphQL Server.                                                   | `{}`                                                    |
-| `guac.graphqlServer.image.ports[0].containerPort`              | Port the GraphQL Server container listens on                                                | `8080`                                                  |
-| `guac.graphqlServer.svcPorts[0].protocol`                      | Protocol used at the the GraphQL Server                                                     | `TCP`                                                   |
-| `guac.graphqlServer.svcPorts[0].port`                          | Port the GraphQL Server service listens on                                                  | `8080`                                                  |
-| `guac.graphqlServer.svcPorts[0].targetPort`                    | Port the GraphQL Server container listens on                                                | `8080`                                                  |
-| `guac.graphqlServer.backend`                                   | which backend to use - keyvalue (default) | arango | ent.                                   | `keyvalue`                                              |
-| `guac.graphqlServer.debug`                                     | Enable debug mode for graphql server; also enable the UI                                    | `true`                                                  |
-| `guac.graphqlServer.nodeSelector`                              | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.visualizer.enabled`                                      | String Whether to deploy the visualizer.                                                    | `true`                                                  |
-| `guac.visualizer.name`                                         | String Name of the visualizer.                                                              | `visualizer`                                            |
-| `guac.visualizer.annotations.reloader.stakater.com/auto`       | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)            | `""`                                                    |
-| `guac.visualizer.replicas`                                     | Number of replicas for visualizer deployment                                                | `1`                                                     |
-| `guac.visualizer.image.repository`                             | Path to the Ingestor image                                                                  | `ghcr.io/guacsec/guac-visualizer`                       |
-| `guac.visualizer.image.tag`                                    | Tag if using an image tag.  Optional                                                        | `v0.0.3`                                                |
-| `guac.visualizer.image.digest`                                 | Sha256 Image Digest.  It is strongly recommended to use this for verification.              | `""`                                                    |
-| `guac.visualizer.image.pullPolicy`                             | ImagePullPolicy for kubernetes                                                              | `IfNotPresent`                                          |
-| `guac.visualizer.image.ports[0].containerPort`                 | Port the visualizer container listens on                                                    | `3000`                                                  |
-| `guac.visualizer.svcPorts[0].protocol`                         | Protocol used at the visualizer                                                             | `TCP`                                                   |
-| `guac.visualizer.svcPorts[0].port`                             | Port the visualizer service listens on                                                      | `3000`                                                  |
-| `guac.visualizer.svcPorts[0].targetPort`                       | Port the visualizer container listens on                                                    | `3000`                                                  |
-| `guac.visualizer.env`                                          | Environment variables for the visualizer.                                                   | `{}`                                                    |
-| `guac.visualizer.nodeSelector`                                 | - sets the node selector for where to run the deployment                                    | `{}`                                                    |
-| `guac.observability.deployServiceMonitor`                      | Boolean Deploy the service monitor for observability                                        | `false`                                                 |
-| `guac.sampleData.ingest`                                       | Boolean - whether to ingest sample data after deployment                                    | `false`                                                 |
-| `guac.sampleData.jobName`                                      | Name of the sample data ingest job                                                          | `ingest-guac-data`                                      |
-| `guac.sampleData.env`                                          | Environment variables for the sample data ingest job                                        | `{}`                                                    |
-| `guac.ingress.enabled`                                         | Whether to deploy an Ingress object                                                         | `false`                                                 |
-| `guac.apiOnlyIngress.enabled`                                  | Whether to deploy an Ingress object to expose API only                                      | `false`                                                 |
-| `guac.backend.ent.db-driver`                                   | database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB | `postgres`                                              |
-| `guac.backend.ent.db-address`                                  | Full URL of database to connect to                                                          | `postgres://guac:guac@host:port/dbName?sslmode=disable` |
-| `guac.backend.ent.db-migrate`                                  | Wether to automatically run database migrations on start                                    | `true`                                                  |
-| `guac.backend.ent.db-debug`                                    | Enable debug logging for database queries                                                   | `true`                                                  |
+| Name                                                           | Description                                                                                  | Value                                                   |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `guac.guacImage.repository`                                    | Path to the GUAC image                                                                       | `ghcr.io/guacsec/guac`                                  |
+| `guac.guacImage.tag`                                           | Tag if using an image tag.  Optional                                                         | `undefined`                                             |
+| `guac.guacImage.digest`                                        | Sha256 Image Digest.  It is strongly recommended to use this for verification.               | `""`                                                    |
+| `guac.guacImage.pullPolicy`                                    | ImagePullPolicy for kubernetes                                                               | `IfNotPresent`                                          |
+| `guac.guacImage.workingDir`                                    | Working Directory for GUAC                                                                   | `/guac`                                                 |
+| `guac.common.env`                                              | Environment variables common apply for all guac services                                     | `""`                                                    |
+| `guac.ociCollector.enabled`                                    | String Whether to deploy OCI Collector                                                       | `true`                                                  |
+| `guac.ociCollector.name`                                       | String Name of the OCI Collector component.                                                  | `oci-collector`                                         |
+| `guac.ociCollector.annotations.reloader.stakater.com/auto`     | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.ociCollector.replicas`                                   | Number of replicas for oci collector deployment                                              | `1`                                                     |
+| `guac.ociCollector.image.command`                              | Command for the OCI Collector image.  It is not recommended to override this.                | `["sh","-c","/opt/guac/guaccollect image"]`             |
+| `guac.ociCollector.env`                                        | Environment variables for OCI Collector.                                                     | `{}`                                                    |
+| `guac.ociCollector.nodeSelector`                               | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.depsDevCollector.enabled`                                | String Whether to deploy Deps.Dev Collector                                                  | `true`                                                  |
+| `guac.depsDevCollector.name`                                   | String Name of the Deps.Dev Collector component.                                             | `depsdev-collector`                                     |
+| `guac.depsDevCollector.annotations.reloader.stakater.com/auto` | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.depsDevCollector.replicas`                               | Number of replicas for depsdev collector deployment                                          | `1`                                                     |
+| `guac.depsDevCollector.image.command`                          | Command for the Deps.Dev Collector image.  It is not recommended to override this.           | `["sh","-c","/opt/guac/guaccollect deps_dev"]`          |
+| `guac.depsDevCollector.env`                                    | Environment variables for Deps.Dev Collector.                                                | `{}`                                                    |
+| `guac.depsDevCollector.nodeSelector`                           | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.osvCertifier.enabled`                                    | String Whether to deploy OSV Certifier                                                       | `true`                                                  |
+| `guac.osvCertifier.name`                                       | String Name of the OSV Certifier component.                                                  | `osv-certifier`                                         |
+| `guac.osvCertifier.annotations.reloader.stakater.com/auto`     | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.osvCertifier.replicas`                                   | Number of replicas for OSV Certifier deployment                                              | `1`                                                     |
+| `guac.osvCertifier.image.command`                              | Command for the OSV Certifier Collector image.  It is not recommended to override this.      | `["sh","-c","/opt/guac/guacone certifier osv --poll"]`  |
+| `guac.osvCertifier.env`                                        | Environment variables for OSV Certifier Collector.                                           | `{}`                                                    |
+| `guac.osvCertifier.nodeSelector`                               | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.ingestor.enabled`                                        | String Whether to deploy Ingestor                                                            | `true`                                                  |
+| `guac.ingestor.name`                                           | String Name of the ingestor component.                                                       | `ingestor`                                              |
+| `guac.ingestor.annotations.reloader.stakater.com/auto`         | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.ingestor.replicas`                                       | Number of replicas for ingestor deployment                                                   | `1`                                                     |
+| `guac.ingestor.image.command`                                  | Command for the ingestor image.  It is not recommended to override this.                     | `["sh","-c","/opt/guac/guacingest"]`                    |
+| `guac.ingestor.env`                                            | Environment variables for ingestor.                                                          | `{}`                                                    |
+| `guac.ingestor.nodeSelector`                                   | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.collectSub.enabled`                                      | String Whether to deploy Collector Sub                                                       | `true`                                                  |
+| `guac.collectSub.name`                                         | String Name of the Collector Sub component.                                                  | `collectsub`                                            |
+| `guac.collectSub.annotations.reloader.stakater.com/auto`       | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.collectSub.replicas`                                     | Number of replicas for Collector Sub deployment                                              | `1`                                                     |
+| `guac.collectSub.image.command`                                | Command for the Collector Sub image.  It is not recommended to override this.                | `["sh","-c","/opt/guac/guaccsub"]`                      |
+| `guac.collectSub.env`                                          | Environment variables for Collector Sub.                                                     | `{}`                                                    |
+| `guac.collectSub.image.ports[0].containerPort`                 | Port the Collector Sub container listens on                                                  | `2782`                                                  |
+| `guac.collectSub.svcPorts[0].protocol`                         | Protocol used at Collector Sub                                                               | `TCP`                                                   |
+| `guac.collectSub.svcPorts[0].port`                             | Port the Collector Sub service listens on                                                    | `2782`                                                  |
+| `guac.collectSub.svcPorts[0].targetPort`                       | Port the Collector Sub container listens on                                                  | `2782`                                                  |
+| `guac.collectSub.nodeSelector`                                 | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.graphqlServer.enabled`                                   | String Whether to deploy GraphQL Server                                                      | `true`                                                  |
+| `guac.graphqlServer.name`                                      | String Name of the GraphQL Server component.                                                 | `graphql-server`                                        |
+| `guac.graphqlServer.annotations.reloader.stakater.com/auto`    | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.graphqlServer.replicas`                                  | Number of replicas for GraphQL Server deployment                                             | `1`                                                     |
+| `guac.graphqlServer.image.command`                             | Command for the GraphQL Server image.  It is not recommended to override this.               | `["sh","-c","/opt/guac/guacgql"]`                       |
+| `guac.graphqlServer.env`                                       | Environment variables for GraphQL Server.                                                    | `{}`                                                    |
+| `guac.graphqlServer.image.ports[0].containerPort`              | Port the GraphQL Server container listens on                                                 | `8080`                                                  |
+| `guac.graphqlServer.svcPorts[0].protocol`                      | Protocol used at the the GraphQL Server                                                      | `TCP`                                                   |
+| `guac.graphqlServer.svcPorts[0].port`                          | Port the GraphQL Server service listens on                                                   | `8080`                                                  |
+| `guac.graphqlServer.svcPorts[0].targetPort`                    | Port the GraphQL Server container listens on                                                 | `8080`                                                  |
+| `guac.graphqlServer.backend`                                   | which backend to use - keyvalue (default) | arango | ent.                                    | `keyvalue`                                              |
+| `guac.graphqlServer.debug`                                     | Enable debug mode for graphql server; also enable the UI                                     | `true`                                                  |
+| `guac.graphqlServer.nodeSelector`                              | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.visualizer.enabled`                                      | String Whether to deploy the visualizer.                                                     | `true`                                                  |
+| `guac.visualizer.name`                                         | String Name of the visualizer.                                                               | `visualizer`                                            |
+| `guac.visualizer.annotations.reloader.stakater.com/auto`       | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                    |
+| `guac.visualizer.replicas`                                     | Number of replicas for visualizer deployment                                                 | `1`                                                     |
+| `guac.visualizer.image.repository`                             | Path to the Ingestor image                                                                   | `ghcr.io/guacsec/guac-visualizer`                       |
+| `guac.visualizer.image.tag`                                    | Tag if using an image tag.  Optional                                                         | `v0.0.3`                                                |
+| `guac.visualizer.image.digest`                                 | Sha256 Image Digest.  It is strongly recommended to use this for verification.               | `""`                                                    |
+| `guac.visualizer.image.pullPolicy`                             | ImagePullPolicy for kubernetes                                                               | `IfNotPresent`                                          |
+| `guac.visualizer.image.ports[0].containerPort`                 | Port the visualizer container listens on                                                     | `3000`                                                  |
+| `guac.visualizer.svcPorts[0].protocol`                         | Protocol used at the visualizer                                                              | `TCP`                                                   |
+| `guac.visualizer.svcPorts[0].port`                             | Port the visualizer service listens on                                                       | `3000`                                                  |
+| `guac.visualizer.svcPorts[0].targetPort`                       | Port the visualizer container listens on                                                     | `3000`                                                  |
+| `guac.visualizer.env`                                          | Environment variables for the visualizer.                                                    | `{}`                                                    |
+| `guac.visualizer.nodeSelector`                                 | - sets the node selector for where to run the deployment                                     | `{}`                                                    |
+| `guac.observability.deployServiceMonitor`                      | Boolean Deploy the service monitor for observability                                         | `false`                                                 |
+| `guac.sampleData.ingest`                                       | Boolean Whether to ingest sample data after deployment                                       | `false`                                                 |
+| `guac.sampleData.jobName`                                      | Name of the sample data ingest job                                                           | `ingest-guac-data`                                      |
+| `guac.sampleData.env`                                          | Environment variables for the sample data ingest job                                         | `{}`                                                    |
+| `guac.ingress.enabled`                                         | Whether to deploy an Ingress object                                                          | `false`                                                 |
+| `guac.ingress.ingressClassName`                                | Ingress class name                                                                           | `undefined`                                             |
+| `guac.ingress.webuiHostname`                                   | DNS name for the UI components - e.g. Visualizer, GQL playground                             | `undefined`                                             |
+| `guac.ingress.apiHostname`                                     | DNS name for the GQL API. When specified, GQL API won't be served at webuiHostname           | `undefined`                                             |
+| `guac.ingress.annotations`                                     | Annotations for the ingress object                                                           | `{}`                                                    |
+| `guac.apiOnlyIngress.enabled`                                  | Whether to deploy an Ingress object to expose API only                                       | `false`                                                 |
+| `guac.apiOnlyIngress.ingressClassName`                         | Ingress class name for API only ingress                                                      | `undefined`                                             |
+| `guac.apiOnlyIngress.apiHostname`                              | DNS name for the GQL API.                                                                    | `undefined`                                             |
+| `guac.apiOnlyIngress.annotations`                              | Annotations for the API only ingress object                                                  | `{}`                                                    |
+| `guac.backend.ent.db-driver`                                   | database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB  | `postgres`                                              |
+| `guac.backend.ent.db-address`                                  | Full URL of database to connect to                                                           | `postgres://guac:guac@host:port/dbName?sslmode=disable` |
+| `guac.backend.ent.db-migrate`                                  | Wether to automatically run database migrations on start                                     | `true`                                                  |
+| `guac.backend.ent.db-debug`                                    | Enable debug logging for database queries                                                    | `true`                                                  |
+| `guac.pubSubAddr`                                              | String gocloud connection string for pubsub configured via https://gocloud.dev/howto/pubsub/ | `undefined`                                             |
+| `guac.blobAddr`                                                | gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/      | `undefined`                                             |
 
 ### nats
 
@@ -201,13 +211,17 @@ This is the configuration for nats.  This is a subchart.  See full documentation
 
 This is the configuration for minio.  This is a subchart.  See full documentation [here](https://github.com/minio/minio/tree/master/helm/minio).
 
-| Name                 | Description                                            | Value          |
-| -------------------- | ------------------------------------------------------ | -------------- |
-| `minio.enabled`      | Whehter to deploy minio as part of the Helm deployment | `true`         |
-| `minio.replicas`     | Number of replicas.                                    | `1`            |
-| `minio.mode`         | minio mode, i.e. standalone or distributed             | `standalone`   |
-| `minio.rootUser`     | root user name.                                        | `rootUser`     |
-| `minio.rootPassword` | root user password.                                    | `rootPassword` |
+| Name                 | Description                                                                    | Value          |
+| -------------------- | ------------------------------------------------------------------------------ | -------------- |
+| `minio.enabled`      | Whehter to deploy minio as part of the Helm deployment                         | `true`         |
+| `minio.replicas`     | Number of replicas.                                                            | `1`            |
+| `minio.persistence`  | Persistence volume configuration.                                              | `{}`           |
+| `minio.mode`         | minio mode, i.e. standalone or distributed                                     | `standalone`   |
+| `minio.resources`    | resource requests and limits                                                   | `{}`           |
+| `minio.rootUser`     | root user name.                                                                | `rootUser`     |
+| `minio.rootPassword` | root user password.                                                            | `rootPassword` |
+| `minio.buckets`      | List of buckets to create after deployment.                                    | `{}`           |
+| `minio.users`        | List of users, in terms of creds and permissions, to create after deployment.? | `{}`           |
 
 ## Developing
 For running the unit tests, install the unittest plugin.

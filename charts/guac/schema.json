@@ -26,12 +26,6 @@
                             "description": "Path to the GUAC image",
                             "default": "ghcr.io/guacsec/guac"
                         },
-                        "tag": {
-                            "type": "string",
-                            "description": "Tag if using an image tag.  Optional",
-                            "default": "v0.5.0",
-                            "nullable": true
-                        },
                         "digest": {
                             "type": "string",
                             "description": "Sha256 Image Digest.  It is strongly recommended to use this for verification.",
@@ -46,6 +40,16 @@
                             "type": "string",
                             "description": "Working Directory for GUAC",
                             "default": "/guac"
+                        }
+                    }
+                },
+                "common": {
+                    "type": "object",
+                    "properties": {
+                        "env": {
+                            "type": "string",
+                            "description": "Environment variables common apply for all guac services",
+                            "default": "\"\""
                         }
                     }
                 },
@@ -514,7 +518,7 @@
                     "properties": {
                         "ingest": {
                             "type": "boolean",
-                            "description": "Boolean - whether to ingest sample data after deployment",
+                            "description": "Boolean Whether to ingest sample data after deployment",
                             "default": false
                         },
                         "jobName": {
