@@ -330,7 +330,7 @@ minio:
   mode: standalone
   resources:
     requests:
-      memory: 1Gi
+      memory: 500Mi
   rootUser: "rootUser"
   rootPassword: "rootPassword"
   buckets:
