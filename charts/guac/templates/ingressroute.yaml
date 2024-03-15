@@ -1,4 +1,4 @@
-{{- if .Values.guac.ingress.enabled -}}
+{{- if .Values.guac.traefikIngressRoute.enabled -}}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
