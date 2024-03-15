@@ -192,6 +192,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacgql']
       ports:
         - containerPort: 8080
+          nodePort: 30080
     env: {}
     svcPorts:
       - protocol: TCP
@@ -243,6 +244,13 @@ guac:
     # ingressClassName:
     # apiHostname:
     # annotations:
+  
+  traefikIngressRoute:
+    enabled: false
+    entryPoints: [ web ]
+    hostMatchingHeader: X-Kusari-API-Host
+    gqlPath: /query
+    # apiHostname:
 
   backend:
     ent:
