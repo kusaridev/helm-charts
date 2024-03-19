@@ -244,7 +244,7 @@ guac:
     # ingressClassName:
     # apiHostname:
     # annotations:
- 
+
   traefikIngressRoute:
     enabled: false
     entryPoints: [web]
