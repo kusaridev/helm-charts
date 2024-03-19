@@ -106,7 +106,7 @@ guac:
   guacImage:
     repository: ghcr.io/guacsec/guac
     # if not set appVersion field from Chart.yaml is used
-    # tag: 
+    # tag:
     # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
     digest: ""
     pullPolicy: IfNotPresent
@@ -244,10 +244,10 @@ guac:
     # ingressClassName:
     # apiHostname:
     # annotations:
-  
+ 
   traefikIngressRoute:
     enabled: false
-    entryPoints: [ web ]
+    entryPoints: [web]
     hostMatchingHeader: X-Kusari-API-Host
     gqlPath: /query
     # apiHostname:
