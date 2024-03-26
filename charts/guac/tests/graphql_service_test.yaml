@@ -6,11 +6,16 @@ templates:
 
 tests:
   - it: service should render
+    values:
+      - "./values_graphql_service.yaml"
     asserts:
       - isKind:
           of: Service
       - hasDocuments:
-          count: 1
+          count: 2
+      - matchRegex:
+          path: spec.type 
+          pattern: NodePort|ClusterIP
 
   - it: should respect spec level parameters
     values:

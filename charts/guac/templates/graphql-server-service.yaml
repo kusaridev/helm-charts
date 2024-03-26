@@ -12,6 +12,7 @@ metadata:
     app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
     app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
 spec:
+  type: ClusterIP
   selector:
     {{- include "guac.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
@@ -20,5 +21,31 @@ spec:
   {{- range .Values.guac.graphqlServer.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}
   {{- end }}
+{{- end }}
+{{- end }}
+
+{{ if .Values.guac.graphqlServer.enabled }}
+{{- if .Values.guac.graphqlServer.svcPorts }}
+{{ if .Values.guac.graphqlServer.service.createNodePortService }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.guac.graphqlServer.name }}-nodeport
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+spec:
+  type: NodePort
+  selector:
+    {{- include "guac.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+  ports:
+  {{- range .Values.guac.graphqlServer.nodePortSvcPorts }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

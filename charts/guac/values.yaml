@@ -65,9 +65,12 @@ imagePullSecrets:
 ## @param guac.graphqlServer.svcPorts[0].protocol Protocol used at the the GraphQL Server
 ## @param guac.graphqlServer.svcPorts[0].port Port the GraphQL Server service listens on
 ## @param guac.graphqlServer.svcPorts[0].targetPort Port the GraphQL Server container listens on
+## @param guac.graphqlServer.nodePortSvcPorts [object] NodePort service ports definition
 ## @param guac.graphqlServer.backend which backend to use - keyvalue (default) | arango | ent.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.graphqlServer.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.graphqlServer.service.createNodePortService - Whether to deploy a NodePort type service 
+
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
 ## @param guac.visualizer.name String Name of the visualizer.
 ## @param guac.visualizer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -95,6 +98,7 @@ imagePullSecrets:
 ## @param guac.apiOnlyIngress.ingressClassName [nullable] Ingress class name for API only ingress
 ## @param guac.apiOnlyIngress.apiHostname [nullable] DNS name for the GQL API.
 ## @param guac.apiOnlyIngress.annotations [object] Annotations for the API only ingress object
+## @param guac.traefikIngressRoute.enabled Whether to deploy Traefik IngressRoute object
 ## @param guac.backend.ent.db-driver database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB
 ## @param guac.backend.ent.db-address Full URL of database to connect to
 ## @param guac.backend.ent.db-migrate Wether to automatically run database migrations on start
@@ -192,15 +196,21 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacgql']
       ports:
         - containerPort: 8080
-          nodePort: 30080
     env: {}
     svcPorts:
       - protocol: TCP
         port: 8080
         targetPort: 8080
+    nodePortSvcPorts:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080
+        nodePort: 30080
     backend: keyvalue
     debug: true
     nodeSelector: {}
+    service:
+      createNodePortService: false
 
   visualizer:
     enabled: true
@@ -248,7 +258,7 @@ guac:
   traefikIngressRoute:
     enabled: false
     # entryPoints: []
-    # hostMatchingHeader: 
+    # hostMatchingHeader:
     # gqlPath: /query
     # apiHostname:
 
