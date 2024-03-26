@@ -1,0 +1,22 @@
+{{- if .Values.guac.traefikIngressRoute.enabled -}}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  entryPoints:
+  {{- range .Values.guac.traefikIngressRoute.entryPoints }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}
+  routes:
+  - kind: Rule
+    match: (Headers(`{{ .Values.guac.traefikIngressRoute.hostMatchingHeader }}`, `{{ .Values.guac.traefikIngressRoute.apiHostname }}`) && Path(`{{ .Values.guac.traefikIngressRoute.gqlPath }}`))
+    services:
+    - kind: Service
+      name: graphql-server
+      namespace: {{ .Release.Namespace }}
+      port: 8080
+      scheme: http
+{{- end -}}

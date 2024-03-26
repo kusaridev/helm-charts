@@ -2,3 +2,7 @@
 guac:
   sampleData:
     ingest: true
+
+  graphqlServer:
+    service:
+      createNodePortService: true
