@@ -247,9 +247,9 @@ guac:
 
   traefikIngressRoute:
     enabled: false
-    entryPoints: [web]
-    hostMatchingHeader: X-Kusari-API-Host
-    gqlPath: /query
+    # entryPoints: []
+    # hostMatchingHeader: 
+    # gqlPath: /query
     # apiHostname:
 
   backend:
