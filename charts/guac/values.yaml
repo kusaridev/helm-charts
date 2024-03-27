@@ -44,6 +44,7 @@ imagePullSecrets:
 ## @param guac.ingestor.image.command Command for the ingestor image.  It is not recommended to override this.
 ## @param guac.ingestor.env Environment variables for ingestor.
 ## @param guac.ingestor.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.ingestor.serviceAccount.annotations - Ingestor service account annotations
 ## @param guac.collectSub.enabled String Whether to deploy Collector Sub
 ## @param guac.collectSub.name String Name of the Collector Sub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -68,6 +69,7 @@ imagePullSecrets:
 ## @param guac.graphqlServer.backend which backend to use - keyvalue (default) | arango | ent.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.graphqlServer.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.graphqlServer.serviceAccount.annotations - graphql server service account annotations
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
 ## @param guac.visualizer.name String Name of the visualizer.
 ## @param guac.visualizer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -164,6 +166,8 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacingest']
     env: {}
     nodeSelector: {}
+    serviceAccount:
+      annotations: {}
 
   collectSub:
     enabled: true
@@ -200,6 +204,8 @@ guac:
     backend: keyvalue
     debug: true
     nodeSelector: {}
+    serviceAccount:
+      annotations: {}
 
   visualizer:
     enabled: true

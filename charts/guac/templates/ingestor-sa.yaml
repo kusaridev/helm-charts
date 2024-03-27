@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.ingestor.name }}
+{{- if .Values.guac.ingestor.annotations }}
+  annotations:
+{{ toYaml .Values.guac.ingestor.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
+    app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}

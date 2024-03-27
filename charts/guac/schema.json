@@ -238,6 +238,16 @@
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- Ingestor service account annotations",
+                                    "default": {}
+                                }
+                            }
                         }
                     }
                 },
@@ -410,6 +420,16 @@
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- graphql server service account annotations",
+                                    "default": {}
+                                }
+                            }
                         }
                     }
                 },

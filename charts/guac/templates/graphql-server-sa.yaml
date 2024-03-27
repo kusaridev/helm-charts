@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.graphqlServer.name }}
+{{- if .Values.guac.graphqlServer.annotations }}
+  annotations:
+{{ toYaml .Values.guac.graphqlServer.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
+    app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}

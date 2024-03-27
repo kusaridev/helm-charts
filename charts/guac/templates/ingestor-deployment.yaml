@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
         app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.ingestor.name }}
       containers:
       - name: {{ .Values.guac.ingestor.name }}
         {{- if .Values.guac.guacImage.digest }}

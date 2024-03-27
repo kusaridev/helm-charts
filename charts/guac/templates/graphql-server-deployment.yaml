@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
         app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.graphqlServer.name }}
       containers:
       - name: {{ .Values.guac.graphqlServer.name }}
         {{- if .Values.guac.guacImage.digest }}
