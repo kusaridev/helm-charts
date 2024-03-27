@@ -108,7 +108,7 @@ guac:
   guacImage:
     repository: ghcr.io/guacsec/guac
     # if not set appVersion field from Chart.yaml is used
-    # tag: v0.5.0
+    # tag:
     # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
     digest: ""
     pullPolicy: IfNotPresent
@@ -303,11 +303,13 @@ guac:
   # blobAddr: s3://[bucket_name]?region=[aws_region]
   # blobAddr: file:///tmp/blobstore?no_tmp_dir=true
 
+  additionalResources: {}
+
 
 ## @section nats
 ## @descriptionStart This is the configuration for nats.  This is a subchart.  See full documentation [here](https://docs.nats.io/running-a-nats-service/nats-kubernetes/helm-charts).
 ## @descriptionEnd
-## @param nats.enabled Whehter to deploy nats
+## @param nats.enabled Whether to deploy nats
 ## @param nats.nats.jetstream.enabled Boolean for enabling JetStream.
 ## @param nats.nats.limits.maxPayload Max Payload size for nats
 ## @param nats.nats.statefulSetPodLabels.app.kubernetes.io/part-of Label to associate nats with GUAC for monitoring purposes
