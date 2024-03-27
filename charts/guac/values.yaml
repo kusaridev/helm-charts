@@ -133,6 +133,12 @@ guac:
     env: {}
     # ENV_NAME: ENV_VALUE
     nodeSelector: {}
+    resources:
+      requests:
+        cpu: "0.2"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
 
   depsDevCollector:
     enabled: true
@@ -144,6 +150,12 @@ guac:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
     env: {}
     nodeSelector: {}
+    resources:
+      requests:
+        cpu: "0.2"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
 
   osvCertifier:
     enabled: true
@@ -155,6 +167,12 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
     env: {}
     nodeSelector: {}
+    resources:
+      requests:
+        cpu: "0.2"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
 
   ingestor:
     enabled: true
@@ -168,6 +186,13 @@ guac:
     nodeSelector: {}
     serviceAccount:
       annotations: {}
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
+
 
   collectSub:
     enabled: true
@@ -185,6 +210,12 @@ guac:
         port: 2782
         targetPort: 2782
     nodeSelector: {}
+    resources:
+      requests:
+        cpu: "0.2"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
 
   graphqlServer:
     enabled: true
@@ -206,6 +237,12 @@ guac:
     nodeSelector: {}
     serviceAccount:
       annotations: {}
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: "500M"
+      # limits:
+      #   memory: "2G"
 
   visualizer:
     enabled: true

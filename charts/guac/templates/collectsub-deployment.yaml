@@ -43,6 +43,9 @@ spec:
         ports:
 {{ toYaml .Values.guac.collectSub.image.ports | indent 10 }}
 {{- end }}
+{{- if .Values.guac.collectSub.resources }}
+        resources: {{- toYaml .Values.guac.collectSub.resources | nindent 10 }}
+{{- end }}
         volumeMounts:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
