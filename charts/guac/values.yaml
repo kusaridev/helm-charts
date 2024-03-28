@@ -150,6 +150,8 @@ guac:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
     env: {}
     nodeSelector: {}
+    serviceAccount:
+      annotations: {}
     resources:
       requests:
         cpu: "0.2"

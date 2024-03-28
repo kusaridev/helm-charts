@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.depsDevCollector.name }}
+{{- if .Values.guac.depsDevCollector.annotations }}
+  annotations:
+{{ toYaml .Values.guac.depsDevCollector.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.depsDevCollector.name }}
+    app.kubernetes.io/component: {{ .Values.guac.depsDevCollector.name }}

@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.depsDevCollector.name }}
         app.kubernetes.io/component: {{ .Values.guac.depsDevCollector.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.depsDevCollector.name }}
       containers:
       - name: {{ .Values.guac.depsDevCollector.name }}
         {{- if .Values.guac.guacImage.digest }}
