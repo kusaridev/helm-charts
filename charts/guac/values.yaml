@@ -115,12 +115,12 @@ guac:
     workingDir: /guac
 
   common:
-    # env: {}
+    env: {}
     # COMMON_ENV_NAME: COMMON_ENV_VALUE
-    env:
-      # default creds (set at minio.users) for accessing minio blobstore. Remove when changing default blobAddr.
-      AWS_ACCESS_KEY_ID: accessKey
-      AWS_SECRET_ACCESS_KEY: secretKey
+    # env:
+    #   # default creds (set at minio.users) for accessing minio blobstore. Remove when changing default blobAddr.
+    #   AWS_ACCESS_KEY_ID: accessKey
+    #   AWS_SECRET_ACCESS_KEY: secretKey
 
   ociCollector:
     enabled: true
