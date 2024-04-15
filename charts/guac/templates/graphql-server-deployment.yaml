@@ -52,7 +52,7 @@ spec:
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
 {{- if .Values.guac.graphqlServer.additionalVolumeMounts }}
-{{ toYaml .Values.guac.graphqlServer.additionalVolumeMounts | indent 8 }}
+{{ toYaml .Values.guac.graphqlServer.additionalVolumeMounts | indent 10 }}
 {{- end }}
 {{- if .Values.imagePullSecrets }}
 {{- if or .Values.guac.common.env .Values.guac.graphqlServer.env }}
