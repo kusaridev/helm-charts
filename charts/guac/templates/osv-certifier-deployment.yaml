@@ -77,4 +77,5 @@ spec:
       tolerations:
 {{ toYaml .Values.guac.osvCertifier.tolerations | indent 8 }}
 {{- end }}
+
 {{- end }}

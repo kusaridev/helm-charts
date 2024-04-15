@@ -58,7 +58,6 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
-{{- end }}
 {{- if .Values.guac.ociCollector.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.guac.ociCollector.nodeSelector | indent 8 }}
@@ -66,4 +65,6 @@ spec:
 {{- if .Values.guac.ociCollector.tolerations }}
       tolerations:
 {{ toYaml .Values.guac.ociCollector.tolerations | indent 8 }}
+{{- end }}
+
 {{- end }}
