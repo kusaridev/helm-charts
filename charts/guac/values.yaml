@@ -133,6 +133,7 @@ guac:
     env: {}
     # ENV_NAME: ENV_VALUE
     nodeSelector: {}
+    tolerations: []
     resources:
       requests:
         cpu: "0.2"
@@ -150,6 +151,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
     env: {}
     nodeSelector: {}
+    tolerations: []
     serviceAccount:
       annotations: {}
     resources:
@@ -169,6 +171,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
     env: {}
     nodeSelector: {}
+    tolerations: []
     resources:
       requests:
         cpu: "0.2"
@@ -186,6 +189,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacingest']
     env: {}
     nodeSelector: {}
+    tolerations: []
     serviceAccount:
       annotations: {}
     resources:
@@ -212,6 +216,7 @@ guac:
         port: 2782
         targetPort: 2782
     nodeSelector: {}
+    tolerations: []
     resources:
       requests:
         cpu: "0.2"
@@ -237,6 +242,7 @@ guac:
     backend: keyvalue
     debug: true
     nodeSelector: {}
+    tolerations: []
     serviceAccount:
       annotations: {}
     resources:
@@ -267,6 +273,7 @@ guac:
         port: 3000
         targetPort: 3000
     nodeSelector: {}
+    tolerations: []
 
   observability:
     deployServiceMonitor: false

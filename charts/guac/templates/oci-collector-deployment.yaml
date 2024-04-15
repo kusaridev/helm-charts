@@ -63,3 +63,7 @@ spec:
       nodeSelector:
 {{ toYaml .Values.guac.ociCollector.nodeSelector | indent 8 }}
 {{- end }}
+{{- if .Values.guac.ociCollector.tolerations }}
+      tolerations:
+{{ toYaml .Values.guac.ociCollector.tolerations | indent 8 }}
+{{- end }}
