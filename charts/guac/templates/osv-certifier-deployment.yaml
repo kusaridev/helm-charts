@@ -69,7 +69,6 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
-{{- end }}
 {{- if .Values.guac.osvCertifier.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.guac.osvCertifier.nodeSelector | indent 8 }}
