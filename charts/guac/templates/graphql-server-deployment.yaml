@@ -51,6 +51,9 @@ spec:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
+{{- if .Values.guac.graphqlServer.additionalVolumeMounts }}
+{{ toYaml .Values.guac.graphqlServer.additionalVolumeMounts | indent 8 }}
+{{- end }}
 {{- if .Values.imagePullSecrets }}
 {{- if or .Values.guac.common.env .Values.guac.graphqlServer.env }}
         env:
@@ -70,6 +73,9 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
+{{- if .Values.guac.graphqlServer.additionalVolumes }}
+{{ toYaml .Values.guac.graphqlServer.additionalVolumes | indent 8 }}
+{{- end }}
 {{- if .Values.guac.graphqlServer.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.guac.graphqlServer.nodeSelector | indent 8 }}
