@@ -188,7 +188,7 @@ guac:
       annotations: {}
     resources:
       requests:
-        cpu: "0.5"
+        cpu: "0.2"
         memory: "500M"
 
   collectSub:
@@ -212,8 +212,6 @@ guac:
       requests:
         cpu: "0.2"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
 
   graphqlServer:
     enabled: true
@@ -238,7 +236,7 @@ guac:
       annotations: {}
     resources:
       requests:
-        cpu: "0.5"
+        cpu: "0.2"
         memory: "500M"
 
   visualizer:
@@ -288,7 +286,7 @@ guac:
   backend:
     ent:
       db-driver: postgres
-      db-address: postgres://guac:guac@host:port/dbName?sslmode=disable
+      # db-address: postgres://guac:guac@host:port/dbName?sslmode=disable
       db-migrate: true
       db-debug: true
 
