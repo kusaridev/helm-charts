@@ -138,8 +138,6 @@ guac:
       requests:
         cpu: "0.2"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
 
   depsDevCollector:
     enabled: true
@@ -158,8 +156,6 @@ guac:
       requests:
         cpu: "0.2"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
 
   osvCertifier:
     enabled: true
@@ -176,8 +172,6 @@ guac:
       requests:
         cpu: "0.2"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
 
   ingestor:
     enabled: true
@@ -196,9 +190,6 @@ guac:
       requests:
         cpu: "0.5"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
-
 
   collectSub:
     enabled: true
@@ -249,8 +240,6 @@ guac:
       requests:
         cpu: "0.5"
         memory: "500M"
-      # limits:
-      #   memory: "2G"
 
   visualizer:
     enabled: true
