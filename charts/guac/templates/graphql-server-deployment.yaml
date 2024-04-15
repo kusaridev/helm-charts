@@ -75,3 +75,7 @@ spec:
       nodeSelector:
 {{ toYaml .Values.guac.graphqlServer.nodeSelector | indent 8 }}
 {{- end }}
+{{- if .Values.guac.graphqlServer.tolerations }}
+      tolerations:
+{{ toYaml .Values.guac.graphqlServer.tolerations | indent 8 }}
+{{- end }}
