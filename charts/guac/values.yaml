@@ -115,12 +115,18 @@ guac:
     workingDir: /guac
 
   common:
-    env: {}
+    # env: []
     # COMMON_ENV_NAME: COMMON_ENV_VALUE
     # env:
     #   # default creds (set at minio.users) for accessing minio blobstore. Remove when changing default blobAddr.
     #   AWS_ACCESS_KEY_ID: accessKey
     #   AWS_SECRET_ACCESS_KEY: secretKey
+    env:
+      # default creds (set at minio.users) for accessing minio blobstore. Remove when changing default blobAddr.
+      - name: AWS_ACCESS_KEY_ID
+        value: accessKey
+      - name: AWS_SECRET_ACCESS_KEY
+        value: secretKey
 
   ociCollector:
     enabled: true
@@ -130,7 +136,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect image']
-    env: {}
+    env: []
     # ENV_NAME: ENV_VALUE
     nodeSelector: {}
     tolerations: []
@@ -147,7 +153,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect deps_dev']
-    env: {}
+    env: []
     nodeSelector: {}
     tolerations: []
     serviceAccount:
@@ -165,7 +171,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
-    env: {}
+    env: []
     nodeSelector: {}
     tolerations: []
     resources:
@@ -181,7 +187,7 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guacingest']
-    env: {}
+    env: []
     nodeSelector: {}
     tolerations: []
     serviceAccount:
@@ -201,7 +207,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guaccsub']
       ports:
         - containerPort: 2782
-    env: {}
+    env: []
     svcPorts:
       - protocol: TCP
         port: 2782
@@ -223,7 +229,7 @@ guac:
       command: ['sh', '-c', '/opt/guac/guacgql']
       ports:
         - containerPort: 8080
-    env: {}
+    env: []
     svcPorts:
       - protocol: TCP
         port: 8080
@@ -256,7 +262,7 @@ guac:
       pullPolicy: IfNotPresent
       ports:
         - containerPort: 3000
-    env: {}
+    env: []
     svcPorts:
       - protocol: TCP
         port: 3000
@@ -270,7 +276,7 @@ guac:
   sampleData:
     ingest: false
     jobName: ingest-guac-data
-    env: {}
+    env: []
 
   ingress:
     enabled: false

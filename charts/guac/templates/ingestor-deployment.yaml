@@ -51,17 +51,17 @@ spec:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
+
 {{- if or .Values.guac.common.env .Values.guac.ingestor.env }}
         env:
-        {{- range $key, $value := .Values.guac.common.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
-        {{- range $key, $value := .Values.guac.ingestor.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
+{{- if .Values.guac.common.env }}
+{{ toYaml .Values.guac.common.env | indent 10 }}
 {{- end }}
+{{- if .Values.guac.ingestor.env }}
+{{ toYaml .Values.guac.ingestor.env | indent 10 }}
+{{- end }}
+{{- end }}
+
 {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
