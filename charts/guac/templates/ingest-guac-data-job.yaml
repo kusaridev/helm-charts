@@ -25,17 +25,17 @@ spec:
         image: "ubuntu:22.04"
         command: ['sh', '-c', '/tmp/guac/ingest-guac-data.sh ingest-data']
         workingDir: {{ .Values.guac.workingDir }}
+
 {{- if or .Values.guac.common.env .Values.guac.sampleData.env }}
         env:
-        {{- range $key, $value := .Values.guac.common.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
-        {{- range $key, $value := .Values.guac.sampleData.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
+{{- if .Values.guac.common.env }}
+{{ toYaml .Values.guac.common.env | indent 10 }}
 {{- end }}
+{{- if .Values.guac.sampleData.env }}
+{{ toYaml .Values.guac.sampleData.env | indent 10 }}
+{{- end }}
+{{- end }}
+
         volumeMounts:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
