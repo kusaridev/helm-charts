@@ -143,7 +143,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   depsDevCollector:
     enabled: true
@@ -161,7 +161,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   osvCertifier:
     enabled: true
@@ -177,7 +177,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   ingestor:
     enabled: true
@@ -195,7 +195,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   collectSub:
     enabled: true
@@ -217,7 +217,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   graphqlServer:
     enabled: true
@@ -245,7 +245,7 @@ guac:
     resources:
       requests:
         cpu: "0.2"
-        memory: "500M"
+        memory: "300M"
 
   visualizer:
     enabled: true
