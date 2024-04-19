@@ -89,14 +89,41 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for OCI Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -136,14 +163,51 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for Deps.Dev Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -183,14 +247,41 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for OSV Certifier Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -230,9 +321,10 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for ingestor.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
@@ -246,6 +338,32 @@
                                     "type": "object",
                                     "description": "- Ingestor service account annotations",
                                     "default": {}
+                                }
+                            }
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -300,9 +418,10 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for Collector Sub.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "svcPorts": {
                             "type": "array",
@@ -329,6 +448,32 @@
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -381,9 +526,10 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for GraphQL Server.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "svcPorts": {
                             "type": "array",
@@ -428,6 +574,54 @@
                                     "type": "object",
                                     "description": "- graphql server service account annotations",
                                     "default": {}
+                                }
+                            }
+                        },
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "createNodePortService": {
+                                    "type": "boolean",
+                                    "description": "- Whether to deploy a NodePort type service",
+                                    "default": false
+                                }
+                            }
+                        },
+                        "additionalVolumeMounts": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "additionalVolumes": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "0.2"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "",
+                                            "default": "300M"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -512,14 +706,21 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for the visualizer.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
                         }
                     }
                 },
@@ -547,9 +748,10 @@
                             "default": "ingest-guac-data"
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for the sample data ingest job",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         }
                     }
                 },
@@ -573,6 +775,16 @@
                         }
                     }
                 },
+                "traefikIngressRoute": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Whether to deploy Traefik IngressRoute object",
+                            "default": false
+                        }
+                    }
+                },
                 "backend": {
                     "type": "object",
                     "properties": {
@@ -583,11 +795,6 @@
                                     "type": "string",
                                     "description": "database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB",
                                     "default": "postgres"
-                                },
-                                "db-address": {
-                                    "type": "string",
-                                    "description": "Full URL of database to connect to",
-                                    "default": "postgres://guac:guac@host:port/dbName?sslmode=disable"
                                 },
                                 "db-migrate": {
                                     "type": "boolean",
@@ -602,6 +809,11 @@
                             }
                         }
                     }
+                },
+                "additionalResources": {
+                    "type": "object",
+                    "description": "",
+                    "default": {}
                 }
             }
         },
@@ -610,7 +822,7 @@
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Whehter to deploy nats",
+                    "description": "Whether to deploy nats",
                     "default": true
                 },
                 "nats": {

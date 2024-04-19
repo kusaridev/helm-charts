@@ -23,6 +23,9 @@ imagePullSecrets:
 ## @param guac.ociCollector.image.command Command for the OCI Collector image.  It is not recommended to override this.
 ## @param guac.ociCollector.env Environment variables for OCI Collector.
 ## @param guac.ociCollector.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.ociCollector.tolerations
+## @param guac.ociCollector.resources.requests.cpu
+## @param guac.ociCollector.resources.requests.memory
 ## @param guac.depsDevCollector.enabled String Whether to deploy Deps.Dev Collector
 ## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
 ## @param guac.depsDevCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -30,6 +33,10 @@ imagePullSecrets:
 ## @param guac.depsDevCollector.image.command Command for the Deps.Dev Collector image.  It is not recommended to override this.
 ## @param guac.depsDevCollector.env Environment variables for Deps.Dev Collector.
 ## @param guac.depsDevCollector.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.depsDevCollector.tolerations
+## @param guac.depsDevCollector.serviceAccount.annotations
+## @param guac.depsDevCollector.resources.requests.cpu
+## @param guac.depsDevCollector.resources.requests.memory
 ## @param guac.osvCertifier.enabled String Whether to deploy OSV Certifier
 ## @param guac.osvCertifier.name String Name of the OSV Certifier component.
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -37,6 +44,9 @@ imagePullSecrets:
 ## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
 ## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.osvCertifier.tolerations
+## @param guac.osvCertifier.resources.requests.cpu
+## @param guac.osvCertifier.resources.requests.memory
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -45,6 +55,9 @@ imagePullSecrets:
 ## @param guac.ingestor.env Environment variables for ingestor.
 ## @param guac.ingestor.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.ingestor.serviceAccount.annotations - Ingestor service account annotations
+## @param guac.ingestor.tolerations
+## @param guac.ingestor.resources.requests.cpu
+## @param guac.ingestor.resources.requests.memory
 ## @param guac.collectSub.enabled String Whether to deploy Collector Sub
 ## @param guac.collectSub.name String Name of the Collector Sub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -56,6 +69,9 @@ imagePullSecrets:
 ## @param guac.collectSub.svcPorts[0].port Port the Collector Sub service listens on
 ## @param guac.collectSub.svcPorts[0].targetPort Port the Collector Sub container listens on
 ## @param guac.collectSub.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.collectSub.tolerations
+## @param guac.collectSub.resources.requests.cpu
+## @param guac.collectSub.resources.requests.memory
 ## @param guac.graphqlServer.enabled String Whether to deploy GraphQL Server
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
 ## @param guac.graphqlServer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -66,10 +82,17 @@ imagePullSecrets:
 ## @param guac.graphqlServer.svcPorts[0].protocol Protocol used at the the GraphQL Server
 ## @param guac.graphqlServer.svcPorts[0].port Port the GraphQL Server service listens on
 ## @param guac.graphqlServer.svcPorts[0].targetPort Port the GraphQL Server container listens on
+## @param guac.graphqlServer.nodePortSvcPorts [object] NodePort service ports definition
 ## @param guac.graphqlServer.backend which backend to use - keyvalue (default) | arango | ent.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.graphqlServer.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.graphqlServer.serviceAccount.annotations - graphql server service account annotations
+## @param guac.graphqlServer.service.createNodePortService - Whether to deploy a NodePort type service
+## @param guac.graphqlServer.additionalVolumeMounts
+## @param guac.graphqlServer.additionalVolumes
+## @param guac.graphqlServer.tolerations
+## @param guac.graphqlServer.resources.requests.cpu
+## @param guac.graphqlServer.resources.requests.memory
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
 ## @param guac.visualizer.name String Name of the visualizer.
 ## @param guac.visualizer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -84,6 +107,7 @@ imagePullSecrets:
 ## @param guac.visualizer.svcPorts[0].targetPort Port the visualizer container listens on
 ## @param guac.visualizer.env Environment variables for the visualizer.
 ## @param guac.visualizer.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.visualizer.tolerations
 ## @param guac.observability.deployServiceMonitor Boolean Deploy the service monitor for observability
 ## @param guac.sampleData.ingest Boolean Whether to ingest sample data after deployment
 ## @param guac.sampleData.jobName Name of the sample data ingest job
@@ -97,12 +121,14 @@ imagePullSecrets:
 ## @param guac.apiOnlyIngress.ingressClassName [nullable] Ingress class name for API only ingress
 ## @param guac.apiOnlyIngress.apiHostname [nullable] DNS name for the GQL API.
 ## @param guac.apiOnlyIngress.annotations [object] Annotations for the API only ingress object
+## @param guac.traefikIngressRoute.enabled Whether to deploy Traefik IngressRoute object
 ## @param guac.backend.ent.db-driver database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB
-## @param guac.backend.ent.db-address Full URL of database to connect to
+## @param guac.backend.ent.db-address [nullable] Full URL of database to connect to
 ## @param guac.backend.ent.db-migrate Wether to automatically run database migrations on start
 ## @param guac.backend.ent.db-debug Enable debug logging for database queries
 ## @param guac.pubSubAddr [nullable] String gocloud connection string for pubsub configured via https://gocloud.dev/howto/pubsub/
 ## @param guac.blobAddr [nullable] gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/
+## @param guac.additionalResources
 guac:
 
   guacImage:
@@ -238,6 +264,11 @@ guac:
     additionalVolumes: []
     backend: keyvalue
     debug: true
+    nodePortSvcPorts:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080
+        nodePort: 30080
     nodeSelector: {}
     tolerations: []
     serviceAccount:
@@ -246,6 +277,8 @@ guac:
       requests:
         cpu: "0.2"
         memory: "300M"
+    service:
+      createNodePortService: false
 
   visualizer:
     enabled: true
@@ -290,6 +323,13 @@ guac:
     # ingressClassName:
     # apiHostname:
     # annotations:
+
+  traefikIngressRoute:
+    enabled: false
+    # entryPoints: []
+    # hostMatchingHeader:
+    # gqlPath: /query
+    # apiHostname:
 
   backend:
     ent:
@@ -371,7 +411,7 @@ minio:
   mode: standalone
   resources:
     requests:
-      memory: 1Gi
+      memory: 500Mi
   rootUser: "rootUser"
   rootPassword: "rootPassword"
   buckets:
