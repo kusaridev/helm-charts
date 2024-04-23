@@ -24,8 +24,7 @@ imagePullSecrets:
 ## @param guac.ociCollector.env Environment variables for OCI Collector.
 ## @param guac.ociCollector.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.ociCollector.tolerations
-## @param guac.ociCollector.resources.requests.cpu
-## @param guac.ociCollector.resources.requests.memory
+## @param guac.ociCollector.resources - [map] resource requests or limits of the ociCollector deployment
 ## @param guac.depsDevCollector.enabled String Whether to deploy Deps.Dev Collector
 ## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
 ## @param guac.depsDevCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -35,8 +34,7 @@ imagePullSecrets:
 ## @param guac.depsDevCollector.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.depsDevCollector.tolerations
 ## @param guac.depsDevCollector.serviceAccount.annotations
-## @param guac.depsDevCollector.resources.requests.cpu
-## @param guac.depsDevCollector.resources.requests.memory
+## @param guac.depsDevCollector.resources - [map] resource requests or limits of the depsDevCollector deployment
 ## @param guac.osvCertifier.enabled String Whether to deploy OSV Certifier
 ## @param guac.osvCertifier.name String Name of the OSV Certifier component.
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -45,8 +43,6 @@ imagePullSecrets:
 ## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.osvCertifier.tolerations
-## @param guac.osvCertifier.resources.requests.cpu
-## @param guac.osvCertifier.resources.requests.memory
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -56,8 +52,7 @@ imagePullSecrets:
 ## @param guac.ingestor.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.ingestor.serviceAccount.annotations - Ingestor service account annotations
 ## @param guac.ingestor.tolerations
-## @param guac.ingestor.resources.requests.cpu
-## @param guac.ingestor.resources.requests.memory
+## @param guac.ingestor.resources - [map] resource requests or limits of the ingestor deployment
 ## @param guac.collectSub.enabled String Whether to deploy Collector Sub
 ## @param guac.collectSub.name String Name of the Collector Sub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -70,8 +65,7 @@ imagePullSecrets:
 ## @param guac.collectSub.svcPorts[0].targetPort Port the Collector Sub container listens on
 ## @param guac.collectSub.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.collectSub.tolerations
-## @param guac.collectSub.resources.requests.cpu
-## @param guac.collectSub.resources.requests.memory
+## @param guac.collectSub.resources - [map] resource requests or limits of the collectSub deployment
 ## @param guac.graphqlServer.enabled String Whether to deploy GraphQL Server
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
 ## @param guac.graphqlServer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -91,8 +85,21 @@ imagePullSecrets:
 ## @param guac.graphqlServer.additionalVolumeMounts
 ## @param guac.graphqlServer.additionalVolumes
 ## @param guac.graphqlServer.tolerations
-## @param guac.graphqlServer.resources.requests.cpu
-## @param guac.graphqlServer.resources.requests.memory
+## @param guac.graphqlServer.resources - [map] resource requests or limits of the graphqlServer deployment
+## @param guac.restApi.enabled String Whether to deploy the restApi
+## @param guac.restApi.name String Name of the restApi component.
+## @param guac.restApi.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
+## @param guac.restApi.replicas Number of replicas for restApi deployment
+## @param guac.restApi.image.command Command for the restApi image.  It is not recommended to override this.
+## @param guac.restApi.env Environment variables for restApi.
+## @param guac.restApi.image.ports[0].containerPort Port the restApi container listens on
+## @param guac.restApi.svcPorts[0].protocol Protocol used at the the restApi
+## @param guac.restApi.svcPorts[0].port Port the restApi service listens on
+## @param guac.restApi.svcPorts[0].targetPort Port the restApi container listens on
+## @param guac.restApi.serviceAccount.annotations - graphql server service account annotations
+## @param guac.restApi.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.restApi.tolerations
+## @param guac.restApi.resources - [map] resource requests or limits of the restApi deployment
 ## @param guac.visualizer.enabled String Whether to deploy the visualizer.
 ## @param guac.visualizer.name String Name of the visualizer.
 ## @param guac.visualizer.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -163,13 +170,12 @@ guac:
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect image']
     env: []
-    # ENV_NAME: ENV_VALUE
     nodeSelector: {}
     tolerations: []
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    resources: {}
+      # requests:
+      #   cpu: "0.25"
+      #   memory: "0.5G"
 
   depsDevCollector:
     enabled: true
@@ -184,10 +190,10 @@ guac:
     tolerations: []
     serviceAccount:
       annotations: {}
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    resources: {}
+      # requests:
+      #   cpu: "0.25"
+      #   memory: "0.5G"
 
   osvCertifier:
     enabled: true
@@ -200,10 +206,10 @@ guac:
     env: []
     nodeSelector: {}
     tolerations: []
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    # resources:
+    #   requests:
+    #     cpu: "0.25"
+    #     memory: "0.5G"
 
   ingestor:
     enabled: true
@@ -218,10 +224,10 @@ guac:
     tolerations: []
     serviceAccount:
       annotations: {}
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    resources: {}
+    #   requests:
+    #     cpu: "0.25"
+    #     memory: "0.5G"
 
   collectSub:
     enabled: true
@@ -240,10 +246,10 @@ guac:
         targetPort: 2782
     nodeSelector: {}
     tolerations: []
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    resources: {}
+    #   requests:
+    #     cpu: "0.2"
+    #     memory: "300M"
 
   graphqlServer:
     enabled: true
@@ -273,12 +279,36 @@ guac:
     tolerations: []
     serviceAccount:
       annotations: {}
-    resources:
-      requests:
-        cpu: "0.2"
-        memory: "300M"
+    resources: {}
+    #   requests:
+    #     cpu: "0.2"
+    #     memory: "300M"
     service:
       createNodePortService: false
+
+  restApi:
+    enabled: true
+    name: rest-api
+    annotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      command: ['sh', '-c', '/opt/guac/guacrest']
+      ports:
+        - containerPort: 8081
+    env: []
+    svcPorts:
+      - protocol: TCP
+        port: 8081
+        targetPort: 8081
+    nodeSelector: {}
+    tolerations: []
+    serviceAccount:
+      annotations: {}
+    resources: {}
+    #   requests:
+    #     cpu: "0.25"
+    #     memory: "0.5G"
 
   visualizer:
     enabled: true
@@ -409,9 +439,9 @@ minio:
   persistence:
     enabled: false
   mode: standalone
-  resources:
-    requests:
-      memory: 500Mi
+  resources: {}
+    # requests:
+    #   memory: 500Mi
   rootUser: "rootUser"
   rootPassword: "rootPassword"
   buckets:
