@@ -1,0 +1,17 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.collectSub.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.collectSub.name }}
+{{- if .Values.guac.collectSub.annotations }}
+  annotations:
+{{ toYaml .Values.guac.collectSub.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
+    app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+{{- end }}

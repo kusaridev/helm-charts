@@ -105,6 +105,16 @@
                             "default": [],
                             "items": {}
                         },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- OCI Collector service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
                         "resources": {
                             "type": "object",
                             "description": "- [map] resource requests or limits of the ociCollector deployment",
@@ -232,6 +242,21 @@
                             "description": "",
                             "default": [],
                             "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- OSV Certifier service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the OSV Certifier deployment",
+                            "default": {}
                         }
                     }
                 },
@@ -309,17 +334,17 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "String Whether to deploy Collector Sub",
+                            "description": "String Whether to deploy CollectSub",
                             "default": true
                         },
                         "name": {
                             "type": "string",
-                            "description": "String Name of the Collector Sub component.",
+                            "description": "String Name of the CollectSub component.",
                             "default": "collectsub"
                         },
                         "replicas": {
                             "type": "number",
-                            "description": "Number of replicas for Collector Sub deployment",
+                            "description": "Number of replicas for CollectSub deployment",
                             "default": 1
                         },
                         "image": {
@@ -327,7 +352,7 @@
                             "properties": {
                                 "command": {
                                     "type": "array",
-                                    "description": "Command for the Collector Sub image.  It is not recommended to override this.",
+                                    "description": "Command for the CollectSub image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
@@ -339,13 +364,13 @@
                                 },
                                 "ports": {
                                     "type": "array",
-                                    "description": "Port the Collector Sub container listens on",
+                                    "description": "Port the CollectSub container listens on",
                                     "items": {
                                         "type": "object",
                                         "properties": {
                                             "containerPort": {
                                                 "type": "number",
-                                                "description": "Port the Collector Sub container listens on"
+                                                "description": "Port the CollectSub container listens on"
                                             }
                                         }
                                     }
@@ -354,27 +379,27 @@
                         },
                         "env": {
                             "type": "array",
-                            "description": "Environment variables for Collector Sub.",
+                            "description": "Environment variables for CollectSub.",
                             "default": [],
                             "items": {}
                         },
                         "svcPorts": {
                             "type": "array",
-                            "description": "Protocol used at Collector Sub",
+                            "description": "Protocol used at CollectSub",
                             "items": {
                                 "type": "object",
                                 "properties": {
                                     "protocol": {
                                         "type": "string",
-                                        "description": "Protocol used at Collector Sub"
+                                        "description": "Protocol used at CollectSub"
                                     },
                                     "port": {
                                         "type": "number",
-                                        "description": "Port the Collector Sub service listens on"
+                                        "description": "Port the CollectSub service listens on"
                                     },
                                     "targetPort": {
                                         "type": "number",
-                                        "description": "Port the Collector Sub container listens on"
+                                        "description": "Port the CollectSub container listens on"
                                     }
                                 }
                             }
@@ -389,6 +414,16 @@
                             "description": "",
                             "default": [],
                             "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- CollectSub service account annotations",
+                                    "default": {}
+                                }
+                            }
                         },
                         "resources": {
                             "type": "object",

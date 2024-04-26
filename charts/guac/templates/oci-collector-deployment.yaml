@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
         app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.ociCollector.name }}
       containers:
       - name: {{ .Values.guac.ociCollector.name }}
         {{- if .Values.guac.guacImage.digest }}

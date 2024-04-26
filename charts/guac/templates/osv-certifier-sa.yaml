@@ -1,0 +1,17 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.osvCertifier.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.osvCertifier.name }}
+{{- if .Values.guac.osvCertifier.annotations }}
+  annotations:
+{{ toYaml .Values.guac.osvCertifier.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.osvCertifier.name }}
+    app.kubernetes.io/component: {{ .Values.guac.osvCertifier.name }}
+{{- end }}

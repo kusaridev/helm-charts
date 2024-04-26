@@ -24,6 +24,7 @@ imagePullSecrets:
 ## @param guac.ociCollector.env Environment variables for OCI Collector.
 ## @param guac.ociCollector.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.ociCollector.tolerations
+## @param guac.ociCollector.serviceAccount.annotations - OCI Collector service account annotations
 ## @param guac.ociCollector.resources - [map] resource requests or limits of the ociCollector deployment
 ## @param guac.depsDevCollector.enabled String Whether to deploy Deps.Dev Collector
 ## @param guac.depsDevCollector.name String Name of the Deps.Dev Collector component.
@@ -43,6 +44,8 @@ imagePullSecrets:
 ## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.osvCertifier.tolerations
+## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
+## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -53,18 +56,19 @@ imagePullSecrets:
 ## @param guac.ingestor.serviceAccount.annotations - Ingestor service account annotations
 ## @param guac.ingestor.tolerations
 ## @param guac.ingestor.resources - [map] resource requests or limits of the ingestor deployment
-## @param guac.collectSub.enabled String Whether to deploy Collector Sub
-## @param guac.collectSub.name String Name of the Collector Sub component.
+## @param guac.collectSub.enabled String Whether to deploy CollectSub
+## @param guac.collectSub.name String Name of the CollectSub component.
 ## @param guac.collectSub.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
-## @param guac.collectSub.replicas Number of replicas for Collector Sub deployment
-## @param guac.collectSub.image.command Command for the Collector Sub image.  It is not recommended to override this.
-## @param guac.collectSub.env Environment variables for Collector Sub.
-## @param guac.collectSub.image.ports[0].containerPort Port the Collector Sub container listens on
-## @param guac.collectSub.svcPorts[0].protocol Protocol used at Collector Sub
-## @param guac.collectSub.svcPorts[0].port Port the Collector Sub service listens on
-## @param guac.collectSub.svcPorts[0].targetPort Port the Collector Sub container listens on
+## @param guac.collectSub.replicas Number of replicas for CollectSub deployment
+## @param guac.collectSub.image.command Command for the CollectSub image.  It is not recommended to override this.
+## @param guac.collectSub.env Environment variables for CollectSub.
+## @param guac.collectSub.image.ports[0].containerPort Port the CollectSub container listens on
+## @param guac.collectSub.svcPorts[0].protocol Protocol used at CollectSub
+## @param guac.collectSub.svcPorts[0].port Port the CollectSub service listens on
+## @param guac.collectSub.svcPorts[0].targetPort Port the CollectSub container listens on
 ## @param guac.collectSub.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.collectSub.tolerations
+## @param guac.collectSub.serviceAccount.annotations - CollectSub service account annotations
 ## @param guac.collectSub.resources - [map] resource requests or limits of the collectSub deployment
 ## @param guac.graphqlServer.enabled String Whether to deploy GraphQL Server
 ## @param guac.graphqlServer.name String Name of the GraphQL Server component.
@@ -172,6 +176,8 @@ guac:
     env: []
     nodeSelector: {}
     tolerations: []
+    serviceAccount:
+      annotations: {}
     resources: {}
       # requests:
       #   cpu: "0.25"
@@ -206,7 +212,9 @@ guac:
     env: []
     nodeSelector: {}
     tolerations: []
-    # resources:
+    serviceAccount:
+      annotations: {}
+    resources: {}
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
@@ -246,6 +254,8 @@ guac:
         targetPort: 2782
     nodeSelector: {}
     tolerations: []
+    serviceAccount:
+      annotations: {}
     resources: {}
     #   requests:
     #     cpu: "0.2"
