@@ -439,9 +439,9 @@ minio:
   persistence:
     enabled: false
   mode: standalone
-  resources: {}
-    # requests:
-    #   memory: 500Mi
+  resources:
+    requests:
+      memory: 300Mi
   rootUser: "rootUser"
   rootPassword: "rootPassword"
   buckets:
