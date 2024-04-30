@@ -1,0 +1,24 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.restApi.enabled }}
+{{- if .Values.guac.restApi.svcPorts }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.guac.restApi.name }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.restApi.name }}
+    app.kubernetes.io/component: {{ .Values.guac.restApi.name }}
+spec:
+  selector:
+    {{- include "guac.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.restApi.name }}
+    app.kubernetes.io/component: {{ .Values.guac.restApi.name }}
+  ports:
+  {{- range .Values.guac.restApi.svcPorts }}
+    - {{ . | toYaml | indent 6 | trim }}
+  {{- end }}
+{{- end }}
+{{- end }}

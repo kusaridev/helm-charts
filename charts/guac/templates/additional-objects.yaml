@@ -1,0 +1,9 @@
+{{- if .Values.additionalObjects }}
+{{/*
+{{- toYaml .Values.guac.additionalResources }}
+*/}}
+{{- range $.Values.additionalObjects }}
+---
+{{ toYaml . }}
+{{- end }}
+{{- end }}

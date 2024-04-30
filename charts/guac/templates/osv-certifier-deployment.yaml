@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.osvCertifier.name }}
         app.kubernetes.io/component: {{ .Values.guac.osvCertifier.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.osvCertifier.name }}
       containers:
       - name: {{ .Values.guac.osvCertifier.name }}
         {{- if .Values.guac.guacImage.digest }}
@@ -43,22 +44,25 @@ spec:
         ports:
 {{ toYaml .Values.guac.osvCertifier.image.ports | indent 10 }}
 {{- end }}
+{{- if .Values.guac.osvCertifier.resources }}
+        resources: {{- toYaml .Values.guac.osvCertifier.resources | nindent 10 }}
+{{- end }}
         volumeMounts:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
-{{- if .Values.imagePullSecrets }}
+
 {{- if or .Values.guac.common.env .Values.guac.osvCertifier.env }}
         env:
-        {{- range $key, $value := .Values.guac.common.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
-        {{- range $key, $value := .Values.guac.osvCertifier.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
+{{- if .Values.guac.common.env }}
+{{ toYaml .Values.guac.common.env | indent 10 }}
 {{- end }}
+{{- if .Values.guac.osvCertifier.env }}
+{{ toYaml .Values.guac.osvCertifier.env | indent 10 }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
 {{- end }}
@@ -66,8 +70,13 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
-{{- end }}
 {{- if .Values.guac.osvCertifier.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.guac.osvCertifier.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.guac.osvCertifier.tolerations }}
+      tolerations:
+{{ toYaml .Values.guac.osvCertifier.tolerations | indent 8 }}
+{{- end }}
+
 {{- end }}

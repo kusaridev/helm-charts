@@ -89,13 +89,35 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for OCI Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- OCI Collector service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the ociCollector deployment",
                             "default": {}
                         }
                     }
@@ -136,13 +158,35 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for Deps.Dev Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the depsDevCollector deployment",
                             "default": {}
                         }
                     }
@@ -183,13 +227,35 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for OSV Certifier Collector.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- OSV Certifier service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the OSV Certifier deployment",
                             "default": {}
                         }
                     }
@@ -230,13 +296,35 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for ingestor.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- Ingestor service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the ingestor deployment",
                             "default": {}
                         }
                     }
@@ -246,17 +334,17 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "String Whether to deploy Collector Sub",
+                            "description": "String Whether to deploy CollectSub",
                             "default": true
                         },
                         "name": {
                             "type": "string",
-                            "description": "String Name of the Collector Sub component.",
+                            "description": "String Name of the CollectSub component.",
                             "default": "collectsub"
                         },
                         "replicas": {
                             "type": "number",
-                            "description": "Number of replicas for Collector Sub deployment",
+                            "description": "Number of replicas for CollectSub deployment",
                             "default": 1
                         },
                         "image": {
@@ -264,7 +352,7 @@
                             "properties": {
                                 "command": {
                                     "type": "array",
-                                    "description": "Command for the Collector Sub image.  It is not recommended to override this.",
+                                    "description": "Command for the CollectSub image.  It is not recommended to override this.",
                                     "default": [
                                         "sh",
                                         "-c",
@@ -276,13 +364,13 @@
                                 },
                                 "ports": {
                                     "type": "array",
-                                    "description": "Port the Collector Sub container listens on",
+                                    "description": "Port the CollectSub container listens on",
                                     "items": {
                                         "type": "object",
                                         "properties": {
                                             "containerPort": {
                                                 "type": "number",
-                                                "description": "Port the Collector Sub container listens on"
+                                                "description": "Port the CollectSub container listens on"
                                             }
                                         }
                                     }
@@ -290,27 +378,28 @@
                             }
                         },
                         "env": {
-                            "type": "object",
-                            "description": "Environment variables for Collector Sub.",
-                            "default": {}
+                            "type": "array",
+                            "description": "Environment variables for CollectSub.",
+                            "default": [],
+                            "items": {}
                         },
                         "svcPorts": {
                             "type": "array",
-                            "description": "Protocol used at Collector Sub",
+                            "description": "Protocol used at CollectSub",
                             "items": {
                                 "type": "object",
                                 "properties": {
                                     "protocol": {
                                         "type": "string",
-                                        "description": "Protocol used at Collector Sub"
+                                        "description": "Protocol used at CollectSub"
                                     },
                                     "port": {
                                         "type": "number",
-                                        "description": "Port the Collector Sub service listens on"
+                                        "description": "Port the CollectSub service listens on"
                                     },
                                     "targetPort": {
                                         "type": "number",
-                                        "description": "Port the Collector Sub container listens on"
+                                        "description": "Port the CollectSub container listens on"
                                     }
                                 }
                             }
@@ -318,6 +407,27 @@
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- CollectSub service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the collectSub deployment",
                             "default": {}
                         }
                     }
@@ -371,9 +481,10 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for GraphQL Server.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "svcPorts": {
                             "type": "array",
@@ -411,15 +522,151 @@
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
                         },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- graphql server service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
                         "service": {
                             "type": "object",
                             "properties": {
                                 "createNodePortService": {
                                     "type": "boolean",
-                                    "description": "- Whether to deploy a NodePort type service ",
+                                    "description": "- Whether to deploy a NodePort type service",
                                     "default": false
                                 }
                             }
+                        },
+                        "additionalVolumeMounts": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "additionalVolumes": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the graphqlServer deployment",
+                            "default": {}
+                        }
+                    }
+                },
+                "restApi": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy the restApi",
+                            "default": true
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "String Name of the restApi component.",
+                            "default": "rest-api"
+                        },
+                        "replicas": {
+                            "type": "number",
+                            "description": "Number of replicas for restApi deployment",
+                            "default": 1
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "command": {
+                                    "type": "array",
+                                    "description": "Command for the restApi image.  It is not recommended to override this.",
+                                    "default": [
+                                        "sh",
+                                        "-c",
+                                        "/opt/guac/guacrest"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "description": "Port the restApi container listens on",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "containerPort": {
+                                                "type": "number",
+                                                "description": "Port the restApi container listens on"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "env": {
+                            "type": "array",
+                            "description": "Environment variables for restApi.",
+                            "default": [],
+                            "items": {}
+                        },
+                        "svcPorts": {
+                            "type": "array",
+                            "description": "Protocol used at the the restApi",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "protocol": {
+                                        "type": "string",
+                                        "description": "Protocol used at the the restApi"
+                                    },
+                                    "port": {
+                                        "type": "number",
+                                        "description": "Port the restApi service listens on"
+                                    },
+                                    "targetPort": {
+                                        "type": "number",
+                                        "description": "Port the restApi container listens on"
+                                    }
+                                }
+                            }
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- graphql server service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the restApi deployment",
+                            "default": {}
                         }
                     }
                 },
@@ -502,14 +749,21 @@
                             }
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for the visualizer.",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         },
                         "nodeSelector": {
                             "type": "object",
                             "description": "- sets the node selector for where to run the deployment",
                             "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
                         }
                     }
                 },
@@ -537,9 +791,10 @@
                             "default": "ingest-guac-data"
                         },
                         "env": {
-                            "type": "object",
+                            "type": "array",
                             "description": "Environment variables for the sample data ingest job",
-                            "default": {}
+                            "default": [],
+                            "items": {}
                         }
                     }
                 },
@@ -584,11 +839,6 @@
                                     "description": "database driver to use, one of [postgres | sqlite3 | mysql] or anything supported by sql.DB",
                                     "default": "postgres"
                                 },
-                                "db-address": {
-                                    "type": "string",
-                                    "description": "Full URL of database to connect to",
-                                    "default": "postgres://guac:guac@host:port/dbName?sslmode=disable"
-                                },
                                 "db-migrate": {
                                     "type": "boolean",
                                     "description": "Wether to automatically run database migrations on start",
@@ -602,6 +852,11 @@
                             }
                         }
                     }
+                },
+                "additionalResources": {
+                    "type": "object",
+                    "description": "",
+                    "default": {}
                 }
             }
         },
@@ -610,7 +865,7 @@
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Whehter to deploy nats",
+                    "description": "Whether to deploy nats",
                     "default": true
                 },
                 "nats": {

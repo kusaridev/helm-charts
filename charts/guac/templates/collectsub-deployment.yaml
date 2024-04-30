@@ -28,6 +28,7 @@ spec:
         app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
         app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
     spec:
+      serviceAccountName: {{ .Values.guac.collectSub.name }}
       containers:
       - name: {{ .Values.guac.collectSub.name }}
         {{- if .Values.guac.guacImage.digest }}
@@ -43,22 +44,25 @@ spec:
         ports:
 {{ toYaml .Values.guac.collectSub.image.ports | indent 10 }}
 {{- end }}
+{{- if .Values.guac.collectSub.resources }}
+        resources: {{- toYaml .Values.guac.collectSub.resources | nindent 10 }}
+{{- end }}
         volumeMounts:
           - name: guac-config
             mountPath: {{ .Values.guac.guacImage.workingDir }}
             readOnly: true
-{{- if .Values.imagePullSecrets }}
+
 {{- if or .Values.guac.common.env .Values.guac.collectSub.env }}
         env:
-        {{- range $key, $value := .Values.guac.common.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
-        {{- range $key, $value := .Values.guac.collectSub.env }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}  
+{{- if .Values.guac.common.env }}
+{{ toYaml .Values.guac.common.env | indent 10 }}
 {{- end }}
+{{- if .Values.guac.collectSub.env }}
+{{ toYaml .Values.guac.collectSub.env | indent 10 }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
 {{- end }}
@@ -66,8 +70,13 @@ spec:
         - name: guac-config
           configMap:
             name: guac-cm
-{{- end }}
 {{- if .Values.guac.collectSub.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.guac.collectSub.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.guac.collectSub.tolerations }}
+      tolerations:
+{{ toYaml .Values.guac.collectSub.tolerations | indent 8 }}
+{{- end }}
+
 {{- end }}
