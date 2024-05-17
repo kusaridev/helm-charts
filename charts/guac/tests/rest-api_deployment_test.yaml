@@ -1,8 +1,8 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
-suite: Ingestor Deployment tests
+suite: OSV Certifier Deployment tests
 templates:
-  - ingestor-deployment.yaml
+  - guacrest-deployment.yaml
 
 tests:
   - it: deployment should render
@@ -12,18 +12,18 @@ tests:
       - hasDocuments:
           count: 1
 
-  - it: should run the ingestor image
+  - it: should run the osvCertifier image
     values:
       - ./values_digest_and_tag.yaml
     asserts:
       - equal:
           path:  spec.template.spec.containers[0].name
-          value:  ingestor
+          value: rest-api 
       - equal:
           path:  spec.template.spec.containers[0].image
           value:  ghcr.io/guacsec/guac@sha256:167e823f36e268f66b12a79d4c4b39df23c2f87847817c161b6c6ddbc9ee5c4e
 
-  - it: should run the collector sub command
+  - it: should run the osvCertifier sub command
     values:
       - ./values_digest_and_tag.yaml
     asserts:
@@ -35,7 +35,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/opt/guac/guacingest"
+          value: "/opt/guac/guacrest"
 
   - it: should respect spec level parameters
     values:
@@ -46,10 +46,10 @@ tests:
           value:  1
       - equal:
           path:  spec.selector.matchLabels["app.kubernetes.io/name"]
-          value:  ingestor
+          value: rest-api 
       - equal:
           path:  spec.template.metadata.labels["app.kubernetes.io/name"]
-          value:  ingestor
+          value: rest-api 
 
   - it: should use tag if only tag is specified
     values:

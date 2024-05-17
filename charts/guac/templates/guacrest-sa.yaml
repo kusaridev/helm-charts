@@ -1,6 +1,7 @@
 # Copyright Kusari, Inc. and contributors
 # Licensed under the MIT license. See LICENSE file in the project root for details.
 {{ if .Values.guac.restApi.enabled }}
+{{ if .Values.guac.restApi.serviceAccount.create }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,4 +15,5 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.restApi.name }}
     app.kubernetes.io/component: {{ .Values.guac.restApi.name }}
+{{- end }}
 {{- end }}

@@ -48,7 +48,12 @@
                     "properties": {
                         "env": {
                             "type": "string",
-                            "description": "Environment variables common apply for all guac services",
+                            "description": "common environment variables apply to all guac services",
+                            "default": "\"\""
+                        },
+                        "tolerations": {
+                            "type": "string",
+                            "description": "common tolerations apply to all guac services",
                             "default": "\"\""
                         }
                     }
@@ -108,6 +113,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create OCI Collector service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- OCI Collector service account annotations",
@@ -177,6 +187,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create depsDevCollector service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "",
@@ -246,6 +261,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create osvCertifier service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- OSV Certifier service account annotations",
@@ -309,6 +329,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create ingestor service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- Ingestor service account annotations",
@@ -418,6 +443,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create collectSub service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- CollectSub service account annotations",
@@ -525,6 +555,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create graphqlServer service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- graphql server service account annotations",
@@ -645,6 +680,11 @@
                         "serviceAccount": {
                             "type": "object",
                             "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create restApi service account",
+                                    "default": true
+                                },
                                 "annotations": {
                                     "type": "object",
                                     "description": "- graphql server service account annotations",
