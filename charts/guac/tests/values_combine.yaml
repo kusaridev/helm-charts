@@ -1,0 +1,66 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+guac:
+
+  common:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/common
+        operator: Equal
+        value: common
+
+  ociCollector:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  depsDevCollector:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  osvCertifier:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  ingestor:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  collectSub:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  graphqlServer:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  restApi:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
+  visualizer:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
