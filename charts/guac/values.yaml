@@ -15,7 +15,8 @@ imagePullSecrets:
 ## @param guac.guacImage.digest [string] Sha256 Image Digest.  It is strongly recommended to use this for verification.
 ## @param guac.guacImage.pullPolicy ImagePullPolicy for kubernetes
 ## @param guac.guacImage.workingDir Working Directory for GUAC
-## @param guac.common.env [string] Environment variables common apply for all guac services
+## @param guac.common.env [string] common environment variables apply to all guac services
+## @param guac.common.tolerations [string] common tolerations apply to all guac services
 ## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
 ## @param guac.ociCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -24,6 +25,7 @@ imagePullSecrets:
 ## @param guac.ociCollector.env Environment variables for OCI Collector.
 ## @param guac.ociCollector.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.ociCollector.tolerations
+## @param guac.ociCollector.serviceAccount.create - whether to create OCI Collector service account
 ## @param guac.ociCollector.serviceAccount.annotations - OCI Collector service account annotations
 ## @param guac.ociCollector.resources - [map] resource requests or limits of the ociCollector deployment
 ## @param guac.depsDevCollector.enabled String Whether to deploy Deps.Dev Collector
@@ -34,6 +36,7 @@ imagePullSecrets:
 ## @param guac.depsDevCollector.env Environment variables for Deps.Dev Collector.
 ## @param guac.depsDevCollector.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.depsDevCollector.tolerations
+## @param guac.depsDevCollector.serviceAccount.create - whether to create depsDevCollector service account
 ## @param guac.depsDevCollector.serviceAccount.annotations
 ## @param guac.depsDevCollector.resources - [map] resource requests or limits of the depsDevCollector deployment
 ## @param guac.osvCertifier.enabled String Whether to deploy OSV Certifier
@@ -44,6 +47,7 @@ imagePullSecrets:
 ## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.osvCertifier.tolerations
+## @param guac.osvCertifier.serviceAccount.create - whether to create osvCertifier service account
 ## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
 ## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
@@ -53,6 +57,7 @@ imagePullSecrets:
 ## @param guac.ingestor.image.command Command for the ingestor image.  It is not recommended to override this.
 ## @param guac.ingestor.env Environment variables for ingestor.
 ## @param guac.ingestor.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.ingestor.serviceAccount.create - whether to create ingestor service account
 ## @param guac.ingestor.serviceAccount.annotations - Ingestor service account annotations
 ## @param guac.ingestor.tolerations
 ## @param guac.ingestor.resources - [map] resource requests or limits of the ingestor deployment
@@ -68,6 +73,7 @@ imagePullSecrets:
 ## @param guac.collectSub.svcPorts[0].targetPort Port the CollectSub container listens on
 ## @param guac.collectSub.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.collectSub.tolerations
+## @param guac.collectSub.serviceAccount.create - whether to create collectSub service account
 ## @param guac.collectSub.serviceAccount.annotations - CollectSub service account annotations
 ## @param guac.collectSub.resources - [map] resource requests or limits of the collectSub deployment
 ## @param guac.graphqlServer.enabled String Whether to deploy GraphQL Server
@@ -84,6 +90,7 @@ imagePullSecrets:
 ## @param guac.graphqlServer.backend which backend to use - keyvalue (default) | arango | ent.
 ## @param guac.graphqlServer.debug Enable debug mode for graphql server; also enable the UI
 ## @param guac.graphqlServer.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.graphqlServer.serviceAccount.create - whether to create graphqlServer service account
 ## @param guac.graphqlServer.serviceAccount.annotations - graphql server service account annotations
 ## @param guac.graphqlServer.service.createNodePortService - Whether to deploy a NodePort type service
 ## @param guac.graphqlServer.additionalVolumeMounts
@@ -100,6 +107,7 @@ imagePullSecrets:
 ## @param guac.restApi.svcPorts[0].protocol Protocol used at the the restApi
 ## @param guac.restApi.svcPorts[0].port Port the restApi service listens on
 ## @param guac.restApi.svcPorts[0].targetPort Port the restApi container listens on
+## @param guac.restApi.serviceAccount.create - whether to create restApi service account
 ## @param guac.restApi.serviceAccount.annotations - graphql server service account annotations
 ## @param guac.restApi.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.restApi.tolerations
@@ -159,11 +167,7 @@ guac:
         value: accessKey
       - name: AWS_SECRET_ACCESS_KEY
         value: secretKey
-    # COMMON_ENV_NAME: COMMON_ENV_VALUE
-    # env:
-    #   # default creds (set at minio.users) for accessing minio blobstore. Remove when changing default blobAddr.
-    #   AWS_ACCESS_KEY_ID: accessKey
-    #   AWS_SECRET_ACCESS_KEY: secretKey
+    tolerations: []
 
   ociCollector:
     enabled: true
@@ -177,6 +181,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
       # requests:
@@ -195,6 +200,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
       # requests:
@@ -213,6 +219,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
     #   requests:
@@ -231,6 +238,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
     #   requests:
@@ -255,6 +263,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
     #   requests:
@@ -288,6 +297,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
     #   requests:
@@ -314,6 +324,7 @@ guac:
     nodeSelector: {}
     tolerations: []
     serviceAccount:
+      create: true
       annotations: {}
     resources: {}
     #   requests:

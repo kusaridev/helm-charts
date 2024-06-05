@@ -85,9 +85,16 @@ spec:
       nodeSelector:
 {{ toYaml .Values.guac.visualizer.nodeSelector | indent 8 }}
 {{- end }}
-{{- if .Values.guac.visualizer.tolerations }}
+
+{{- if or .Values.guac.common.tolerations .Values.guac.visualizer.tolerations }}
       tolerations:
+{{- if .Values.guac.common.tolerations }}
+{{ toYaml .Values.guac.common.tolerations | indent 8 }}
+{{- end }}
+{{- if .Values.guac.visualizer.tolerations }}
 {{ toYaml .Values.guac.visualizer.tolerations | indent 8 }}
 {{- end }}
+{{- end }}
+
 
 {{- end }}
