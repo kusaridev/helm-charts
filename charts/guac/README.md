@@ -104,6 +104,7 @@ This section contains parameters for configuring the different GUAC components.
 | `guac.guacImage.workingDir`                                    | Working Directory for GUAC                                                                   | `/guac`                                                |
 | `guac.common.env`                                              | common environment variables apply to all guac services                                      | `""`                                                   |
 | `guac.common.tolerations`                                      | common tolerations apply to all guac services                                                | `""`                                                   |
+| `guac.configMap.enabled`                                       | Whether to create the guac-cm configMap                                                      | `true`                                                 |
 | `guac.ociCollector.enabled`                                    | String Whether to deploy OCI Collector                                                       | `true`                                                 |
 | `guac.ociCollector.name`                                       | String Name of the OCI Collector component.                                                  | `oci-collector`                                        |
 | `guac.ociCollector.annotations.reloader.stakater.com/auto`     | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                                   |
@@ -233,6 +234,7 @@ This section contains parameters for configuring the different GUAC components.
 | `guac.backend.ent.db-migrate`                                  | Wether to automatically run database migrations on start                                     | `true`                                                 |
 | `guac.backend.ent.db-debug`                                    | Enable debug logging for database queries                                                    | `true`                                                 |
 | `guac.pubSubAddr`                                              | String gocloud connection string for pubsub configured via https://gocloud.dev/howto/pubsub/ | `undefined`                                            |
+| `guac.collectorPublishToQueue`                                 | Whether to publish ingestion message to pubsub queue                                         | `true`                                                 |
 | `guac.blobAddr`                                                | gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/      | `undefined`                                            |
 | `guac.additionalResources`                                     |                                                                                              | `{}`                                                   |
 
