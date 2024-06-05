@@ -17,6 +17,7 @@ imagePullSecrets:
 ## @param guac.guacImage.workingDir Working Directory for GUAC
 ## @param guac.common.env [string] common environment variables apply to all guac services
 ## @param guac.common.tolerations [string] common tolerations apply to all guac services
+## @param guac.configMap.enabled Whether to create the guac-cm configMap
 ## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
 ## @param guac.ociCollector.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -146,6 +147,7 @@ imagePullSecrets:
 ## @param guac.backend.ent.db-migrate Wether to automatically run database migrations on start
 ## @param guac.backend.ent.db-debug Enable debug logging for database queries
 ## @param guac.pubSubAddr [nullable] String gocloud connection string for pubsub configured via https://gocloud.dev/howto/pubsub/
+## @param guac.collectorPublishToQueue Whether to publish ingestion message to pubsub queue
 ## @param guac.blobAddr [nullable] gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/
 ## @param guac.additionalResources
 guac:
@@ -168,6 +170,9 @@ guac:
       - name: AWS_SECRET_ACCESS_KEY
         value: secretKey
     tolerations: []
+
+  configMap:
+    enabled: true
 
   ociCollector:
     enabled: true
@@ -391,6 +396,8 @@ guac:
   # Default to use NATS; specify a value here to override
   # e.g.
   # pubSubAddr: awssqs://sqs.[aws_region].amazonaws.com/[account_id]/[queue_name]?region=[aws_region]
+
+  collectorPublishToQueue: true
 
   # Default to use minio; specify a value here to override
   # e.g.

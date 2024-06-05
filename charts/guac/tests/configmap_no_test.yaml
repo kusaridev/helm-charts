@@ -1,0 +1,13 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+suite: No ConfigMap test
+templates:
+  - guac-cm.yaml
+
+tests:
+  - it: should not create ConfigMap
+    values:
+      - ./values_configmap_no.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
