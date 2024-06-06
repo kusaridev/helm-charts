@@ -35,7 +35,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/opt/guac/guacone certifier osv --poll"
+          value: "/opt/guac/guaccollect osv"
 
   - it: should respect spec level parameters
     values:
@@ -58,3 +58,33 @@ tests:
       - equal:
           path:  spec.template.spec.containers[0].image
           value:  ghcr.io/guacsec/guac:latest
+
+  - it: should include tolerations
+    values:
+      - ./values_combine.yaml
+    asserts:
+      - equal:
+          path:  spec.template.spec.tolerations[0].key
+          value: "kusari.cloud/common"
+      - equal:
+          path:  spec.template.spec.tolerations[0].value
+          value: common
+      - equal:
+          path:  spec.template.spec.tolerations[0].effect
+          value: NoSchedule
+      - equal:
+          path:  spec.template.spec.tolerations[0].operator
+          value: Equal
+
+      - equal:
+          path:  spec.template.spec.tolerations[1].key
+          value: "kusari.cloud/own"
+      - equal:
+          path:  spec.template.spec.tolerations[1].value
+          value: own
+      - equal:
+          path:  spec.template.spec.tolerations[1].effect
+          value: NoSchedule
+      - equal:
+          path:  spec.template.spec.tolerations[1].operator
+          value: Equal

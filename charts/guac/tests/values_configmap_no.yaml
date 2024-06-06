@@ -1,0 +1,6 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+guac:
+
+  configMap:
+    enabled: false

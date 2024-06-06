@@ -121,6 +121,8 @@ data:
         ls -la ${SHARED_DATA}/guac-data/docs
         time /tmp/guaccollect files --service-poll=false ${SHARED_DATA}/guac-data/docs
 
+        sleep 3
+
         echo running guacone collect...
         time /tmp/guacone collect files ${SHARED_DATA}/guac-data/top-dh-sboms/zookeeper.json
         # for d in guac-data/docs
