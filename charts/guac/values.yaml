@@ -219,7 +219,7 @@ guac:
       reloader.stakater.com/auto: "true"
     replicas: 1
     image:
-      command: ['sh', '-c', '/opt/guac/guacone certifier osv --poll']
+      command: ['sh', '-c', '/opt/guac/guaccollect osv']
     env: []
     nodeSelector: {}
     tolerations: []

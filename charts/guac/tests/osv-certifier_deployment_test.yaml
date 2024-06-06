@@ -35,7 +35,7 @@ tests:
           value: "-c"
       - equal:
           path: spec.template.spec.containers[0].command[2]
-          value: "/opt/guac/guacone certifier osv --poll"
+          value: "/opt/guac/guaccollect osv"
 
   - it: should respect spec level parameters
     values:
