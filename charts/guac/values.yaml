@@ -51,6 +51,7 @@ imagePullSecrets:
 ## @param guac.osvCertifier.serviceAccount.create - whether to create osvCertifier service account
 ## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
 ## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
+## @param guac.osvCertifier.dayBetweenRescan Day(s) to wait before rescanning for vulnerability. Default 0 means only run once
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -230,6 +231,7 @@ guac:
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
+    dayBetweenRescan: 0
 
   ingestor:
     enabled: true

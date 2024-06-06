@@ -44,12 +44,9 @@ data:
     use-csub: true
 
     # OscCertifier behavior
-    daysSinceLastScan: 1   # days since the last vulnerability scan was run. 0 means only run once
-
-
-    # certifier polling
+    last-scan: {{ .Values.guac.osvCertifier.dayBetweenRescan }}
     poll: true
-    interval: 5m
+    interval: 5m     # how often to poll graphql-server to discover new packages
 
 {{ if eq $.Values.guac.graphqlServer.backend "ent" }}    
     # Ent config
