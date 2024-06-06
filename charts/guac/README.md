@@ -138,7 +138,7 @@ This section contains parameters for configuring the different GUAC components.
 | `guac.osvCertifier.serviceAccount.create`                      | - whether to create osvCertifier service account                                             | `true`                                         |
 | `guac.osvCertifier.serviceAccount.annotations`                 | - OSV Certifier service account annotations                                                  | `{}`                                           |
 | `guac.osvCertifier.resources`                                  | - [map] resource requests or limits of the OSV Certifier deployment                          | `{}`                                           |
-| `guac.osvCertifier.dayBetweenRescan`                           | Day(s) to wait before rescanning for vulnerability. Default 0 means only run once            | `1`                                            |
+| `guac.osvCertifier.dayBetweenRescan`                           | Day(s) to wait before rescanning for vulnerability. Default 0 means only run once            | `0`                                            |
 | `guac.ingestor.enabled`                                        | String Whether to deploy Ingestor                                                            | `true`                                         |
 | `guac.ingestor.name`                                           | String Name of the ingestor component.                                                       | `ingestor`                                     |
 | `guac.ingestor.annotations.reloader.stakater.com/auto`         | Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)             | `""`                                           |

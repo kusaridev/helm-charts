@@ -291,7 +291,7 @@
                         "dayBetweenRescan": {
                             "type": "number",
                             "description": "Day(s) to wait before rescanning for vulnerability. Default 0 means only run once",
-                            "default": 1
+                            "default": 0
                         }
                     }
                 },
