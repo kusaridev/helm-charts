@@ -43,6 +43,10 @@ data:
     service-poll: true
     use-csub: true
 
+    # OscCertifier behavior
+    daysSinceLastScan: 1   # days since the last vulnerability scan was run. 0 means only run once
+
+
     # certifier polling
     poll: true
     interval: 5m
