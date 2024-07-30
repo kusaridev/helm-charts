@@ -55,6 +55,16 @@
                             "type": "string",
                             "description": "common tolerations apply to all guac services",
                             "default": "\"\""
+                        },
+                        "certifier": {
+                            "type": "object",
+                            "properties": {
+                                "dayBetweenRescan": {
+                                    "type": "string",
+                                    "description": "Day(s) to wait before the certifier rescanning - commonly apply to all certifiers. Default 0 means only run once",
+                                    "default": "0"
+                                }
+                            }
                         }
                     }
                 },
@@ -287,11 +297,6 @@
                             "type": "object",
                             "description": "- [map] resource requests or limits of the OSV Certifier deployment",
                             "default": {}
-                        },
-                        "dayBetweenRescan": {
-                            "type": "number",
-                            "description": "Day(s) to wait before rescanning for vulnerability. Default 0 means only run once",
-                            "default": 0
                         }
                     }
                 },

@@ -43,8 +43,10 @@ data:
     service-poll: true
     use-csub: true
 
-    # OscCertifier behavior
-    last-scan: {{ .Values.guac.osvCertifier.dayBetweenRescan }}
+    # Certifier behavior - i.e. OSV and CD
+{{- if $.Values.guac.common.certifier.dayBetweenRescan }}
+    last-scan: {{ .Values.guac.common.certifier.dayBetweenRescan }}
+{{- end }}
     poll: true
     interval: 5m     # how often to poll graphql-server to discover new packages
 

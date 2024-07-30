@@ -17,6 +17,7 @@ imagePullSecrets:
 ## @param guac.guacImage.workingDir Working Directory for GUAC
 ## @param guac.common.env [string] common environment variables apply to all guac services
 ## @param guac.common.tolerations [string] common tolerations apply to all guac services
+## @param guac.common.certifier.dayBetweenRescan Day(s) to wait before the certifier rescanning - commonly apply to all certifiers. Default 0 means only run once
 ## @param guac.configMap.enabled Whether to create the guac-cm configMap
 ## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
@@ -51,7 +52,6 @@ imagePullSecrets:
 ## @param guac.osvCertifier.serviceAccount.create - whether to create osvCertifier service account
 ## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
 ## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
-## @param guac.osvCertifier.dayBetweenRescan Day(s) to wait before rescanning for vulnerability. Default 0 means only run once
 ## @param guac.cdCertifier.enabled String Whether to deploy CD Certifier
 ## @param guac.cdCertifier.name String Name of the CD Certifier component.
 ## @param guac.cdCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -183,6 +183,9 @@ guac:
         value: secretKey
     tolerations: []
 
+    certifier:
+      dayBetweenRescan: "0"
+
   configMap:
     enabled: true
 
@@ -242,7 +245,6 @@ guac:
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
-    dayBetweenRescan: 0
 
   cdCertifier:
     enabled: true
@@ -367,6 +369,7 @@ guac:
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
+
   visualizer:
     enabled: true
     name: visualizer
