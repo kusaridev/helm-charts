@@ -243,7 +243,7 @@
                                     "default": [
                                         "sh",
                                         "-c",
-                                        "/opt/guac/guacone certifier osv --poll"
+                                        "/opt/guac/guaccollect osv"
                                     ],
                                     "items": {
                                         "type": "string"
@@ -253,7 +253,7 @@
                         },
                         "env": {
                             "type": "array",
-                            "description": "Environment variables for OSV Certifier Collector.",
+                            "description": "Environment variables for OSV Certifier.",
                             "default": [],
                             "items": {}
                         },
@@ -286,6 +286,80 @@
                         "resources": {
                             "type": "object",
                             "description": "- [map] resource requests or limits of the OSV Certifier deployment",
+                            "default": {}
+                        }
+                    }
+                },
+                "cdCertifier": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "String Whether to deploy CD Certifier",
+                            "default": true
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "String Name of the CD Certifier component.",
+                            "default": "cd-certifier"
+                        },
+                        "replicas": {
+                            "type": "number",
+                            "description": "Number of replicas for CD Certifier deployment",
+                            "default": 1
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "command": {
+                                    "type": "array",
+                                    "description": "Command for the CD Certifier Collector image.  It is not recommended to override this.",
+                                    "default": [
+                                        "sh",
+                                        "-c",
+                                        "/opt/guac/guaccollect cd"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "env": {
+                            "type": "array",
+                            "description": "Environment variables for CD Certifier.",
+                            "default": [],
+                            "items": {}
+                        },
+                        "nodeSelector": {
+                            "type": "object",
+                            "description": "- sets the node selector for where to run the deployment",
+                            "default": {}
+                        },
+                        "tolerations": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        },
+                        "serviceAccount": {
+                            "type": "object",
+                            "properties": {
+                                "create": {
+                                    "type": "boolean",
+                                    "description": "- whether to create cdCertifier service account",
+                                    "default": true
+                                },
+                                "annotations": {
+                                    "type": "object",
+                                    "description": "- CD Certifier service account annotations",
+                                    "default": {}
+                                }
+                            }
+                        },
+                        "resources": {
+                            "type": "object",
+                            "description": "- [map] resource requests or limits of the cd Certifier deployment",
                             "default": {}
                         }
                     }

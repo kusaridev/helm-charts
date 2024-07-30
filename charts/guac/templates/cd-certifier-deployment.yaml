@@ -1,0 +1,88 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.cdCertifier.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.guac.cdCertifier.name }}
+{{- if .Values.guac.cdCertifier.annotations }}
+  annotations:
+{{ toYaml .Values.guac.cdCertifier.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.cdCertifier.name }}
+    app.kubernetes.io/component: {{ .Values.guac.cdCertifier.name }}
+spec:
+  replicas:  {{ .Values.guac.cdCertifier.replicas }}
+  selector:
+    matchLabels:
+      {{- include "guac.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ .Values.guac.cdCertifier.name }}
+      app.kubernetes.io/component: {{ .Values.guac.cdCertifier.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "guac.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ .Values.guac.cdCertifier.name }}
+        app.kubernetes.io/component: {{ .Values.guac.cdCertifier.name }}
+    spec:
+      serviceAccountName: {{ .Values.guac.cdCertifier.name }}
+      containers:
+      - name: {{ .Values.guac.cdCertifier.name }}
+        {{- if .Values.guac.guacImage.digest }}
+        image: "{{ .Values.guac.guacImage.repository }}@{{ .Values.guac.guacImage.digest }}"
+        {{- else }}
+        image: "{{ .Values.guac.guacImage.repository }}:{{ .Values.guac.guacImage.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: "{{ .Values.guac.guacImage.pullPolicy }}"
+        command:
+{{ toYaml .Values.guac.cdCertifier.image.command | indent 10 }}
+        workingDir: {{ .Values.guac.guacImage.workingDir }}
+{{- if .Values.guac.cdCertifier.ports }}
+        ports:
+{{ toYaml .Values.guac.cdCertifier.image.ports | indent 10 }}
+{{- end }}
+{{- if .Values.guac.cdCertifier.resources }}
+        resources: {{- toYaml .Values.guac.cdCertifier.resources | nindent 10 }}
+{{- end }}
+        volumeMounts:
+          - name: guac-config
+            mountPath: {{ .Values.guac.guacImage.workingDir }}
+            readOnly: true
+
+{{- if or .Values.guac.common.env .Values.guac.cdCertifier.env }}
+        env:
+{{- if .Values.guac.common.env }}
+{{ toYaml .Values.guac.common.env | indent 10 }}
+{{- end }}
+{{- if .Values.guac.cdCertifier.env }}
+{{ toYaml .Values.guac.cdCertifier.env | indent 10 }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 8 }}
+{{- end }}
+      volumes:
+        - name: guac-config
+          configMap:
+            name: guac-cm
+{{- if .Values.guac.cdCertifier.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.guac.cdCertifier.nodeSelector | indent 8 }}
+{{- end }}
+
+{{- if or .Values.guac.common.tolerations .Values.guac.cdCertifier.tolerations }}
+      tolerations:
+{{- if .Values.guac.common.tolerations }}
+{{ toYaml .Values.guac.common.tolerations | indent 8 }}
+{{- end }}
+{{- if .Values.guac.cdCertifier.tolerations }}
+{{ toYaml .Values.guac.cdCertifier.tolerations | indent 8 }}
+{{- end }}
+{{- end }}
+
+{{- end }}

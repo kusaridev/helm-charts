@@ -45,12 +45,23 @@ imagePullSecrets:
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.osvCertifier.replicas Number of replicas for OSV Certifier deployment
 ## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
-## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
+## @param guac.osvCertifier.env Environment variables for OSV Certifier.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.osvCertifier.tolerations
 ## @param guac.osvCertifier.serviceAccount.create - whether to create osvCertifier service account
 ## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
 ## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
+## @param guac.cdCertifier.enabled String Whether to deploy CD Certifier
+## @param guac.cdCertifier.name String Name of the CD Certifier component.
+## @param guac.cdCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
+## @param guac.cdCertifier.replicas Number of replicas for CD Certifier deployment
+## @param guac.cdCertifier.image.command Command for the CD Certifier Collector image.  It is not recommended to override this.
+## @param guac.cdCertifier.env Environment variables for CD Certifier.
+## @param guac.cdCertifier.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.cdCertifier.tolerations
+## @param guac.cdCertifier.serviceAccount.create - whether to create cdCertifier service account
+## @param guac.cdCertifier.serviceAccount.annotations - CD Certifier service account annotations
+## @param guac.cdCertifier.resources - [map] resource requests or limits of the cd Certifier deployment
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -220,6 +231,25 @@ guac:
     replicas: 1
     image:
       command: ['sh', '-c', '/opt/guac/guaccollect osv']
+    env: []
+    nodeSelector: {}
+    tolerations: []
+    serviceAccount:
+      create: true
+      annotations: {}
+    resources: {}
+    #   requests:
+    #     cpu: "0.25"
+    #     memory: "0.5G"
+
+  cdCertifier:
+    enabled: true
+    name: cd-certifier
+    annotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      command: ['sh', '-c', '/opt/guac/guaccollect cd']
     env: []
     nodeSelector: {}
     tolerations: []
