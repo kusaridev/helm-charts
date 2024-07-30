@@ -17,6 +17,7 @@ imagePullSecrets:
 ## @param guac.guacImage.workingDir Working Directory for GUAC
 ## @param guac.common.env [string] common environment variables apply to all guac services
 ## @param guac.common.tolerations [string] common tolerations apply to all guac services
+## @param guac.common.certifier.dayBetweenRescan Day(s) to wait before the certifier rescanning - commonly apply to all certifiers. Default 0 means only run once
 ## @param guac.configMap.enabled Whether to create the guac-cm configMap
 ## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
@@ -45,13 +46,23 @@ imagePullSecrets:
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
 ## @param guac.osvCertifier.replicas Number of replicas for OSV Certifier deployment
 ## @param guac.osvCertifier.image.command Command for the OSV Certifier Collector image.  It is not recommended to override this.
-## @param guac.osvCertifier.env Environment variables for OSV Certifier Collector.
+## @param guac.osvCertifier.env Environment variables for OSV Certifier.
 ## @param guac.osvCertifier.nodeSelector - sets the node selector for where to run the deployment
 ## @param guac.osvCertifier.tolerations
 ## @param guac.osvCertifier.serviceAccount.create - whether to create osvCertifier service account
 ## @param guac.osvCertifier.serviceAccount.annotations - OSV Certifier service account annotations
 ## @param guac.osvCertifier.resources - [map] resource requests or limits of the OSV Certifier deployment
-## @param guac.osvCertifier.dayBetweenRescan Day(s) to wait before rescanning for vulnerability. Default 0 means only run once
+## @param guac.cdCertifier.enabled String Whether to deploy CD Certifier
+## @param guac.cdCertifier.name String Name of the CD Certifier component.
+## @param guac.cdCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
+## @param guac.cdCertifier.replicas Number of replicas for CD Certifier deployment
+## @param guac.cdCertifier.image.command Command for the CD Certifier Collector image.  It is not recommended to override this.
+## @param guac.cdCertifier.env Environment variables for CD Certifier.
+## @param guac.cdCertifier.nodeSelector - sets the node selector for where to run the deployment
+## @param guac.cdCertifier.tolerations
+## @param guac.cdCertifier.serviceAccount.create - whether to create cdCertifier service account
+## @param guac.cdCertifier.serviceAccount.annotations - CD Certifier service account annotations
+## @param guac.cdCertifier.resources - [map] resource requests or limits of the cd Certifier deployment
 ## @param guac.ingestor.enabled String Whether to deploy Ingestor
 ## @param guac.ingestor.name String Name of the ingestor component.
 ## @param guac.ingestor.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -172,6 +183,9 @@ guac:
         value: secretKey
     tolerations: []
 
+    certifier:
+      dayBetweenRescan: "0"
+
   configMap:
     enabled: true
 
@@ -231,7 +245,25 @@ guac:
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
-    dayBetweenRescan: 0
+
+  cdCertifier:
+    enabled: true
+    name: cd-certifier
+    annotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
+    image:
+      command: ['sh', '-c', '/opt/guac/guaccollect cd']
+    env: []
+    nodeSelector: {}
+    tolerations: []
+    serviceAccount:
+      create: true
+      annotations: {}
+    resources: {}
+    #   requests:
+    #     cpu: "0.25"
+    #     memory: "0.5G"
 
   ingestor:
     enabled: true
@@ -337,6 +369,7 @@ guac:
     #   requests:
     #     cpu: "0.25"
     #     memory: "0.5G"
+
   visualizer:
     enabled: true
     name: visualizer
