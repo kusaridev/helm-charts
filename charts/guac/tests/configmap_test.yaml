@@ -8,6 +8,7 @@ tests:
   - it: configmap should render
     values:
       - ./values_ent_backend.yaml
+      - ./values_common_certifier.yaml
     asserts:
       - isKind:
           of: ConfigMap
@@ -26,3 +27,17 @@ tests:
       # - equal:
       #     path: data["guac.yaml"]["db-migrate"]
       #     value: true
+
+  # - it: should override defaults
+  #   values:
+  #     - ./values_common_certifier.yaml
+  #   asserts:
+  #     - equal:
+  #         path: data.guac\.yaml.last-scan
+  #         value: "5"
+  #     - equal:
+  #         path: data.guac/.yaml.certifier-batch-size
+  #         value: "50000"
+  #     - equal:
+  #         path: data.guac/.yaml.certifier-latency
+  #         value: 5s
