@@ -30,6 +30,13 @@ guac:
         operator: Equal
         value: own
 
+  cdCertifier:
+    tolerations:        
+      - effect: NoSchedule
+        key: kusari.cloud/own
+        operator: Equal
+        value: own
+
   ingestor:
     tolerations:        
       - effect: NoSchedule

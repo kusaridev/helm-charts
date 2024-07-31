@@ -1,0 +1,19 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+{{ if .Values.guac.cdCertifier.enabled }}
+{{ if .Values.guac.cdCertifier.serviceAccount.create }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.guac.cdCertifier.name }}
+{{- if .Values.guac.cdCertifier.annotations }}
+  annotations:
+{{ toYaml .Values.guac.cdCertifier.serviceAccount.annotations | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "guac.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.guac.cdCertifier.name }}
+    app.kubernetes.io/component: {{ .Values.guac.cdCertifier.name }}
+{{- end }}
+{{- end }}

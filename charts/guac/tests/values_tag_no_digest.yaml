@@ -20,6 +20,9 @@ guac:
   osvCertifier:
     name: osv-certifier
 
+  cdCertifier:
+    name: cd-certifier
+
   ingestor:
     name: ingestor
  
