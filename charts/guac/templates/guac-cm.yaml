@@ -47,6 +47,13 @@ data:
 {{- if $.Values.guac.common.certifier.dayBetweenRescan }}
     last-scan: {{ .Values.guac.common.certifier.dayBetweenRescan }}
 {{- end }}
+{{- if $.Values.guac.common.certifier.batchSize }}
+    certifier-batch-size: {{ .Values.guac.common.certifier.batchSize }}
+{{- end }}
+{{- if $.Values.guac.common.certifier.latency }}
+    certifier-latency: {{ .Values.guac.common.certifier.latency }}
+{{- end }}
+
     poll: true
     interval: 5m     # how often to poll graphql-server to discover new packages
 

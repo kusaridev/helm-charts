@@ -63,6 +63,17 @@
                                     "type": "string",
                                     "description": "Day(s) to wait before the certifier rescanning - commonly apply to all certifiers. Default 0 means only run once",
                                     "default": "0"
+                                },
+                                "batchSize": {
+                                    "type": "string",
+                                    "description": "sets the batch size for pagination query for the certifier - commonly apply to all certifiers. Default 60000",
+                                    "default": "60000"
+                                },
+                                "latency": {
+                                    "type": "object",
+                                    "description": "sets artificial latency on the certifier - commonly apply to all certifiers. Defaults to empty string (not enabled) but can set m, h, s...etc.",
+                                    "default": null,
+                                    "nullable": true
                                 }
                             }
                         }
@@ -223,6 +234,12 @@
                             "type": "object",
                             "description": "- [map] resource requests or limits of the depsDevCollector deployment",
                             "default": {}
+                        },
+                        "depsDevLatency": {
+                            "type": "object",
+                            "description": "- sets artificial latency on the deps.dev collector. Defaults to empty string (not enabled) but can set m, h, s...etc.",
+                            "default": null,
+                            "nullable": true
                         }
                     }
                 },
