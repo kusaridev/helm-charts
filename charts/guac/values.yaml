@@ -18,6 +18,8 @@ imagePullSecrets:
 ## @param guac.common.env [string] common environment variables apply to all guac services
 ## @param guac.common.tolerations [string] common tolerations apply to all guac services
 ## @param guac.common.certifier.dayBetweenRescan Day(s) to wait before the certifier rescanning - commonly apply to all certifiers. Default 0 means only run once
+## @param guac.common.certifier.batchSize sets the batch size for pagination query for the certifier - commonly apply to all certifiers. Default 60000
+## @param guac.common.certifier.latency [nullable] sets artificial latency on the certifier - commonly apply to all certifiers. Defaults to empty string (not enabled) but can set m, h, s...etc.
 ## @param guac.configMap.enabled Whether to create the guac-cm configMap
 ## @param guac.ociCollector.enabled String Whether to deploy OCI Collector
 ## @param guac.ociCollector.name String Name of the OCI Collector component.
@@ -41,6 +43,7 @@ imagePullSecrets:
 ## @param guac.depsDevCollector.serviceAccount.create - whether to create depsDevCollector service account
 ## @param guac.depsDevCollector.serviceAccount.annotations
 ## @param guac.depsDevCollector.resources - [map] resource requests or limits of the depsDevCollector deployment
+## @param guac.depsDevCollector.depsDevLatency [nullable] - sets artificial latency on the deps.dev collector. Defaults to empty string (not enabled) but can set m, h, s...etc.
 ## @param guac.osvCertifier.enabled String Whether to deploy OSV Certifier
 ## @param guac.osvCertifier.name String Name of the OSV Certifier component.
 ## @param guac.osvCertifier.annotations.reloader.stakater.com/auto [string] Boolean for deploying [stakater/Reloader] (https://github.com/stakater/Reloader)
@@ -185,6 +188,8 @@ guac:
 
     certifier:
       dayBetweenRescan: "0"
+      batchSize: "60000"
+      latency:
 
   configMap:
     enabled: true
@@ -226,6 +231,7 @@ guac:
       # requests:
       #   cpu: "0.25"
       #   memory: "0.5G"
+    depsDevLatency:
 
   osvCertifier:
     enabled: true
