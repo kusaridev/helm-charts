@@ -36,7 +36,6 @@ spec:
         env:
         - name: DB_ADDRESS
           value: '{{ index .Values.guac.backend.ent "db-address" }}'
-          optional: false
 {{- end }}      
         {{- if .Values.atlas.image.digest }}
         image: "{{ .Values.image.repository | default .Values.guac.guacImage.repository }}@{{ .Values.atlas.image.digest }}"
