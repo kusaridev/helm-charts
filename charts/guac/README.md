@@ -79,6 +79,10 @@ kubectl port-forward svc/guac-nats 4222:4222
 kubectl port-forward svc/collectsub 2782:2782
 ```
 
+### Atlas Migration
+[Atlas](https://atlasgo.io/docs) is a language-independent tool for managing and migrating database schemas using modern DevOps principles. When changes to the ENT schema are made, there needs to be a path of migration. This can be done via Atlas as shown in the [ENT documentation](https://entgo.io/docs/versioned-migrations/#quick-guide).
+Atlas init container allows for running atlas migration for ENT.
+
 ## Uninstall
 
 `helm delete [RELEASE_NAME]`
