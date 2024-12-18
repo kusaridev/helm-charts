@@ -20,7 +20,7 @@ data:
 {{- if $.Values.guac.blobAddr }}
     blob-addr: {{ $.Values.guac.blobAddr }}
 {{- else }}
-    blob-addr: s3://bucketname?endpoint={{ .Release.Namespace }}-minio.{{ .Release.Namespace }}.svc.cluster.local:9000&region=us-east-1&disable_https=true&use_path_style=true
+    blob-addr: s3://bucketname?endpoint=http://{{ .Release.Namespace }}-minio.{{ .Release.Namespace }}.svc.cluster.local:9000&region=us-east-1&disable_https=true&use_path_style=true
 {{- end }}
     
 
