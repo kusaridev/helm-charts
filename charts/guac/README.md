@@ -79,6 +79,10 @@ kubectl port-forward svc/guac-nats 4222:4222
 kubectl port-forward svc/collectsub 2782:2782
 ```
 
+### Atlas Migration
+[Atlas](https://atlasgo.io/docs) is a language-independent tool for managing and migrating database schemas using modern DevOps principles. When changes to the ENT schema are made, there needs to be a path of migration. This can be done via Atlas as shown in the [ENT documentation](https://entgo.io/docs/versioned-migrations/#quick-guide).
+Atlas init container allows for running atlas migration for ENT.
+
 ## Uninstall
 
 `helm delete [RELEASE_NAME]`
@@ -286,6 +290,20 @@ This is the configuration for minio.  This is a subchart.  See full documentatio
 | `minio.rootPassword` | root user password.                                                            | `rootPassword` |
 | `minio.buckets`      | List of buckets to create after deployment.                                    | `{}`           |
 | `minio.users`        | List of users, in terms of creds and permissions, to create after deployment.? | `{}`           |
+
+### atlas
+
+This section contains parameters for configuring the atlas migration.
+
+| Name                     | Description                                                                                                      | Value                                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `atlas.enabled`          | Whether to add atlas init-container in graphql-server to manage schema migration via atlas. Defaults to false    | `false`                                                                                               |
+| `atlas.image.command`    | Command for the atlas migration. Overriding default entrypoint to read backend DB connection string from guac-cm | `["sh","-c","atlas migrate apply --dir file:///app/migrations --url $DB_ADDRESS?search_path=public"]` |
+| `atlas.image.repository` | Path to the atlas migration image                                                                                | `ghcr.io/guacsec/guac/atlas-migration`                                                                |
+| `atlas.image.tag`        | Tag if using an image tag.  Optional                                                                             | `undefined`                                                                                           |
+| `atlas.image.digest`     | Sha256 Image Digest. It is strongly recommended to use this for verification.                                    | `""`                                                                                                  |
+| `atlas.image.pullPolicy` | ImagePullPolicy for kubernetes                                                                                   | `IfNotPresent`                                                                                        |
+| `atlas.name`             | Name of the atlas migration component                                                                            | `atlas-migration`                                                                                     |
 
 ## Developing
 For running the unit tests, install the unittest plugin.

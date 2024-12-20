@@ -165,6 +165,7 @@ imagePullSecrets:
 ## @param guac.collectorPublishToQueue Whether to publish ingestion message to pubsub queue
 ## @param guac.blobAddr [nullable] gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/
 ## @param guac.additionalResources
+
 guac:
 
   guacImage:
@@ -522,3 +523,26 @@ minio:
     - accessKey: accessKey
       secretKey: secretKey
       policy: readwrite
+
+## @section atlas
+## @descriptionStart This section contains parameters for configuring the atlas migration.
+## @descriptionEnd
+## @param atlas.enabled Whether to add atlas init-container in graphql-server to manage schema migration via atlas. Defaults to false
+## @param atlas.image.command Command for the atlas migration. Overriding default entrypoint to read backend DB connection string from guac-cm
+## @param atlas.image.repository Path to the atlas migration image
+## @param atlas.image.tag [nullable] Tag if using an image tag.  Optional
+## @param atlas.image.digest [string] Sha256 Image Digest. It is strongly recommended to use this for verification.
+## @param atlas.image.pullPolicy ImagePullPolicy for kubernetes
+## @param atlas.name Name of the atlas migration component
+
+atlas:
+  enabled: false
+  image:
+    command: ['sh', '-c', 'atlas migrate apply --dir file:///app/migrations --url $DB_ADDRESS?search_path=public']
+    repository: ghcr.io/guacsec/guac/atlas-migration
+    # if not set appVersion field from Chart.yaml is used
+    # tag:
+    # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
+    digest: ""
+    pullPolicy: IfNotPresent
+  name: atlas-migration
