@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   guac:
   - apiVersion: v2
+    appVersion: v0.13.0
+    created: "2025-01-21T22:00:46.061287577Z"
+    dependencies:
+    - condition: nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: ~0.19.12
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: ~5.0.15
+    description: A Helm chart for deploying GUAC to Kubernetes
+    digest: ab248acc2c7deedd79bb406478da8946c12edbf73a6498ff9a4e402513efcd6d
+    maintainers:
+    - email: guac-info@kusari.dev
+      name: kusaridev
+      url: https://github.com/kusaridev/helm-charts
+    name: guac
+    type: application
+    urls:
+    - https://github.com/kusaridev/helm-charts/releases/download/guac-0.6.1/guac-0.6.1.tgz
+    version: 0.6.1
+  - apiVersion: v2
     appVersion: v0.12.3
     created: "2025-01-21T15:03:17.854320552Z"
     dependencies:
@@ -525,4 +548,4 @@ entries:
     urls:
     - https://github.com/kusaridev/helm-charts/releases/download/guac-0.1.0/guac-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-21T15:03:17.854483125Z"
+generated: "2025-01-21T22:00:46.061486399Z"
