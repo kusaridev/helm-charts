@@ -1125,6 +1125,53 @@
                     "default": "rootPassword"
                 }
             }
+        },
+        "atlas": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether to add atlas init-container in graphql-server to manage schema migration via atlas. Defaults to false",
+                    "default": false
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "array",
+                            "description": "Command for the atlas migration. Overriding default entrypoint to read backend DB connection string from guac-cm",
+                            "default": [
+                                "sh",
+                                "-c",
+                                "atlas migrate apply --dir file:///app/migrations --url $DB_ADDRESS?search_path=public"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "Path to the atlas migration image",
+                            "default": "ghcr.io/guacsec/guac/atlas-migration"
+                        },
+                        "digest": {
+                            "type": "string",
+                            "description": "Sha256 Image Digest. It is strongly recommended to use this for verification.",
+                            "default": "\"\""
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "ImagePullPolicy for kubernetes",
+                            "default": "IfNotPresent"
+                        }
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the atlas migration component",
+                    "default": "atlas-migration"
+                }
+            }
         }
     }
 }

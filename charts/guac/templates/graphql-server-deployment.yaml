@@ -29,6 +29,23 @@ spec:
         app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
     spec:
       serviceAccountName: {{ .Values.guac.graphqlServer.name }}
+{{- if .Values.atlas.enabled }}
+      initContainers:
+      - name: {{ .Values.atlas.name }}
+{{- if index .Values.guac.backend.ent "db-address" }}
+        env:
+        - name: DB_ADDRESS
+          value: '{{ index .Values.guac.backend.ent "db-address" }}'
+{{- end }}      
+        {{- if .Values.atlas.image.digest }}
+        image: "{{ .Values.atlas.image.repository }}@{{ .Values.atlas.image.digest }}"
+        {{- else }}
+        image: "{{ .Values.atlas.image.repository }}:{{ .Values.atlas.image.tag | default .Chart.AppVersion}}"
+        {{- end }}
+        imagePullPolicy: {{ .Values.atlas.image.pullPolicy }}
+        command:
+{{ toYaml .Values.atlas.image.command | indent 10 }}
+{{- end }}
       containers:
       - name: {{ .Values.guac.graphqlServer.name }}
         {{- if .Values.guac.guacImage.digest }}
