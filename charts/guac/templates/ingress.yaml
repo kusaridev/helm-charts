@@ -16,6 +16,7 @@ metadata:
 {{- range $key, $value := .Values.guac.ingress.extraLabels }}
     {{ $key }}: {{ $value }}
 {{- end }}
+{{- include "custom.labels" . | nindent 4 }}
 
 spec:
   {{- if .Values.guac.ingress.ingressClassName }}

@@ -1013,6 +1013,11 @@
                     "type": "object",
                     "description": "",
                     "default": {}
+                },
+                "customLabels": {
+                    "type": "object",
+                    "description": "custom labels for all resources",
+                    "default": {}
                 }
             }
         },

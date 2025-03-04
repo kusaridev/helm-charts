@@ -14,6 +14,7 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
     app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 spec:
   replicas:  {{ .Values.guac.ociCollector.replicas }}
   selector:
@@ -27,6 +28,7 @@ spec:
         {{- include "guac.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
         app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+        {{- include "custom.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.guac.ociCollector.name }}
       containers:

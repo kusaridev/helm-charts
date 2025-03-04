@@ -15,5 +15,6 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.ociCollector.name }}
     app.kubernetes.io/component: {{ .Values.guac.ociCollector.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 {{- end }}
 {{- end }}

@@ -1,0 +1,78 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+
+suite: GUAC Custom Labels tests
+
+tests:
+  - it: should have custom labels at the metadata level
+    templates:
+      # Deployments
+      - cd-certifier-deployment.yaml
+      - collectsub-deployment.yaml
+      - depsdev-collector-deployment.yaml
+      - graphql-server-deployment.yaml
+      - ingestor-deployment.yaml
+      - oci-collector-deployment.yaml
+      - osv-certifier-deployment.yaml
+      - guacrest-deployment.yaml
+      # Service Accounts
+      - cd-certifier-sa.yaml
+      - collectsub-sa.yaml
+      - depsdev-collector-sa.yaml
+      - graphql-server-sa.yaml
+      - guacrest-sa.yaml
+      - ingestor-sa.yaml
+      - oci-collector-sa.yaml
+      - osv-certifier-sa.yaml
+      # Services
+      - collectsub-service.yaml
+      - graphql-server-service.yaml
+      - guacrest-service.yaml
+      - visualizer-service.yaml
+      # Ingress
+      - api-only-ingress.yaml
+      - ingress.yaml
+    values:
+      - ./values_custom_labels.yaml
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            custom-label-1: 'test-label-1'
+            custom-label-2: 'test-label-2'
+
+  - it: should have custom labels inside pod template metadata (Deployments only)
+    templates:
+      # Deployments
+      - cd-certifier-deployment.yaml
+      - collectsub-deployment.yaml
+      - depsdev-collector-deployment.yaml
+      - graphql-server-deployment.yaml
+      - ingestor-deployment.yaml
+      - oci-collector-deployment.yaml
+      - osv-certifier-deployment.yaml
+      - guacrest-deployment.yaml
+    values:
+      - ./values_custom_labels.yaml
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            custom-label-1: 'test-label-1'
+            custom-label-2: 'test-label-2'
+
+  - it: should have custom labels in spec selector (Services only)
+    templates:
+      # Services
+      - collectsub-service.yaml
+      - graphql-server-service.yaml
+      - guacrest-service.yaml
+      - visualizer-service.yaml
+    values:
+      - ./values_custom_labels.yaml
+    asserts:
+      - isSubset:
+          path: spec.selector
+          content:
+            custom-label-1: 'test-label-1'
+            custom-label-2: 'test-label-2'

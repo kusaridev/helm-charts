@@ -9,6 +9,7 @@ metadata:
   labels:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+    {{- include "custom.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install, post-upgrade
     "helm.sh/hook-weight": "10"
@@ -19,6 +20,7 @@ spec:
       labels:
         {{- include "guac.labels" . | nindent 8 }}
         app.kubernetes.io/name: {{ .Values.guac.sampleData.jobName }}
+        {{- include "custom.labels" . | nindent 8 }}
     spec:
       containers:
       - name: data-ingestor

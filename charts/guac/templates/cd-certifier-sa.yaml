@@ -15,5 +15,6 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.cdCertifier.name }}
     app.kubernetes.io/component: {{ .Values.guac.cdCertifier.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 {{- end }}
 {{- end }}

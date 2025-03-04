@@ -10,11 +10,13 @@ metadata:
   labels: {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
     app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+     {{- include "custom.labels" . | nindent 4 }}
 spec:
   selector:
     {{- include "guac.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.collectSub.name }}
     app.kubernetes.io/component: {{ .Values.guac.collectSub.name }}
+    {{- include "custom.labels" . | nindent 4 }}
   ports:
   {{- range .Values.guac.collectSub.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}

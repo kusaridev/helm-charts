@@ -165,9 +165,8 @@ imagePullSecrets:
 ## @param guac.collectorPublishToQueue Whether to publish ingestion message to pubsub queue
 ## @param guac.blobAddr [nullable] gocloud connection string for blob store configured via https://gocloud.dev/howto/blob/
 ## @param guac.additionalResources
-
+## @param guac.customLabels custom labels for all resources
 guac:
-
   guacImage:
     repository: ghcr.io/guacsec/guac
     # if not set appVersion field from Chart.yaml is used
@@ -176,7 +175,8 @@ guac:
     digest: ""
     pullPolicy: IfNotPresent
     workingDir: /guac
-
+  # custom labels for all resources
+  customLabels: {}
   common:
     # env: []
     env:
