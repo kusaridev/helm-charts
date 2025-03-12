@@ -14,6 +14,7 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
     app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 spec:
   replicas:  {{ .Values.guac.graphqlServer.replicas }}
   selector:
@@ -27,6 +28,7 @@ spec:
         {{- include "guac.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/name: {{ .Values.guac.graphqlServer.name }}
         app.kubernetes.io/component: {{ .Values.guac.graphqlServer.name }}
+        {{- include "custom.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.guac.graphqlServer.name }}
 {{- if .Values.atlas.enabled }}
@@ -36,7 +38,7 @@ spec:
         env:
         - name: DB_ADDRESS
           value: '{{ index .Values.guac.backend.ent "db-address" }}'
-{{- end }}      
+{{- end }}
         {{- if .Values.atlas.image.digest }}
         image: "{{ .Values.atlas.image.repository }}@{{ .Values.atlas.image.digest }}"
         {{- else }}

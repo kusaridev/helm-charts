@@ -1,0 +1,12 @@
+# Copyright Kusari, Inc. and contributors
+# Licensed under the MIT license. See LICENSE file in the project root for details.
+guac:
+  customLabels: { custom-label-1: 'test-label-1', custom-label-2: 'test-label-2' }
+  apiOnlyIngress:
+    enabled: true
+  ingress:
+    enabled: true
+  sampleData:
+    env: ["test"]
+    ingest: true
+    jobName: ingest-guac-data

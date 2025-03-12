@@ -14,6 +14,7 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
     app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 spec:
   replicas:  {{ .Values.guac.visualizer.replicas }}
   selector:
@@ -27,6 +28,7 @@ spec:
         {{- include "guac.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/name: {{ .Values.guac.visualizer.name }}
         app.kubernetes.io/component: {{ .Values.guac.visualizer.name }}
+        {{- include "custom.labels" . | nindent 8 }}
     spec:
       containers:
       # workaround the problem that next.config.js can't set gql-addr dynamically

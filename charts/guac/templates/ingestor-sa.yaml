@@ -15,5 +15,6 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.ingestor.name }}
     app.kubernetes.io/component: {{ .Values.guac.ingestor.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 {{- end }}
 {{- end }}

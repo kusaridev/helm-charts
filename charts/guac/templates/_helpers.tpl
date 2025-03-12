@@ -35,6 +35,12 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "custom.labels" -}}
+{{- if .Values.guac.customLabels }}
+{{- toYaml .Values.guac.customLabels }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}

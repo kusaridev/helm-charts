@@ -11,11 +11,13 @@ metadata:
     {{- include "guac.labels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.restApi.name }}
     app.kubernetes.io/component: {{ .Values.guac.restApi.name }}
+    {{- include "custom.labels" . | nindent 4 }}
 spec:
   selector:
     {{- include "guac.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ .Values.guac.restApi.name }}
     app.kubernetes.io/component: {{ .Values.guac.restApi.name }}
+    {{- include "custom.labels" . | nindent 4 }}
   ports:
   {{- range .Values.guac.restApi.svcPorts }}
     - {{ . | toYaml | indent 6 | trim }}
